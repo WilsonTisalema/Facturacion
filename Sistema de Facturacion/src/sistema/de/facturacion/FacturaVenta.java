@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistema.de.facturacion;
 
 import dialogs.consultaCliente;
@@ -31,20 +30,21 @@ public class FacturaVenta extends javax.swing.JFrame {
      * Creates new form FacturaVenta
      */
     DefaultTableModel modelo;
+
     public FacturaVenta() {
         initComponents();
         cargarHora();
         txtFecha.setEnabled(false);
         cargarSecuencial();
-        String[] titulos={"Código","Descripcion","Cantidad","Pre. Uni","Descuento %","Total"};
-        modelo=new DefaultTableModel(null,titulos);
+        String[] titulos = {"Código", "Descripcion", "Cantidad", "Pre. Uni", "Descuento %", "Total"};
+        modelo = new DefaultTableModel(null, titulos);
         jtbProductos.setModel(modelo);
         txtNumFac.setEnabled(false);
         txtVendedor.setEnabled(false);
         txtVendedor.setText("1804181400");
         setLocationRelativeTo(null);
     }
-    
+
     public FacturaVenta(String vendedor) {
         initComponents();
         cargarHora();
@@ -55,151 +55,213 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtVendedor.setText(vendedor);
         setLocationRelativeTo(null);
     }
-    public void cargarHora(){
-        Calendar cs=new GregorianCalendar();
-        Date fecha=cs.getTime();
-        String dia,mes,anio;
-        dia=String.valueOf(fecha.getDate());
-        mes=String.valueOf(fecha.getMonth()+1);
-        anio=String.valueOf(fecha.getYear()+1900);
-        String fecha1=anio+"-"+mes+"-"+dia;
+
+    public void cargarHora() {
+        Calendar cs = new GregorianCalendar();
+        Date fecha = cs.getTime();
+        String dia, mes, anio;
+        dia = String.valueOf(fecha.getDate());
+        mes = String.valueOf(fecha.getMonth() + 1);
+        anio = String.valueOf(fecha.getYear() + 1900);
+        String fecha1 = anio + "-" + mes + "-" + dia;
         txtFecha.setText(fecha1);
     }
-    public void buscarCliente(String cedula){
-        conexion_mysql cn=new conexion_mysql();
-        Connection cc=cn.conectar();
-        String sql="";
-        sql="select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RAZON_SOCI_USU,RUC_CLI,TIPO_CONT_CLI from clientes where ci_cli='"+cedula+"'";
-       // String[] filas=new String[8];
+
+    public void buscarCliente(String cedula) {
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        String sql = "";
+        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RAZON_SOCI_USU,RUC_CLI,TIPO_CONT_CLI from clientes where ci_cli='" + cedula + "'";
+        // String[] filas=new String[8];
         Statement ps;
         try {
             ps = cc.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
-            txtNomCli.setText(rs.getString("nom_cli")+" "+rs.getString("nom_cli1")+" "+rs.getString("ape_cli")+" "+rs.getString("ape_cli1"));
-            txtTelefono.setText(rs.getString("TLF1_CLI"));
-            txtCelular.setText(rs.getString("CEL1_CLI"));
-            txtEmail.setText(rs.getString("E_MAIL_CLI"));
-            txtDireccion.setText(rs.getString("DIR_CLI"));
-            txtRazonS.setText(rs.getString("RAZON_SOCI_USU"));
-            txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
-            txtRuc.setText(rs.getString("RUC_CLI"));
-            txtNomCli.setEnabled(false);
-            txtTelefono.setEnabled(false);
-            txtCelular.setEnabled(false);
-            txtEmail.setEnabled(false);
-            txtDireccion.setEnabled(false);
-            txtRazonS.setEnabled(false);
-            txtTipo.setEnabled(false);
-            txtRuc.setEnabled(false);
-            
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                txtNomCli.setText(rs.getString("nom_cli") + " " + rs.getString("nom_cli1") + " " + rs.getString("ape_cli") + " " + rs.getString("ape_cli1"));
+                txtTelefono.setText(rs.getString("TLF1_CLI"));
+                txtCelular.setText(rs.getString("CEL1_CLI"));
+                txtEmail.setText(rs.getString("E_MAIL_CLI"));
+                txtDireccion.setText(rs.getString("DIR_CLI"));
+                txtRazonS.setText(rs.getString("RAZON_SOCI_USU"));
+                txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
+                txtRuc.setText(rs.getString("RUC_CLI"));
+                txtNomCli.setEnabled(false);
+                txtTelefono.setEnabled(false);
+                txtCelular.setEnabled(false);
+                txtEmail.setEnabled(false);
+                txtDireccion.setEnabled(false);
+                txtRazonS.setEnabled(false);
+                txtTipo.setEnabled(false);
+                txtRuc.setEnabled(false);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    public void cargarSecuencial(){
-        conexion_mysql cn=new conexion_mysql();
-        Connection cc=cn.conectar();
-        String sql="";
-        String ultimo=ultimoSecuencial();
-        sql="select num_sec from secuencial where id='"+ultimo+"'";
+
+    public void cargarSecuencial() {
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        String sql = "";
+        String ultimo = ultimoSecuencial();
+        sql = "select num_sec from secuencial where id='" + ultimo + "'";
         //System.out.println(sql);
         try {
-            Statement ps=cc.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
+            Statement ps = cc.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
             rs.next();
             txtNumFac.setText(rs.getString("num_sec"));
-            
+
         } catch (SQLException ex) {
             //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    public String ultimoSecuencial(){
-        conexion_mysql cn=new conexion_mysql();
-        Connection cc=cn.conectar();
-        String sql="";
-        String datos="";
-        sql="select max(id) from secuencial";
+
+    public String ultimoSecuencial() {
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        String sql = "";
+        String datos = "";
+        sql = "select max(id) from secuencial";
         try {
             Statement ps = cc.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
-                 datos=String.valueOf(rs.getInt("max(id)"));
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                datos = String.valueOf(rs.getInt("max(id)"));
             }
-            
+
         } catch (SQLException ex) {
             //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
         return datos;
     }
-    public void agregarAtabla(){
-        int  y=0;
-        int dato_stock=Integer.valueOf(txtCant.getText());
-        int dato_descuento=Integer.valueOf(txtDescPro.getText());
-        if(dato_stock>stockProBase){
-            JOptionPane.showMessageDialog(this, "No hay stock, El stock es = "+stockProBase);
+
+    public void ingresoStockGNI12() {
+        String codigoBarras = txtCodProd.getText().trim();
+        String codigo = codigoBarras.substring(1, 6);
+
+        String nombrePro = codigoProductos(codigoBarras.substring(7, 11));
+        String[] presentacion = presentacionProductos(codigoBarras.substring(7, 11));
+
+        txtCodProd.setText(presentacion[2]);
+        txtDesPro.setText(nombrePro);
+        txtPresentacion.setText(presentacion[0]);
+        txtPresentacion.setEnabled(false);
+        txtPreU.setText(presentacion[1]);
+        buscarProd(presentacion[2]);
+        //txtCodProd.requestFocus();
+    }
+
+    public String[] presentacionProductos(String codigo) {
+        String[] data = new String[3];
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select pr.DES_PRES_PRO,p.PRE1_PROD,p.COD_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='" + codigo + "' and p.cod_prod=pr.cod_pro_p";
+        //System.out.println(sql);
+        try {
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                data[0] = rs.getString("DES_PRES_PRO");
+                data[1] = rs.getString("PRE1_PROD");
+                data[2] = rs.getString("COD_PROD");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede obtener nombre del producto");
+        }
+
+        return data;
+    }
+
+    public String codigoProductos(String codigo) {
+        String data = "";
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select p.DES_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='" + codigo + "' and p.cod_prod=pr.cod_pro_p";
+        //System.out.println(sql);
+        try {
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                data = rs.getString("DES_PROD");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede obtener nombre del producto");
+        }
+
+        return data;
+    }
+
+    public void agregarAtabla() {
+        int y = 0;
+        int dato_stock = Integer.valueOf(txtCant.getText());
+        int dato_descuento = Integer.valueOf(txtDescPro.getText());
+        if (dato_stock > stockProBase) {
+            JOptionPane.showMessageDialog(this, "No hay stock, El stock es = " + stockProBase);
             y++;
         }
-        if(dato_descuento>max_descuento){
-            JOptionPane.showMessageDialog(this, "Descuento excede el maximo, Maximo descuento es = "+max_descuento);
+        if (dato_descuento > max_descuento) {
+            JOptionPane.showMessageDialog(this, "Descuento excede el maximo, Maximo descuento es = " + max_descuento);
             y++;
         }
-        if(y==0){
-            String[] datos=new String[6];
-            datos[0]=txtCodProd.getText().trim();
-            datos[1]=txtDesPro.getText().trim();
-            datos[2]=txtCant.getText().trim();
-            datos[3]=txtPreU.getText().trim();
-            datos[4]=txtDescPro.getText().trim();
-            float cantidad=Float.valueOf(txtCant.getText().trim());
-            float precioU=Float.valueOf(txtPreU.getText().trim());
-            float descuento=Float.valueOf(txtDescPro.getText().trim());
-            float totalS=(cantidad*precioU)*(descuento/100);
-            float total=(cantidad*precioU)-totalS;
-            datos[5]=String.valueOf(total);
+        if (y == 0) {
+            String[] datos = new String[6];
+            datos[0] = txtCodProd.getText().trim();
+            datos[1] = txtDesPro.getText().trim();
+            
+            datos[3] = txtPreU.getText().trim();
+            datos[4] = txtDescPro.getText().trim();
+            float cantidad = Float.valueOf(txtCant.getText().trim()) * Float.valueOf(txtPresentacion.getText().trim());
+            datos[2] = String.valueOf(cantidad);
+            System.out.println(cantidad+" cantidad a comprar");
+            float precioU = Float.valueOf(txtPreU.getText().trim());
+            float descuento = Float.valueOf(txtDescPro.getText().trim());
+            float totalS = (cantidad * precioU) * (descuento / 100);
+            float total = (cantidad * precioU) - totalS;
+            datos[5] = String.valueOf(total);
             modelo.addRow(datos);
-                    
+
         }
         jtbProductos.setModel(modelo);
     }
     int stockProBase;
     int max_descuento;
-    public void buscarProd(String producto){
-        conexion_mysql cn=new conexion_mysql();
-        Connection cc=cn.conectar();
-        String sql="";
-        sql="select cod_prod,des_prod,stock_pro,PRE1_PROD,POR_MAX_DES_PROD from productos where cod_prod = '"+producto+"'";
-        //System.out.println(sql);
-        //String[] titulos={"Codigo","Descripción","Stock"};
-       // modelo=new DefaultTableModel(null, titulos);
-        //String[] cadena=new String[3];
-        int stock=0;
+
+    public void buscarProd(String producto) {
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        String sql = "";
+        sql = "select p.cod_prod,p.des_prod,p.stock_pro,p.PRE1_PROD,p.POR_MAX_DES_PROD,pr.DES_PRES_PRO from productos p,presentaciones_productos pr where p.cod_prod = '" + producto + "' and p.cod_prod=PR.COD_PRO_P";
+        System.out.println(sql + " busqueda");
+        int stock = 0;
         try {
-            Statement ps=cc.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
+            Statement ps = cc.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
                 txtDesPro.setText(rs.getString("des_prod"));
-               txtDesPro.setEnabled(false);
-               txtCodProd.setEnabled(false);
-                stockProBase=rs.getInt("stock_pro");
-                max_descuento=rs.getInt("POR_MAX_DES_PROD");
+                txtDesPro.setEnabled(false);
+                txtCodProd.setEnabled(false);
+                txtPresentacion.setEnabled(false);
+                stockProBase = rs.getInt("stock_pro");
+                max_descuento = rs.getInt("POR_MAX_DES_PROD");
                 txtPreU.setText(rs.getString("PRE1_PROD"));
+                txtPresentacion.setText(rs.getString("DES_PRES_PRO"));
                 txtPreU.setEnabled(false);
                 txtCant.requestFocus();
             }
-          //  modelo.addRow(cadena);
+            //  modelo.addRow(cadena);
             //jtbProductos.setModel(modelo);
         } catch (SQLException ex) {
             //Logger.getLogger(consultaProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,6 +327,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         jcbPagos = new javax.swing.JComboBox();
         jbtAgregar = new javax.swing.JButton();
         jbtCancela = new javax.swing.JButton();
+        jLabel24 = new javax.swing.JLabel();
+        txtPresentacion = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -382,7 +446,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                        .addComponent(txtTelefono))
                     .addGroup(txtNombreLayout.createSequentialGroup()
                         .addGroup(txtNombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(txtNombreLayout.createSequentialGroup()
@@ -507,83 +571,103 @@ public class FacturaVenta extends javax.swing.JFrame {
             }
         });
 
+        jLabel24.setText("Presentacion");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDesPro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel19)
-                        .addGap(2, 2, 2)
-                        .addComponent(txtPreU, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel12)
-                        .addGap(0, 0, 0)
-                        .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(jbtAgregar)
-                        .addGap(1, 1, 1)
-                        .addComponent(jbtCancela))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel20)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel15)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addComponent(jLabel14)
-                                            .addGap(21, 21, 21)))
+                                            .addGap(21, 21, 21))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel16)
+                                            .addGap(44, 44, 44)))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addGap(44, 44, 44)))
+                                        .addComponent(jLabel17)
+                                        .addGap(37, 37, 37))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSubT)
+                            .addComponent(txtDescuento)
+                            .addComponent(txtIva)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel17)
-                                    .addGap(37, 37, 37)))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtSubT)
-                                .addComponent(txtDescuento)
-                                .addComponent(txtIva)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)))
+                                    .addComponent(jLabel10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel11)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtDesPro, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel24)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel19)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtPreU, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel18)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(107, 107, 107)
+                            .addComponent(jbtAgregar)
+                            .addGap(1, 1, 1)
+                            .addComponent(jbtCancela))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
-                    .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19)
-                    .addComponent(txtPreU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtDesPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtAgregar)
-                    .addComponent(jbtCancela))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(txtCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel11)
+                                .addComponent(txtDesPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel24)
+                                .addComponent(txtPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18)
+                            .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19)
+                            .addComponent(txtPreU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtAgregar)
+                            .addComponent(jbtCancela))))
                 .addGap(3, 3, 3)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -596,9 +680,9 @@ public class FacturaVenta extends javax.swing.JFrame {
                             .addComponent(jLabel14)
                             .addComponent(txtSubT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
@@ -616,7 +700,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -641,37 +725,58 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void txtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteActionPerformed
         // TODO add your handling code here:
-        if(txtCliente.getText().trim().length()!=10){
-        consultaCliente cn=new consultaCliente(this, rootPaneCheckingEnabled,txtCliente.getText().trim());
-        cn.show();
-        txtCliente.setText(cn.cedula);
+        if (txtCliente.getText().trim().length() != 10) {
+            consultaCliente cn = new consultaCliente(this, rootPaneCheckingEnabled, txtCliente.getText().trim());
+            cn.show();
+            txtCliente.setText(cn.cedula);
             buscarCliente(txtCliente.getText());
-        }else{
+        } else {
             buscarCliente(txtCliente.getText());
         }
     }//GEN-LAST:event_txtClienteActionPerformed
 
     private void txtCodProdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProdKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtCodProdKeyPressed
 
     private void txtCodProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProdActionPerformed
         // TODO add your handling code here:
-        if(txtCodProd.getText().trim().length()==6){
-            buscarProd(txtCodProd.getText().trim());
-        }else{
-            consultaProductos bp=new consultaProductos(this, true, txtCodProd.getText().trim());
-            bp.show();
-            txtCodProd.setText(bp.data);
-            buscarProd(txtCodProd.getText().trim());
+        if (txtCodProd.getText().trim().length() == 12 || txtCodProd.getText().trim().length() == 13) {
+            calculoCodBarras cd = new calculoCodBarras();
+            if (txtCodProd.getText().length() == 12) {
+                if (cd.verificador(txtCodProd.getText())) {
+                    //System.out.println("entra al if de 12");
+                    ingresoStockGNI12();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Numero codigo erroneo 12");
+                }
+            } else {
+                if (cd.verificador13D(txtCodProd.getText())) {
+                    System.out.println("ok");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Numero codigo erroneo");
+                }
+            }
+
+        } else {
+            if (txtCodProd.getText().trim().length() == 6) {
+                buscarProd(txtCodProd.getText().trim());
+            } else {
+                consultaProductos bp = new consultaProductos(this, true, txtCodProd.getText().trim());
+                bp.show();
+                txtCodProd.setText(bp.data);
+                buscarProd(txtCodProd.getText().trim());
+            }
+
         }
+
     }//GEN-LAST:event_txtCodProdActionPerformed
 
     private void txtCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantActionPerformed
         // TODO add your handling code here:
         txtDescPro.requestFocus();
-                
+
     }//GEN-LAST:event_txtCantActionPerformed
 
     private void jbtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAgregarActionPerformed
@@ -731,6 +836,7 @@ public class FacturaVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -762,6 +868,7 @@ public class FacturaVenta extends javax.swing.JFrame {
     private javax.swing.JPanel txtNombre;
     private javax.swing.JTextField txtNumFac;
     private javax.swing.JTextField txtPreU;
+    private javax.swing.JTextField txtPresentacion;
     private javax.swing.JTextField txtRazonS;
     private javax.swing.JTextField txtRuc;
     private javax.swing.JTextField txtSecuencial;
