@@ -6,6 +6,8 @@
 
 package sistema.de.facturacion;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Wilson
@@ -17,6 +19,8 @@ public class SistemaDeFacturacion {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        conexion_mysql cc=new conexion_mysql();
+        Connection cn=cc.conectar();
     }
     
 }

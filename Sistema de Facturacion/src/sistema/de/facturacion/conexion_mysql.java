@@ -18,11 +18,14 @@ public class conexion_mysql {
     {
         try {
             //Class.forName("com.mysql.jdbc.Drive");//empresa a la que hace referencia papi
-            Class.forName("com.mysql.jdbc.Driver"); 
-            conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "root", "");
+            //Class.forName("com.mysql.jdbc.Driver"); 
+            //conexion=DriverManager.getConnection("jdbc:mysql://192.168.137.47/leb", "root", "");
+            Class.forName("com.mysql.jdbc.Driver");
+            conexion=DriverManager.getConnection("jdbc:mysql://192.168.137.108/leb", "root", "password");
             //JOptionPane.showMessageDialog(null, "Conexion correcta");
+            System.out.println("conexion");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la conexion en la base");
+            JOptionPane.showMessageDialog(null, "Error en la conexion en la base "+ ex);
             //Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conexion;
