@@ -32,6 +32,7 @@ public class FacturaVenta extends javax.swing.JFrame {
      */
     DefaultTableModel modelo;
     float iva_ecuador;
+
     public FacturaVenta() {
         initComponents();
         txtDescuento.setText("0");
@@ -54,7 +55,7 @@ public class FacturaVenta extends javax.swing.JFrame {
     public FacturaVenta(String vendedor) {
         initComponents();
         txtDescuento.setText("0");
-        
+
         cargarHora();
         traerIVA();
         txtIva.setText(String.valueOf(iva_ecuador));
@@ -67,36 +68,53 @@ public class FacturaVenta extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         cargarNumeroFactura();
     }
-    public void traerIVA(){
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-        String sql="";
-        sql="select NUM_NUM  from numeros where COD_NUM ='CD1'";
+
+    public void traerIVA() {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select NUM_NUM  from numeros where COD_NUM ='CD1'";
         try {
-            Statement ps=cn.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
-                iva_ecuador=Float.valueOf(rs.getString("NUM_NUM"));
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                iva_ecuador = Float.valueOf(rs.getString("NUM_NUM"));
                 //System.out.println(iva_ecuador);
             }
         } catch (Exception ex) {
-           // Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "No se puede traer el IVA");
         }
     }
+
     public void cargarNumeroFactura() {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
+        int secuencial = 0;
         String sql = "select num_fac from encabezadofactura";
         try {
             String numero_factura = "";
             Statement ps = cc.createStatement();
             ResultSet rs = ps.executeQuery(sql);
-            if (rs.next()) {
-                rs.last();
-                while (rs.next()) {
-                    numero_factura = rs.getString("num_fac");
+
+            while (rs.next()) {
+                numero_factura = rs.getString("num_fac");
+
+            }
+            secuencial = Integer.valueOf(numero_factura);
+            //System.out.println("numero fac= " + secuencial);
+            if (secuencial > 0) {
+                secuencial = secuencial + 1;
+                //secuencial=1010;
+                String secu = String.valueOf(secuencial);
+                //traigo el secuencial y le sumo 1 y aumento los 0os de la izquiera
+                for (int i = 0; i < 10; i++) {
+                    if (secu.length() != 9) {
+                        secu = "0" + secu;
+                    }
                 }
+                txtSecuencial.setText(secu);
+                System.out.println(secu);
             } else {
                 txtSecuencial.setText("000000001");
             }
@@ -263,46 +281,71 @@ public class FacturaVenta extends javax.swing.JFrame {
 
         return data;
     }
-    public void calculoTotalesPie(){
+
+    public void calculoTotalesPie() {
         //txtDescuento.setText("0");
-        if(txtDescuento.getText().trim().length()==0){
+        if (txtDescuento.getText().trim().length() == 0) {
             txtDescuento.setText("0");
         }
-        float suma=0;
-        for(int i=0;i<jtbProductos.getRowCount();i++){
-            suma=suma+Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
+        float suma = 0;
+        for (int i = 0; i < jtbProductos.getRowCount(); i++) {
+            suma = suma + Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
         }
         txtSubT.setText(String.valueOf(suma));
-        float subTotal=suma;
-        float descuento=Float.valueOf(txtDescuento.getText().trim());
-        float descuentoDinero=subTotal*(descuento/100);
-        float totales=(subTotal-descuentoDinero)*((iva_ecuador/100)+1);
-        System.out.println((iva_ecuador/100)+1 +" iva");
+        float subTotal = suma;
+        float descuento = Float.valueOf(txtDescuento.getText().trim());
+        float descuentoDinero = subTotal * (descuento / 100);
+        float totales = (subTotal - descuentoDinero) * ((iva_ecuador / 100) + 1);
+        System.out.println((iva_ecuador / 100) + 1 + " iva");
         txtTotal.setText(String.valueOf(totales));
-        
+
+    }
+    public int verificarSiEstaEnTabla(){
+        int comprobacion=0;
+        int numeroFilas=jtbProductos.getRowCount();
+       // System.out.println("Numero de filas= "+numeroFilas);
+        for(int i=0;i<numeroFilas;i++){
+            String datodeCaja=txtCodProd.getText().trim().toUpperCase();
+            String datoTabla=jtbProductos.getValueAt(i, 0).toString();
+            if(datoTabla.equals(datodeCaja)){
+                 comprobacion=i+1;
+                //System.out.println(comprobacion+" comprobaciones");
+            }
+            
+        }
+        return comprobacion;
     }
     public void agregarAtabla() {
         int y = 0;
         int dato_stock = Integer.valueOf(txtCant.getText());
         int dato_descuento = Integer.valueOf(txtDescPro.getText());
         if (dato_stock > stockProBase) {
-            JOptionPane.showMessageDialog(this, "No hay stock, El stock es = " + stockProBase);
+            JOptionPane.showMessageDialog(null, "No hay stock, El stock es = " + stockProBase);
             y++;
         }
         if (dato_descuento > max_descuento) {
-            JOptionPane.showMessageDialog(this, "Descuento excede el maximo, Maximo descuento es = " + max_descuento);
+            JOptionPane.showMessageDialog(null, "Descuento excede el maximo, Maximo descuento es = " + max_descuento);
             y++;
+        }
+        if(txtCant.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe ingresar cantidad");
+            y++;
+        }else{
+            if(txtDescPro.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(null, "Debe ingresar descuento");
+            y++;
+            }
         }
         if (y == 0) {
             String[] datos = new String[6];
-            datos[0] = txtCodProd.getText().trim();
+            datos[0] = txtCodProd.getText().trim().toUpperCase();
             datos[1] = txtDesPro.getText().trim();
 
             datos[3] = txtPreU.getText().trim();
             datos[4] = txtDescPro.getText().trim();
-            float cantidad = Float.valueOf(txtCant.getText().trim()) * Float.valueOf(txtPresentacion.getText().trim());
+            float cantidad = Float.valueOf(Float.valueOf(txtCant.getText().trim()) * Float.valueOf(txtPresentacion.getText().trim()));
             datos[2] = String.valueOf(cantidad);
-            //System.out.println(cantidad + " cantidad a comprar");
+            System.out.println(cantidad + " cantidad a comprar");
             float precioU = Float.valueOf(txtPreU.getText().trim());
             float descuento = Float.valueOf(txtDescPro.getText().trim());
             float totalS = (cantidad * precioU) * (descuento / 100);
@@ -310,8 +353,19 @@ public class FacturaVenta extends javax.swing.JFrame {
             datos[5] = String.valueOf(total);
             modelo.addRow(datos);
             calculoTotalesPie();
+            limiparCajasProductos();
         }
         jtbProductos.setModel(modelo);
+    }
+    public void limiparCajasProductos(){
+        txtCodProd.setText("");
+        txtDesPro.setText("");
+        txtDescPro.setText("");
+        txtCant.setText("");
+        txtPreU.setText("");
+        txtPresentacion.setText("");
+        txtCodProd.setEnabled(true);
+        txtCodProd.requestFocus();
     }
     int stockProBase;
     int max_descuento;
@@ -320,8 +374,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
         String sql = "";
-        sql = "select p.cod_prod,p.des_prod,p.stock_pro,p.PRE1_PROD,p.POR_MAX_DES_PROD,pr.DES_PRES_PRO from productos p,presentaciones_productos pr where p.cod_prod = '" + producto + "' and p.cod_prod=PR.COD_PRO_P";
-        System.out.println(sql + " busqueda");
+        sql = "select p.cod_prod,p.des_prod,p.stock_pro,p.PRE1_PROD,p.POR_MAX_DES_PROD,pr.DES_PRES_PRO from productos p,presentaciones_productos pr where p.cod_prod = '" + producto + "' and p.cod_prod=pr.COD_PRO_P";
+        System.out.println(sql);
         int stock = 0;
         try {
             Statement ps = cc.createStatement();
@@ -352,7 +406,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         String sql = "";
         int insertar = 0;
         sql = "insert into encabezadofactura(SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC) values(?,?,?,?,?,?,?,?,?,?)";
-        
+
         String SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC;
         SEC_FAC = txtNumFac.getText().trim();
         NUM_FAC = txtSecuencial.getText().trim();
@@ -398,7 +452,7 @@ public class FacturaVenta extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "No se puede guardar encabezado de factura "+ex);
+            JOptionPane.showMessageDialog(null, "No se puede guardar encabezado de factura " + ex);
         }
         String sql2 = "";
         sql2 = "insert into  detalle_fac_ven(SEC_NUM_FAC_P, NUM_FAC_PER, COD_PRO_P, CANT_PRO, DES_PRO, PRE_UNI_PRO) values(?,?,?,?,?,?)";
@@ -406,28 +460,28 @@ public class FacturaVenta extends javax.swing.JFrame {
         for (int i = 0; i < jtbProductos.getRowCount(); i++) {
             SEC_NUM_FAC_P = txtNumFac.getText().trim();
             NUM_FAC_PER = txtSecuencial.getText().trim();
-            COD_PRO_P=jtbProductos.getValueAt(i,0).toString();
-            CANT_PRO=jtbProductos.getValueAt(i,2).toString();
+            COD_PRO_P = jtbProductos.getValueAt(i, 0).toString();
+            CANT_PRO = jtbProductos.getValueAt(i, 2).toString();
             System.out.println(CANT_PRO);
-            DES_PRO=jtbProductos.getValueAt(i,4).toString();
-            PRE_UNI_PRO=jtbProductos.getValueAt(i,5).toString();
+            DES_PRO = jtbProductos.getValueAt(i, 4).toString();
+            PRE_UNI_PRO = jtbProductos.getValueAt(i, 5).toString();
             try {
-                PreparedStatement ps1=cc.prepareStatement(sql2);
+                PreparedStatement ps1 = cc.prepareStatement(sql2);
                 ps1.setString(1, SEC_NUM_FAC_P);
                 ps1.setString(2, NUM_FAC_PER);
                 ps1.setString(3, COD_PRO_P);
                 ps1.setString(4, CANT_PRO);
                 ps1.setString(5, DES_PRO);
                 ps1.setString(6, PRE_UNI_PRO);
-                insertar=insertar+ps1.executeUpdate();
+                insertar = insertar + ps1.executeUpdate();
                 System.out.println(sql2);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "No se puede insertar productos "+ex);
+                JOptionPane.showMessageDialog(null, "No se puede insertar productos " + ex);
             }
-            if(insertar==2){
+            if (insertar == 2) {
                 JOptionPane.showMessageDialog(null, "Factura guardada con exito");
             }
-            
+
         }
 
     }
@@ -725,6 +779,12 @@ public class FacturaVenta extends javax.swing.JFrame {
 
         jLabel18.setText("Descuento %:");
 
+        txtDescPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescProActionPerformed(evt);
+            }
+        });
+
         jLabel19.setText("Pre. Unit");
 
         jLabel20.setText("Pago:");
@@ -927,6 +987,7 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void txtCodProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProdActionPerformed
         // TODO add your handling code here:
+        txtDescPro.setText("0");
         if (txtCodProd.getText().trim().length() == 12 || txtCodProd.getText().trim().length() == 13) {
             calculoCodBarras cd = new calculoCodBarras();
             if (txtCodProd.getText().length() == 12) {
@@ -938,7 +999,8 @@ public class FacturaVenta extends javax.swing.JFrame {
                 }
             } else {
                 if (cd.verificador13D(txtCodProd.getText())) {
-                    System.out.println("ok");
+                    //System.out.println("ok");
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Numero codigo erroneo");
                 }
@@ -947,11 +1009,13 @@ public class FacturaVenta extends javax.swing.JFrame {
         } else {
             if (txtCodProd.getText().trim().length() == 6) {
                 buscarProd(txtCodProd.getText().trim());
+                txtDescPro.setText("0");
             } else {
                 consultaProductos bp = new consultaProductos(this, true, txtCodProd.getText().trim());
                 bp.show();
                 txtCodProd.setText(bp.data);
                 buscarProd(txtCodProd.getText().trim());
+                txtDescPro.setText("0");
             }
 
         }
@@ -966,7 +1030,17 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void jbtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAgregarActionPerformed
         // TODO add your handling code here:
-        agregarAtabla();
+        int n=verificarSiEstaEnTabla();
+        if(n==0){
+            agregarAtabla();
+        }else{
+            n=n-1;
+            modelo=(DefaultTableModel) jtbProductos.getModel();
+            modelo.removeRow(n);
+            jtbProductos.setModel(modelo);
+            agregarAtabla();
+        }
+        
     }//GEN-LAST:event_jbtAgregarActionPerformed
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
@@ -978,6 +1052,11 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jbtnGuardarActionPerformed
+
+    private void txtDescProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescProActionPerformed
+        // TODO add your handling code here:
+        jbtAgregar.requestFocus();
+    }//GEN-LAST:event_txtDescProActionPerformed
 
     /**
      * @param args the command line arguments

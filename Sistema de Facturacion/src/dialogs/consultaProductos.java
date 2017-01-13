@@ -68,8 +68,10 @@ public class consultaProductos extends javax.swing.JDialog {
                 cadena[0]=rs.getString("cod_prod");
                 cadena[1]=rs.getString("des_prod");
                 cadena[2]=rs.getString("stock_pro");
+                       modelo.addRow(cadena);
             }
-            modelo.addRow(cadena);
+            
+     
             jtblProductos.setModel(modelo);
         } catch (SQLException ex) {
             Logger.getLogger(consultaProductos.class.getName()).log(Level.SEVERE, null, ex);
