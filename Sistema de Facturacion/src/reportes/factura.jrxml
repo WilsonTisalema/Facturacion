@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="numero" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Benjita\\Documents\\NetBeansProjects\\Facturacion\\Sistema de Facturacion\\src\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     encabezadofactura.`SEC_FAC` AS encabezadofactura_SEC_FAC,
+     encabezadofactura.`NUM_FAC` AS encabezadofactura_NUM_FAC,
+     encabezadofactura.`FEC_HOR_FAC` AS encabezadofactura_FEC_HOR_FAC,
+     encabezadofactura.`VEN_FAC` AS encabezadofactura_VEN_FAC,
+     encabezadofactura.`CLIE_FAC` AS encabezadofactura_CLIE_FAC,
+     encabezadofactura.`SUB_TO_FAC` AS encabezadofactura_SUB_TO_FAC,
+     encabezadofactura.`DES_TO_FAC` AS encabezadofactura_DES_TO_FAC,
+     encabezadofactura.`IVA_FAC` AS encabezadofactura_IVA_FAC,
+     encabezadofactura.`TOT_FAC` AS encabezadofactura_TOT_FAC,
+     encabezadofactura.`PAG_FAC` AS encabezadofactura_PAG_FAC,
+     cli.`dir_cli` AS detalle_fac_ven_SEC_NUM_FAC_P,
+     cli.`tlf1_cli` AS detalle_fac_ven_NUM_FAC_PER,
+     CONCAT_WS(' ',cli.NOM_CLI, cli.NOM_CLI1, cli.ape_cli, cli.ape_cli1)  AS detalle_fac_ven_COD_PRO_P,
+     cli.`e_mail_cli` AS detalle_fac_ven_CANT_PRO
+ 
+FROM
+     `encabezadofactura` encabezadofactura,
+     `detalle_fac_ven` detalle_fac_ven,`clientes` cli
+where cli.ci_cli=encabezadofactura.clie_fac and encabezadofactura.`NUM_FAC`=$P{numero}
+]]>
+	</queryString>
+	<field name="encabezadofactura_SEC_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_NUM_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_FEC_HOR_FAC" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_VEN_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_CLIE_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_SUB_TO_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_DES_TO_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_IVA_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_TOT_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="encabezadofactura_PAG_FAC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_fac_ven_SEC_NUM_FAC_P" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_fac_ven_NUM_FAC_PER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_fac_ven_COD_PRO_P" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_fac_ven_CANT_PRO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="58" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="8" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="9" width="275" height="35"/>
+				<textElement textAlignment="Left">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESARROLLO 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="24" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Factura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="24" width="51" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_SEC_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="459" y="24" width="17" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="476" y="24" width="68" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_NUM_FAC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="153" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="11" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha de Emision:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="11" width="174" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{encabezadofactura_FEC_HOR_FAC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="31" width="174" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_VEN_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="31" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cédula Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="11" width="136" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_PAG_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="51" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="71" width="174" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_SEC_NUM_FAC_P}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="71" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dirección Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="91" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Telefono Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="91" width="175" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_NUM_FAC_PER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="11" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo Pago:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="51" width="442" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_COD_PRO_P}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="111" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Correo Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="111" width="173" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_CANT_PRO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="7" width="551" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="109" splitType="Stretch">
+			<subreport>
+				<reportElement x="-19" y="9" width="427" height="100"/>
+				<subreportParameter name="numero"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "detalleFac.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="167" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="517" y="148" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="347" y="148" width="170" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="148" width="209" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="20" width="174" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_CLIE_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Cédula Vendedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="59" width="136" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_SUB_TO_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="59" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sub Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="79" width="136" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_DES_TO_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="79" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Descuento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="99" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[IVA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="99" width="136" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_IVA_FAC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="308" y="119" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="119" width="136" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{encabezadofactura_TOT_FAC}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="4" y="0" width="551" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

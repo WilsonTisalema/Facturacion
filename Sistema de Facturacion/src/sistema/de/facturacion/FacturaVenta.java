@@ -16,10 +16,15 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -485,6 +490,11 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
 
     }
+    public void limpiarTodo(){
+        FacturaVenta fv=new FacturaVenta(txtVendedor.getText());
+        this.dispose();
+        fv.show();  
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -554,6 +564,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txtPresentacion = new javax.swing.JTextField();
         jbtnGuardar = new javax.swing.JButton();
+        jbtnImprimit = new javax.swing.JButton();
+        jbtnNuevo = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -814,6 +826,20 @@ public class FacturaVenta extends javax.swing.JFrame {
             }
         });
 
+        jbtnImprimit.setText("Imprimir");
+        jbtnImprimit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnImprimitActionPerformed(evt);
+            }
+        });
+
+        jbtnNuevo.setText("Nuevo");
+        jbtnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -826,9 +852,13 @@ public class FacturaVenta extends javax.swing.JFrame {
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(87, 87, 87)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtnNuevo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jbtnGuardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 391, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbtnImprimit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -918,7 +948,9 @@ public class FacturaVenta extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
                             .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnGuardar))
+                            .addComponent(jbtnGuardar)
+                            .addComponent(jbtnImprimit)
+                            .addComponent(jbtnNuevo))
                         .addGap(0, 76, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1058,6 +1090,21 @@ public class FacturaVenta extends javax.swing.JFrame {
         jbtAgregar.requestFocus();
     }//GEN-LAST:event_txtDescProActionPerformed
 
+    private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
+        // TODO add your handling code here:
+        limpiarTodo();
+    }//GEN-LAST:event_jbtnNuevoActionPerformed
+
+    private void jbtnImprimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimitActionPerformed
+        // TODO add your handling code here:
+        Map parametro=new HashMap();
+        try {
+            JasperReport reporte=JasperCompileManager.compileReport("c:/");
+        } catch (JRException ex) {
+            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtnImprimitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1126,6 +1173,8 @@ public class FacturaVenta extends javax.swing.JFrame {
     private javax.swing.JButton jbtAgregar;
     private javax.swing.JButton jbtCancela;
     private javax.swing.JButton jbtnGuardar;
+    private javax.swing.JButton jbtnImprimit;
+    private javax.swing.JButton jbtnNuevo;
     private javax.swing.JComboBox jcbPagos;
     private javax.swing.JCheckBox jchActivo;
     private javax.swing.JTable jtbProductos;
