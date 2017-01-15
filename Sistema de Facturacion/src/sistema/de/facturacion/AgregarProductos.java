@@ -70,7 +70,8 @@ public class AgregarProductos extends javax.swing.JFrame {
         conexion_mysql cc=new conexion_mysql();
         Connection cn=cc.conectar();
         String sql="";
-        sql="select pr.DES_PRES_PRO from productos p,presentaciones_productos pr where pr.COD_PRES='"+codigo+"' and p.cod_prod=pr.cod_pro_p";
+        sql="select pr.DES_PRES_PRO from productos p,presentaciones_productos pr where pr.COD_PRES='"
+                +codigo+"' and p.cod_prod=pr.cod_pro_p";
        // System.out.println(sql);
         try {
             Statement ps=cn.createStatement();
@@ -143,6 +144,7 @@ public class AgregarProductos extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Producto:");
 
         jtblIngreso.setModel(new javax.swing.table.DefaultTableModel(
@@ -158,6 +160,8 @@ public class AgregarProductos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtblIngreso);
 
+        jbtnConfirmar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jbtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/check.png"))); // NOI18N
         jbtnConfirmar.setText("Confirmar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -168,13 +172,15 @@ public class AgregarProductos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnConfirmar)
+                        .addGap(44, 44, 44))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
