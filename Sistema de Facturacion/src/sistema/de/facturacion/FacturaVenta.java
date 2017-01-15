@@ -59,12 +59,13 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtVendedor.setEnabled(false);
         txtVendedor.setText("1804181400");
         setLocationRelativeTo(null);
+        jbtnImprimit.setEnabled(false);
     }
 
     public FacturaVenta(String vendedor) {
         initComponents();
         txtDescuento.setText("0");
-
+        jbtnImprimit.setEnabled(false);
         cargarHora();
         traerIVA();
         txtIva.setText(String.valueOf(iva_ecuador));
@@ -489,6 +490,8 @@ public class FacturaVenta extends javax.swing.JFrame {
             }
             if (insertar == 2) {
                 JOptionPane.showMessageDialog(null, "Factura guardada con exito");
+                jbtnImprimit.setEnabled(true);
+                jbtnImprimit.requestFocus();
             }
 
         }

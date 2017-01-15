@@ -52,9 +52,11 @@ public class consultaCliente extends javax.swing.JDialog {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         int n=jtblClientes.getSelectedRow();
+                        
                         txtCliente.setText(jtblClientes.getValueAt(n, 0).toString());
                         cedula=txtCliente.getText();
                         dispose();
+                        
                     }
                 });
            
@@ -67,7 +69,7 @@ public class consultaCliente extends javax.swing.JDialog {
         String[] titulos={"Cedula","Nombres"};
         modelo=new DefaultTableModel(null, titulos);
         String[] fila=new String[2];
-        sql="SELECT CI_CLI,NOM_CLI,NOM_CLI1,APE_CLI,APE_CLI1 FROM CLIENTES WHERE CI_CLI LIKE '%"+datos+"%' or NOM_CLI LIKE '%"+datos+"%'"
+        sql="SELECT CI_CLI,NOM_CLI,NOM_CLI1,APE_CLI,APE_CLI1 FROM clientes WHERE CI_CLI LIKE '%"+datos+"%' or NOM_CLI LIKE '%"+datos+"%'"
                 + "OR NOM_CLI1 LIKE '%"+datos+"%'OR APE_CLI LIKE '%"+datos+"%' OR APE_CLI1 LIKE '%"+datos+"%' ";
         //System.out.println(sql);
         Statement ps;
