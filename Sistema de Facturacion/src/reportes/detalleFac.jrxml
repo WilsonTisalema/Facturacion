@@ -34,9 +34,6 @@ where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="11" splitType="Stretch"/>
-	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
@@ -104,13 +101,4 @@ where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="19" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>

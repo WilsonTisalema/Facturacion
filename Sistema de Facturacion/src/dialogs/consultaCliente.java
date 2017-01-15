@@ -52,9 +52,11 @@ public class consultaCliente extends javax.swing.JDialog {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         int n=jtblClientes.getSelectedRow();
+                        
                         txtCliente.setText(jtblClientes.getValueAt(n, 0).toString());
                         cedula=txtCliente.getText();
                         dispose();
+                        
                     }
                 });
            
