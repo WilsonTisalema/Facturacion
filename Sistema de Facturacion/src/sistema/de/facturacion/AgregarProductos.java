@@ -7,6 +7,7 @@
 package sistema.de.facturacion;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,7 +52,8 @@ public class AgregarProductos extends javax.swing.JFrame {
         conexion_mysql cc=new conexion_mysql();
         Connection cn=cc.conectar();
         String sql="";
-        sql="select p.DES_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='"+codigo+"' and p.cod_prod=pr.cod_pro_p";
+        sql="select p.DES_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='"+codigo+
+                "' and p.cod_prod=pr.cod_pro_p";
         //System.out.println(sql);
         try {
             Statement ps=cn.createStatement();
@@ -120,7 +122,38 @@ public class AgregarProductos extends javax.swing.JFrame {
          }   
         }
     }
-
+    public void codigo(){   
+        String sql = "";
+        sql = "select * from productos";
+        conexion_mysql cc=new conexion_mysql();
+        Connection cn=cc.conectar();
+        try {
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                jLabel2.add("COD_PROD", this);                             
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+    }
+ public void confirmar(){
+        conexion_mysql cc=new conexion_mysql();
+        Connection cn=cc.conectar();
+            String sql = "";
+            sql = "update productos set stock_pro='"+"',"+
+                    "'where COD_PROD='"+ "'" ;
+             try {
+                PreparedStatement psd = cn.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,6 +168,7 @@ public class AgregarProductos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblIngreso = new javax.swing.JTable();
         jbtnConfirmar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,6 +198,8 @@ public class AgregarProductos extends javax.swing.JFrame {
         jbtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/check.png"))); // NOI18N
         jbtnConfirmar.setText("Confirmar");
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,6 +217,10 @@ public class AgregarProductos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnConfirmar)
                         .addGap(44, 44, 44))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,9 +230,11 @@ public class AgregarProductos extends javax.swing.JFrame {
                     .addComponent(txtCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jbtnConfirmar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -240,6 +282,7 @@ public class AgregarProductos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnConfirmar;
     private javax.swing.JTable jtblIngreso;
