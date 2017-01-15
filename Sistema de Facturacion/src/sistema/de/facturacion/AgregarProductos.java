@@ -178,21 +178,56 @@ public class AgregarProductos extends javax.swing.JFrame {
         }
 
     }
-
-    public void confirmar() {
-        conexion_mysql cc = new conexion_mysql();
-        Connection cn = cc.conectar();
-        String sql = "";
-        sql = "update productos set stock_pro='" + "',"
-                + "'where COD_PROD='" + "'";
+    public int stockActual(String codigo){
+        int stock=0;
+        conexion_mysql cn=new conexion_mysql();
+        Connection cc=cn.conectar();
+        String sql="";
+        sql="select stock_pro from productos where cod_prod='"+codigo+"'";
+        //System.out.println(sql);
         try {
-            PreparedStatement psd = cn.prepareStatement(sql);
-            int n = psd.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+            Statement ps=cc.createStatement();
+            ResultSet rs=ps.executeQuery(sql);
+            while(rs.next()){
+                stock=Integer.valueOf(rs.getString("stock_pro"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            //Logger.getLogger(AgregarProductos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "NO se puede obtener Stock Actual");
+        }
+        
+        return stock;
+    }
+    public void subirStock(){
+        int numeroFilas=jtblIngreso.getRowCount();
+        int subida=0;
+        for(int i=0;i<numeroFilas;i++){
+            int stockTemp=Integer.valueOf(jtblIngreso.getValueAt(i,4).toString());
+            String[] datosNosubidos=new String[1000];
+            String codigoProd=jtblIngreso.getValueAt(i, 1).toString();
+            int stockActualDB=stockActual(codigoProd);
+            //System.out.println(stockActualDB+" stock Actual");
+            int stockSubir=stockTemp+stockActualDB;
+            conexion_mysql cc=new conexion_mysql();
+            Connection cn=cc.conectar();
+            String sql="";
+            sql="update productos set stock_pro='"+stockSubir+"' where cod_prod='"+codigoProd+"'";
+            try {
+                PreparedStatement ps=cn.prepareStatement(sql);
+                if(ps.executeUpdate()>0){
+                    subida++;
+                    modelo=(DefaultTableModel) jtblIngreso.getModel();
+                    modelo.removeRow(i);
+                    jtblIngreso.setModel(modelo);
+                }
+            } catch (Exception ex) {
+                //Logger.getLogger(AgregarProductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(subida==numeroFilas){
+                JOptionPane.showMessageDialog(null, "Se han subido todos los datos");
+            }else{
+                
+            }
         }
     }
 
@@ -293,6 +328,7 @@ public class AgregarProductos extends javax.swing.JFrame {
 
     private void jbtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnConfirmarActionPerformed
         // TODO add your handling code here:
+        subirStock();
     }//GEN-LAST:event_jbtnConfirmarActionPerformed
 
     /**
