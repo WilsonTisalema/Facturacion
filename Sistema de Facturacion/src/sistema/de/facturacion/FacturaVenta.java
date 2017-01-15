@@ -24,7 +24,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -1078,6 +1082,8 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         // TODO add your handling code here:
         if (jchActivo.isSelected()) {
+            modelo=(DefaultTableModel) jtbProductos.getModel();
+            jtbProductos.setModel(modelo);
             guardarFactura();
         } else {
             JOptionPane.showMessageDialog(null, "Cliente inactivo");
@@ -1097,10 +1103,15 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void jbtnImprimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimitActionPerformed
         // TODO add your handling code here:
+        conexion_mysql cn=new conexion_mysql();
+        Connection cc=cn.conectar();
         Map parametro=new HashMap();
         try {
-            JasperReport reporte=JasperCompileManager.compileReport("c:/");
-        } catch (JRException ex) {
+            parametro.put("numero", txtSecuencial.getText().trim());
+            JasperReport reporte=JasperCompileManager.compileReport("c:/leb/factura.jrxml");
+            JasperPrint print=JasperFillManager.fillReport(reporte, parametro,cc);
+            JasperViewer.viewReport(print,false);
+        } catch (Exception ex) {
             Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbtnImprimitActionPerformed

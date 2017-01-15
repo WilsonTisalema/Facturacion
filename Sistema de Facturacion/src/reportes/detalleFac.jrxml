@@ -11,7 +11,7 @@
      detalle_fac_ven.`PRE_UNI_PRO` AS detalle_fac_ven_PRE_UNI_PRO
 FROM
      `detalle_fac_ven` detalle_fac_ven
-]]>
+where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 	</queryString>
 	<field name="detalle_fac_ven_SEC_NUM_FAC_P" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
