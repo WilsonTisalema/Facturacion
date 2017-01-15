@@ -27,133 +27,175 @@ public class AgregarProductos extends javax.swing.JFrame {
      */
     public AgregarProductos() {
         initComponents();
-        String[] titulos={"Código","Descripcion","Fabricante","Cantidad"};
+        String[] titulos = {"Código", "Código Pro.", "Descripcion", "Fabricante", "Cantidad"};
         modelo = new DefaultTableModel(null, titulos);
         jtblIngreso.setModel(modelo);
     }
     DefaultTableModel modelo;
-    public void ingresoStockGNI12(){
-        String codigoBarras=txtCodPro.getText().trim();
-        String codigo=codigoBarras.substring(1, 6);
+
+    public void ingresoStockGNI12() {
+        String codigoBarras = txtCodPro.getText().trim();
+        String codigo = codigoBarras.substring(1, 6);
         //System.out.println(codigo);
-        String fabricante=verificaEmpresa12(codigo);
-       // System.out.println(codigoBarras.substring(7, 11));
-        String nombrePro=codigoProductos(codigoBarras.substring(7, 11));
-        String presentacion=presentacionProductos(codigoBarras.substring(7, 11));
+        String fabricante = verificaEmpresa12(codigo);
+        // System.out.println(codigoBarras.substring(7, 11));
+        String nombrePro = codigoProductos(codigoBarras.substring(7, 11));
+        String presentacion = presentacionProductos(codigoBarras.substring(7, 11));
         //System.out.println(presentacion);
-        String[] datos={codigoBarras,nombrePro,fabricante,presentacion};
-        modelo.addRow(datos);
-        jtblIngreso.setModel(modelo);
-        txtCodPro.setText("");
-        txtCodPro.requestFocus();
+        String codigoPro = codigoProductosCod(codigoBarras.substring(7, 11));
+        if (codigoPro.length() != 0) {
+            if (fabricante.length() != 0) {
+                if (presentacion.length() != 0) {
+                    String[] datos = {codigoBarras, codigoPro, nombrePro, fabricante, presentacion};
+                    modelo.addRow(datos);
+                    jtblIngreso.setModel(modelo);
+                    txtCodPro.setText("");
+                    txtCodPro.requestFocus();
+                }else{
+                    JOptionPane.showMessageDialog(null, "El producto no registra presentacion de venta");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El producto no registra fabricante asociado");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El codigo no se encontro");
+        }
     }
-    public String codigoProductos(String codigo){
-        String data="";
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-        String sql="";
-        sql="select p.DES_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='"+codigo+
-                "' and p.cod_prod=pr.cod_pro_p";
+
+    public String codigoProductosCod(String codigo) {
+        String data = "";
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select p.cod_PROD"
+                + " from productos p,presentaciones_productos pr where pr.COD_PRES='" + codigo
+                + "' and p.cod_prod=pr.cod_pro_p";
+        System.out.println(sql + " es codProd");
+        try {
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                data = rs.getString("cod_PROD");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se puede obtener nombre del producto");
+        }
+
+        return data;
+    }
+
+    public String codigoProductos(String codigo) {
+        String data = "";
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select p.DES_PROD from productos p,presentaciones_productos pr where pr.COD_PRES='" + codigo
+                + "' and p.cod_prod=pr.cod_pro_p";
         //System.out.println(sql);
         try {
-            Statement ps=cn.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while (rs.next()){
-                data=rs.getString("DES_PROD");
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                data = rs.getString("DES_PROD");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede obtener nombre del producto");
         }
-        
+
         return data;
     }
-    public String presentacionProductos(String codigo){
-        String data="";
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-        String sql="";
-        sql="select pr.DES_PRES_PRO from productos p,presentaciones_productos pr where pr.COD_PRES='"
-                +codigo+"' and p.cod_prod=pr.cod_pro_p";
-       // System.out.println(sql);
+
+    public String presentacionProductos(String codigo) {
+        String data = "";
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select pr.DES_PRES_PRO from productos p,presentaciones_productos pr where pr.COD_PRES='"
+                + codigo + "' and p.cod_prod=pr.cod_pro_p";
+        // System.out.println(sql);
         try {
-            Statement ps=cn.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while (rs.next()){
-                data=rs.getString("DES_PRES_PRO");
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                data = rs.getString("DES_PRES_PRO");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede obtener nombre del producto");
         }
-        
+
         return data;
     }
-   
-    public String verificaEmpresa12(String codigo){
-        String ver="";
-        String sql="";
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-        sql="select EMP_FAB from fabricante_producto where COD_FAB='"+codigo+"'";
+
+    public String verificaEmpresa12(String codigo) {
+        String ver = "";
+        String sql = "";
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        sql = "select EMP_FAB from fabricante_producto where COD_FAB='" + codigo + "'";
         try {
-            Statement ps=cn.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
-                ver=rs.getString("EMP_FAB");
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                ver = rs.getString("EMP_FAB");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se puede buscar Fabricante");
         }
-        
+
         return ver;
     }
-    public void controlIngreso(){
-        calculoCodBarras cd=new calculoCodBarras();
-        if(txtCodPro.getText().length()==12){
-        if(cd.verificador(txtCodPro.getText())){
-            ingresoStockGNI12();
-        }else{
-            JOptionPane.showMessageDialog(null,"Numero codigo erroneo");
-        }
-        }else{
-         if(cd.verificador13D(txtCodPro.getText())){
-            System.out.println("ok");
-        }else{
-             JOptionPane.showMessageDialog(null,"Numero codigo erroneo");
-         }   
+
+    public void controlIngreso() {
+        calculoCodBarras cd = new calculoCodBarras();
+        if (txtCodPro.getText().length() == 12) {
+            if (cd.verificador(txtCodPro.getText())) {
+                ingresoStockGNI12();
+            } else {
+                JOptionPane.showMessageDialog(null, "Numero codigo erroneo");
+            }
+        } else {
+            if (cd.verificador13D(txtCodPro.getText())) {
+                System.out.println("ok");
+            } else {
+                JOptionPane.showMessageDialog(null, "Numero codigo erroneo");
+            }
         }
     }
-    public void codigo(){   
+
+    public void codigo() {
         String sql = "";
         sql = "select * from productos";
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
         try {
             Statement psd = cn.createStatement();
             ResultSet rs = psd.executeQuery(sql);
             while (rs.next()) {
-                jLabel2.add("COD_PROD", this);                             
+                jLabel2.add("COD_PROD", this);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-        
+
     }
- public void confirmar(){
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-            String sql = "";
-            sql = "update productos set stock_pro='"+"',"+
-                    "'where COD_PROD='"+ "'" ;
-             try {
-                PreparedStatement psd = cn.prepareStatement(sql);
-                int n = psd.executeUpdate();
-                if (n > 0) {
-                    JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+
+    public void confirmar() {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "update productos set stock_pro='" + "',"
+                + "'where COD_PROD='" + "'";
+        try {
+            PreparedStatement psd = cn.prepareStatement(sql);
+            int n = psd.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -195,8 +237,12 @@ public class AgregarProductos extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtblIngreso);
 
         jbtnConfirmar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jbtnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/check.png"))); // NOI18N
         jbtnConfirmar.setText("Confirmar");
+        jbtnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnConfirmarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("jLabel2");
 
@@ -232,7 +278,7 @@ public class AgregarProductos extends javax.swing.JFrame {
                     .addComponent(jbtnConfirmar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -244,6 +290,10 @@ public class AgregarProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         controlIngreso();
     }//GEN-LAST:event_txtCodProActionPerformed
+
+    private void jbtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnConfirmarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
