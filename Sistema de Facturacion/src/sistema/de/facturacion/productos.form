@@ -41,7 +41,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,14 +102,17 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jcbPresentaciones" min="-2" pref="174" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jbtAgregarPres" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -583,11 +586,6 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
-                          <Component id="txtTiem" min="-2" pref="131" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -595,23 +593,20 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="47" max="32767" attributes="0"/>
                           <Component id="txtMaxDes" min="-2" pref="131" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="txtStockMin" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Component id="txtDiasMinInv" min="-2" pref="134" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="txtStockMin" min="-2" pref="134" max="-2" attributes="0"/>
                           <EmptySpace pref="6" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -622,15 +617,9 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtStockMax" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Component id="txtDiasMaxInv" min="-2" pref="134" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                          <Component id="txtStockMax" min="-2" pref="134" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel40" min="-2" pref="153" max="-2" attributes="0"/>
@@ -645,16 +634,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel29" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="txtTiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtDiasMinInv" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtDiasMaxInv" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -680,35 +660,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="txtTiem">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDiasMinInv">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiasMinInvActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDiasMinInvKeyTyped"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel30">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="D&#xed;as min inve:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtDiasMaxInv">
-          <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDiasMaxInvKeyTyped"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel31">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="D&#xed;as max inv:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel33">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -742,14 +693,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUltCom">
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel29">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Tiempo Entrega:"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel35">
           <Properties>
@@ -806,13 +749,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton1" min="-2" pref="119" max="-2" attributes="0"/>
                       <Component id="btnClear" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEdit" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="btnNew" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnSave" alignment="0" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="btnEdit" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -822,6 +766,8 @@
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="btnNew" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnEdit" min="-2" pref="41" max="-2" attributes="0"/>
@@ -829,7 +775,7 @@
                   <Component id="btnClear" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -842,9 +788,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/nuevo.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
           </Properties>
@@ -860,9 +803,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/ACTUALIZAR1.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Actualizar"/>
           </Properties>
           <Events>
@@ -877,11 +817,11 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/guardar.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnClear">
           <Properties>
@@ -890,9 +830,6 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
@@ -905,14 +842,22 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/salir.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Salir "/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="cc" red="33" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Agregar Productos"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
