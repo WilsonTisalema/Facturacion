@@ -29,17 +29,48 @@ public class login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("INGRESO A PUNTO DE VENTA");
     }
-    public void ingreso(){
+    public void ingreso() {
         //System.out.println("ok");
-        if(VerUsuario()){
-            String password=encriptaEnMD5(txtPass.getText().trim());
-            if(password.equals(verClave())){
-               
-               principal pl=new principal(txtUser.getText());
-               pl.setVisible(true);
-               this.dispose();
+        if (VerUsuario()) {
+            String password = encriptaEnMD5(txtPass.getText().trim());
+            if (password.equals(verClave())) {
+                if (jerarquia(txtUser.getText()).equals("ADMINISTRADOR")) {
+                    principal pl = new principal(txtUser.getText());
+                    principal.jMenuItem1.setVisible(false);
+                    principal.jMenu6.setVisible(false);
+                    pl.setVisible(true);
+                    this.dispose();
+                } else if (jerarquia(txtUser.getText()).equals("CAJERO")) {
+                    principal pl = new principal(txtUser.getText());
+                    principal.jMenu1.setVisible(false);
+                    pl.setVisible(true);
+                    this.dispose();
+                } else if (jerarquia(txtUser.getText()).equals("BODEGUERO")) {
+                    principal pl = new principal(txtUser.getText());
+                    principal.jMenu6.setVisible(false);
+                    pl.setVisible(true);
+                    this.dispose();
+                }
+
             }
         }
+    }
+    public String jerarquia(String ced){
+       String res = "";
+        try {
+            conexion_mysql cc=new conexion_mysql();
+            Connection cn=cc.conectar();
+            String sql="";
+            sql="select * from usuarios where ci_usu='"+ced+"'";
+            Statement ps=cn.createStatement();
+            ResultSet rs=ps.executeQuery(sql);
+            if(rs.next()){
+                res=rs.getString("JERAR_USU");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return res;
     }
   
     public boolean VerUsuario(){

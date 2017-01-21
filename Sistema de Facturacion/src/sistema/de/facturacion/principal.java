@@ -85,7 +85,7 @@ public class principal extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGap(0, 462, Short.MAX_VALUE)
         );
 
         lblUsuario.setText("Usuario:");
@@ -116,15 +116,29 @@ public class principal extends javax.swing.JFrame {
                 .addComponent(jLabel2))
         );
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047314_male3.png"))); // NOI18N
         jMenu1.setText("Usuarios");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047336_customers.png"))); // NOI18N
         jMenu2.setText("Clientes");
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047393_suppliers.png"))); // NOI18N
         jMenu3.setText("Proveedores");
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047410_file-roller.png"))); // NOI18N
         jMenu4.setText("Productos");
 
         jMenuItem1.setText("Agregar Stock");
@@ -132,16 +146,25 @@ public class principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047439_industry.png"))); // NOI18N
         jMenu5.setText("Fabricantes");
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047466_billing.png"))); // NOI18N
         jMenu6.setText("Facturacion");
         jMenuBar1.add(jMenu6);
 
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047488_Help.png"))); // NOI18N
         jMenu7.setText("Acerca de");
         jMenuBar1.add(jMenu7);
 
+        jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
         jMenu8.setText("Exit");
+        jMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu8MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu8);
 
         setJMenuBar(jMenuBar1);
@@ -170,6 +193,27 @@ public class principal extends javax.swing.JFrame {
         this.dispose();
         log.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu8MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenu8MouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        try {
+            // TODO add your handling code here:
+            IngresoUsuario usu=new IngresoUsuario();
+            jDesktopPane1.add(usu);
+            usu.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,16 +253,16 @@ public class principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
+    public static javax.swing.JMenu jMenu1;
+    public static javax.swing.JMenu jMenu2;
+    public static javax.swing.JMenu jMenu3;
+    public static javax.swing.JMenu jMenu4;
+    public static javax.swing.JMenu jMenu5;
+    public static javax.swing.JMenu jMenu6;
+    public static javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    public static javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
