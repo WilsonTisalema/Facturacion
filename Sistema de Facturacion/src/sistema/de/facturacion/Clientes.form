@@ -162,7 +162,7 @@
                                       <Component id="cbxEstadocivil" max="32767" attributes="0"/>
                                       <Component id="txtApellido" max="32767" attributes="0"/>
                                       <Component id="cbxGeneroC" alignment="0" pref="153" max="32767" attributes="0"/>
-                                      <Component id="txtFecha" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jDateChooser1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -210,7 +210,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtFecha" min="-2" max="-2" attributes="0"/>
+                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -349,7 +349,7 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApellido1KeyTyped"/>
           </Events>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="txtFecha">
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
         </Component>
       </SubComponents>
     </Container>
