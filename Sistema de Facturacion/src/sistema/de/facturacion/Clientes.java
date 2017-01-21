@@ -26,7 +26,7 @@ public class Clientes extends javax.swing.JFrame {
         genero();
         estadoCivil();
         provincias();
-        jDateChooser1.setEnabled(false);
+        txtFecha.setEnabled(false);
         cbxCanton.removeAllItems();
         botonesInicio();
     }
@@ -484,7 +484,7 @@ public class Clientes extends javax.swing.JFrame {
         txtNombre1.setEnabled(false);
         txtApellido1.setEnabled(false);
         txtApellido.setEnabled(false);
-        jDateChooser1.setEnabled(false);
+        txtFecha.setEnabled(false);
         cbxEstadocivil.setEnabled(false);
         cbxProvincia.setEnabled(false);
         cbxCanton.setEnabled(false);
@@ -511,7 +511,7 @@ public class Clientes extends javax.swing.JFrame {
         txtNombre1.setEnabled(true);
         txtApellido1.setEnabled(true);
         txtApellido.setEnabled(true);
-        jDateChooser1.setEnabled(true);
+        txtFecha.setEnabled(true);
         cbxEstadocivil.setEnabled(true);
         cbxProvincia.setEnabled(true);
         cbxCanton.setEnabled(true);
@@ -532,7 +532,7 @@ public class Clientes extends javax.swing.JFrame {
         txtCedulaC.setText("");
         cbxTipContribuyente.setSelectedIndex(0);
         cbxGeneroC.setSelectedIndex(0);
-        jDateChooser1.setDate(null);
+        txtFecha.setDate(null);
         cbxEstadocivil.setSelectedIndex(0);
         cbxProvincia.setSelectedIndex(0);
         cbxCanton.setSelectedIndex(0);
@@ -552,7 +552,7 @@ public class Clientes extends javax.swing.JFrame {
     public void controlCampos() {
         if (Extranjero.isSelected() == false) {
             if (!verificaCedula(txtCedulaC.getText())) {
-                JOptionPane.showMessageDialog(this, "Cèdula no Valida");
+                JOptionPane.showMessageDialog(this, "Cèdula o Ruc no Valida");
             }
         } else if (txtRuc.getText().length() != 13) {
             JOptionPane.showMessageDialog(this, "Ruc no Valida");
@@ -570,7 +570,7 @@ public class Clientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione Provincia");
         } else if (cbxCanton.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Canton");
-        } else if (jDateChooser1.getDate().toString().isEmpty()) {
+        } else if (txtFecha.getDate().toString().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
         } else if (txtDireccionC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Direccion no ingresada");
@@ -591,21 +591,32 @@ public class Clientes extends javax.swing.JFrame {
     public void guardar() {
         conexion_mysql cx = new conexion_mysql();
         Connection cn = cx.conectar();
-        String sql = "insert into usuarios(CI_CLI,NOM_CLI,NOM_CLI1,APE_CLI,APE_CLI1,TIPO_CONT_CLI,FEC_NAC_CLI,EST_CIV_CLI,GEN_CLI,PRO_CLI,CANT_CLI,,DIR_CLI,CEL1_CLI,CEL2_CLI,TLF1_CLI,TLF2_CLI,E_MAIL_CLI,)values (?,?,?,?,?)";
+        String sql = "insert into clientes(CI_CLI, NOM_CLI, NOM_CLI1, APE_CLI, APE_CLI1, TIPO_CONT_CLI, FEC_NAC_CLI, EST_CIV_CLI, GEN_CLI, PRO_CLI, CANT_CLI, DIR_CLI, CEL1_CLI, CEL2_CLI, TLF1_CLI, TLF2_CLI, E_MAIL_CLI, RUC_CLI)values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = cn.prepareStatement(sql);
             ps.setString(1, txtCedulaC.getText());
             ps.setString(2, txtNombre.getText());
             ps.setString(3, txtNombre1.getText());
-            ps.setString(3, txtApellido.getText());
-            ps.setString(4, txtApellido1.getText());
+            ps.setString(4, txtApellido.getText());
+            ps.setString(5, txtApellido1.getText());
+            ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
+            ps.setString(7, txtFecha.getDate().toString());
+            ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
+            ps.setString(9, cbxGeneroC.getSelectedItem().toString());
+            ps.setString(10, cbxProvincia.getSelectedItem().toString());
+            ps.setString(11, cbxCanton.getSelectedItem().toString());
+            ps.setString(12, txtDireccionC.getText());
+            ps.setString(13, txtCelUnoC.getText());
+            ps.setString(14, txtCelDosC.getText());
+            ps.setString(15, txtTelfUnoC.getText());
+            ps.setString(16, txtTelDosC.getText());
+            ps.setString(17, txtEmailC.getText());
+            ps.setString(18, txtRuc.getText());
+
             int n = ps.executeUpdate();
 
             if (n > 0) {
                 JOptionPane.showMessageDialog(null, "Guardado Exitoso");
-//                cargarTabla("");
-//                limpiar();
-//                bloquear();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -642,7 +653,7 @@ public class Clientes extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         txtNombre1 = new javax.swing.JTextField();
         txtApellido1 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtFecha = new com.toedter.calendar.JDateChooser();
         jLabel22 = new javax.swing.JLabel();
         txtRuc = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -798,7 +809,7 @@ public class Clientes extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxGeneroC, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxTipContribuyente, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -845,7 +856,7 @@ public class Clientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -1293,7 +1304,6 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxGeneroC;
     private javax.swing.JComboBox<String> cbxProvincia;
     private javax.swing.JComboBox<String> cbxTipContribuyente;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1325,6 +1335,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtCelUnoC;
     private javax.swing.JTextField txtDireccionC;
     private javax.swing.JTextField txtEmailC;
+    private com.toedter.calendar.JDateChooser txtFecha;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtRuc;
