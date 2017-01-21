@@ -5,6 +5,10 @@
  */
 package sistema.de.facturacion;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Cristty
@@ -49,7 +53,7 @@ public class productos extends javax.swing.JFrame {
         cbxSubFam.setSelectedIndex(0);
         txtUnidAl.setText("");
         txtPreBas.setText("");
-        txtPp.setText("");
+        txtCateg.setText("");
         txtPre1.setText("");
         txtPre2.setText("");
         txtUltPreCo.setText("");
@@ -90,25 +94,24 @@ public class productos extends javax.swing.JFrame {
 //        cbxTipo.setToolTipText("SELECCIONE UNO");
 //    }
 //    
-    
     public void Familia() {
         cbxFam.removeAllItems();
         cbxFam.addItem("SELECCIONE UNO");
         cbxFam.addItem("familia");
         cbxFam.addItem("familia");
         cbxFam.addItem("familia");
-      
+
         cbxFam.setToolTipText("SELECCIONE UNO");
     }
-    
-     public void Subfamilia() {
+
+    public void Subfamilia() {
         if (cbxFam.getSelectedIndex() == 1) {
             cbxSubFam.removeAllItems();
             cbxSubFam.addItem("SELECCIONE UNO");
             cbxSubFam.addItem("familia1");
             cbxSubFam.addItem("familia1");
             cbxSubFam.addItem("familia1");
-        
+
         } else if (cbxFam.getSelectedIndex() == 2) {
             cbxSubFam.removeAllItems();
             cbxSubFam.addItem("SELECCIONE UNO");
@@ -119,9 +122,83 @@ public class productos extends javax.swing.JFrame {
             cbxSubFam.addItem("familia2");
             cbxSubFam.addItem("familia2");
             cbxSubFam.addItem("familia2");
-        } 
-     }
-     
+        }
+    }
+
+    public void guardar() {
+
+        if (txtCod.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la codigo");
+            txtCod.requestFocus();
+        } else if (jcbPresentaciones.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Presentacion");
+            jcbPresentaciones.requestFocus();
+        } else if (txtUnid.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad");
+            txtUnid.requestFocus();
+        } else if (txtUnidAl.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad Alterna");
+            txtUnidAl.requestFocus();
+        } else if (txtCateg.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            txtCateg.requestFocus();
+        } else if (cbxFam.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            cbxFam.requestFocus();
+        } else if (cbxSubFam.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            cbxSubFam.requestFocus();
+        } else if (txtPreBas.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            cbxSubFam.requestFocus();
+        } else if (txtPre1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            cbxSubFam.requestFocus();
+        } else if (txtPre2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            cbxSubFam.requestFocus();
+            try {
+                conexion_mysql cc = new conexion_mysql();
+                Connection cn = (Connection) cc.conectar();
+                String COD_PROD, DES_PROD, UNI_PROD, UNI_ALT_PRO, CATE_PRO_PROD, PRES_PROD, FAM_PROD, SUB_FAM_PROD, PREC_BASE, PRE1_PROD, PRE2_PROD;
+                String sql = "";
+                sql = "insert into autos(COD_PROD,DES_PROD,UNI_PROD,UNI_ALT_PRO,CATE_PRO_PROD,PRES_PROD)"
+                        + " values(?,?,?,?,?,?)";
+                COD_PROD = txtCod.getText().toUpperCase().trim();
+                if (txtDesc.getText().isEmpty()) {
+                    DES_PROD = "NO HAY DESCRIPCION";
+                } else {
+                    DES_PROD = txtDesc.getText().trim();
+                }
+                UNI_PROD = txtUnid.getText().toUpperCase().trim();
+                UNI_ALT_PRO = txtUnidAl.getText().toUpperCase().trim();
+                CATE_PRO_PROD = txtCateg.getText().toUpperCase().trim();
+                PRES_PROD = String.valueOf(jcbPresentaciones.getSelectedItem()).trim();
+                FAM_PROD = String.valueOf(cbxFam.getSelectedItem()).trim();
+                SUB_FAM_PROD = String.valueOf(cbxSubFam.getSelectedItem()).trim();
+
+                PreparedStatement psd = cn.prepareStatement(sql);
+                psd.setString(1, COD_PROD);
+                psd.setString(2, DES_PROD);
+                psd.setString(3, UNI_PROD);
+                psd.setString(4, UNI_ALT_PRO);
+                psd.setString(5, CATE_PRO_PROD);
+                psd.setString(6, PRES_PROD);
+                psd.setString(7, PRES_PROD);
+                psd.setString(8, PRES_PROD);
+
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se inserto correctamente");
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "No se inserto");
+            }
+
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,11 +216,11 @@ public class productos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCod = new javax.swing.JTextField();
         txtDesc = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         btnBusqueda = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jcbPresentaciones = new javax.swing.JComboBox();
         jbtAgregarPres = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -155,7 +232,7 @@ public class productos extends javax.swing.JFrame {
         cbxSubFam = new javax.swing.JComboBox<String>();
         jLabel18 = new javax.swing.JLabel();
         txtPreBas = new javax.swing.JTextField();
-        txtPp = new javax.swing.JTextField();
+        txtCateg = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         txtPre1 = new javax.swing.JTextField();
@@ -205,7 +282,7 @@ public class productos extends javax.swing.JFrame {
         jLabel1.setText("Código*:");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Fecha/creación:");
+        jLabel2.setText("IVA ");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Descripción:");
@@ -255,14 +332,17 @@ public class productos extends javax.swing.JFrame {
                 .addComponent(btnBusqueda)
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jcbPresentaciones, 0, 174, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtAgregarPres)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jcbPresentaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtAgregarPres))
+                    .addComponent(jCheckBox1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -272,9 +352,9 @@ public class productos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBusqueda)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jCheckBox1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -328,14 +408,14 @@ public class productos extends javax.swing.JFrame {
             }
         });
 
-        txtPp.addActionListener(new java.awt.event.ActionListener() {
+        txtCateg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPpActionPerformed(evt);
+                txtCategActionPerformed(evt);
             }
         });
-        txtPp.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCateg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPpKeyTyped(evt);
+                txtCategKeyTyped(evt);
             }
         });
 
@@ -442,7 +522,7 @@ public class productos extends javax.swing.JFrame {
                             .addComponent(jLabel19))
                         .addGap(17, 17, 17)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtPp, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCateg, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxFam, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE)
                             .addComponent(cbxSubFam, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtPre2)))
@@ -509,7 +589,7 @@ public class productos extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCateg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19))))
                 .addGap(22, 22, Short.MAX_VALUE))
         );
@@ -791,9 +871,9 @@ public class productos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPreProComActionPerformed
 
-    private void txtPpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPpActionPerformed
+    private void txtCategActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPpActionPerformed
+    }//GEN-LAST:event_txtCategActionPerformed
 
     private void txtPreBasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreBasActionPerformed
         // TODO add your handling code here:
@@ -814,10 +894,10 @@ public class productos extends javax.swing.JFrame {
         soloNumeros(evt);
     }//GEN-LAST:event_txtPreBasKeyTyped
 
-    private void txtPpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPpKeyTyped
+    private void txtCategKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCategKeyTyped
         // TODO add your handling code here:
         soloNumeros(evt);
-    }//GEN-LAST:event_txtPpKeyTyped
+    }//GEN-LAST:event_txtCategKeyTyped
 
     private void txtPre1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPre1KeyTyped
         // TODO add your handling code here:
@@ -938,6 +1018,7 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxFam;
     private javax.swing.JComboBox<String> cbxSubFam;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -969,16 +1050,15 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton jbtAgregarPres;
     private javax.swing.JComboBox jcbPresentaciones;
+    private javax.swing.JTextField txtCateg;
     private javax.swing.JTextField txtCntUltCom;
     private javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtDesc;
     private javax.swing.JTextField txtDiasMaxInv;
     private javax.swing.JTextField txtDiasMinInv;
     private javax.swing.JTextField txtMaxDes;
-    private javax.swing.JTextField txtPp;
     private javax.swing.JTextField txtPre1;
     private javax.swing.JTextField txtPre2;
     private javax.swing.JTextField txtPreBas;
