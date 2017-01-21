@@ -52,14 +52,13 @@ public class IngresoUsuario extends javax.swing.JFrame {
             conexion_mysql cn=new conexion_mysql();
             Connection cc=cn.conectar();
             String sql="";
-            sql="Insert into usuarios(CI_USU,EXT_USU,NOM1_USU,NOM2_USU,APE1_USU,APE2_USU,FEC_NAC_USU,TLF_USU,CELU_USU,DIR_USU,E_MAIL_USU,"
+            sql="Insert into usuarios(CI_USU,NOM1_USU,NOM2_USU,APE1_USU,APE2_USU,FEC_NAC_USU,TLF_USU,CELU_USU,DIR_USU,E_MAIL_USU,"
                     + "GEN_USU,EST_CIV_USU,PROCE_USU,JERAR_USU,ESTADO_USU,clave_usu)"
-                    + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             String CI_USU,EXT_USU,NOM1_USU,NOM2_USU,APE1_USU,APE2_USU,FEC_NAC_USU,
                     TLF_USU,CELU_USU,DIR_USU,E_MAIL_USU,GEN_USU,EST_CIV_USU,
                     PROCE_USU,JERAR_USU,ESTADO_USU,clave_usu;
             CI_USU=txtCedula.getText().trim();
-            EXT_USU="0";
             NOM1_USU=txtNombre.getText().trim();
             NOM2_USU=txtNombre1.getText().trim();
             APE1_USU=txtApellido.getText().trim();
@@ -88,22 +87,21 @@ public class IngresoUsuario extends javax.swing.JFrame {
             try {
                 PreparedStatement ps=cc.prepareStatement(sql);
                 ps.setString(1, CI_USU);
-                ps.setString(2, EXT_USU);
-                ps.setString(3, NOM1_USU);
-                ps.setString(4, NOM2_USU);
-                ps.setString(5, APE1_USU);
-                ps.setString(6, APE2_USU);
-                ps.setString(7, FEC_NAC_USU);
-                ps.setString(8, TLF_USU);
-                ps.setString(9, CELU_USU);
-                ps.setString(10, DIR_USU);
-                ps.setString(11, E_MAIL_USU);
-                ps.setString(12, GEN_USU);
-                ps.setString(13, EST_CIV_USU);
-                ps.setString(14, PROCE_USU);
-                ps.setString(15, JERAR_USU);
-                ps.setString(16, ESTADO_USU);
-                ps.setString(17, clave_usu);
+                ps.setString(2, NOM1_USU);
+                ps.setString(3, NOM2_USU);
+                ps.setString(4, APE1_USU);
+                ps.setString(5, APE2_USU);
+                ps.setString(6, FEC_NAC_USU);
+                ps.setString(7, TLF_USU);
+                ps.setString(8, CELU_USU);
+                ps.setString(9, DIR_USU);
+                ps.setString(10, E_MAIL_USU);
+                ps.setString(11, GEN_USU);
+                ps.setString(12, EST_CIV_USU);
+                ps.setString(13, PROCE_USU);
+                ps.setString(14, JERAR_USU);
+                ps.setString(15, ESTADO_USU);
+                ps.setString(16, clave_usu);
                 if(ps.executeUpdate()>0){
                     JOptionPane.showMessageDialog(this, "Se ha guardado correctamente, La contraseña es la cédula");
                     bloquearTodasCajas();
@@ -200,20 +198,14 @@ public class IngresoUsuario extends javax.swing.JFrame {
             conexion_mysql cc = new conexion_mysql();
             Connection cn = cc.conectar();
             String sql = "";
-            sql = "select EXT_USU,NOM1_USU,NOM2_USU,APE1_USU,APE2_USU,TLF_USU,CELU_USU,DIR_USU,"
+            sql = "select NOM1_USU,NOM2_USU,APE1_USU,APE2_USU,TLF_USU,CELU_USU,DIR_USU,"
                     + "E_MAIL_USU,FEC_NAC_USU,GEN_USU,EST_CIV_USU,PROCE_USU,JERAR_USU,ESTADO_USU from usuarios "
                     + "where ci_usu=" + cedula;
             Statement ps = cn.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             if (rs.next()) {
 
-                if (Integer.valueOf(rs.getString("EXT_USU")) == 0) {
-                    jchkExtranjero.setSelected(true);
-                    jchkExtranjero.setEnabled(false);
-                } else {
-                    jchkExtranjero.setSelected(false);
-                    jchkExtranjero.setEnabled(false);
-                }
+                
                 txtNombre.setText(rs.getString("NOM1_USU"));
                 txtNombre1.setText(rs.getString("NOM2_USU"));
                 txtApellido.setText(rs.getString("APE1_USU"));
@@ -595,6 +587,17 @@ public class IngresoUsuario extends javax.swing.JFrame {
                 txtDireccionActionPerformed(evt);
             }
         });
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("Estado Civíl:");
@@ -714,7 +717,7 @@ public class IngresoUsuario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jdtNac, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdtNac, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -763,7 +766,7 @@ public class IngresoUsuario extends javax.swing.JFrame {
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdtNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -985,7 +988,7 @@ public class IngresoUsuario extends javax.swing.JFrame {
                         .addGap(12, 12, 12))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1196,6 +1199,24 @@ public class IngresoUsuario extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_txtCelularKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        // TODO add your handling code here:
+         int n = txtDireccion.getText().toString().length();
+        if (n > 40) {
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        // TODO add your handling code here:
+        int n = txtCorreo.getText().toString().length();
+        if (n > 24) {
+            evt.consume();
+
+        }
+    }//GEN-LAST:event_txtCorreoKeyTyped
 
     /**
      * @param args the command line arguments

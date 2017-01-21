@@ -6,6 +6,13 @@
 
 package sistema.de.facturacion;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Benjita
@@ -16,17 +23,33 @@ public class principal extends javax.swing.JFrame {
      * Creates new form principal
      */
     
-    public principal() {
+    public principal(String perfil) {
         initComponents();
-         // jDesktopPane1.setBorder(new ImagenFondo());
+        lblUsuario.setText("Usuario: "+cargarNombres(perfil));
         this.setExtendedState(principal.MAXIMIZED_BOTH);
         //setTitle("BIENVENIDO USUARIOS="+usuario);
     }
-    public principal(String usuario) {
-        initComponents();
-          
-        setTitle("BIENVENIDO USUARIOS="+usuario);
+    
+    public String cargarNombres(String cedula){
+        String res="";
+        try {
+            conexion_mysql cc = new conexion_mysql();
+            Connection cn = cc.conectar();
+            String sql = "";
+            sql = "select * from usuarios "
+                    + "where ci_usu=" + cedula;
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            if (rs.next()) {
+             res=rs.getString("NOM1_USU")+" "+rs.getString("APE1_USU");
+            }   
+        } catch (SQLException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +62,7 @@ public class principal extends javax.swing.JFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -65,7 +88,7 @@ public class principal extends javax.swing.JFrame {
             .addGap(0, 475, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("Usuario");
+        lblUsuario.setText("Usuario:");
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 204));
         jLabel2.setText("(Cerrar sesion)");
@@ -80,8 +103,8 @@ public class principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(695, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addContainerGap(691, Short.MAX_VALUE)
+                .addComponent(lblUsuario)
                 .addGap(80, 80, 80)
                 .addComponent(jLabel2)
                 .addContainerGap())
@@ -89,7 +112,7 @@ public class principal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1)
+                .addComponent(lblUsuario)
                 .addComponent(jLabel2))
         );
 
@@ -143,7 +166,9 @@ public class principal extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        System.exit(0);
+        login log=new login();
+        this.dispose();
+        log.setVisible(true);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
@@ -176,14 +201,13 @@ public class principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new principal().setVisible(true);
+                new principal("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -196,5 +220,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }
