@@ -143,27 +143,46 @@ public class productos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
             txtCateg.requestFocus();
         } else if (cbxFam.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una Familia");
             cbxFam.requestFocus();
         } else if (cbxSubFam.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una SubFamilia");
             cbxSubFam.requestFocus();
         } else if (txtPreBas.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-            cbxSubFam.requestFocus();
+            JOptionPane.showMessageDialog(null, "Debe insertar el Precio Base");
+            txtPreBas.requestFocus();
         } else if (txtPre1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-            cbxSubFam.requestFocus();
+            txtPre1.requestFocus();
         } else if (txtPre2.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-            cbxSubFam.requestFocus();
+            txtPre2.requestFocus();
+            } else if (txtUltPreCo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar el ultimo precio de compra");
+            txtUltPreCo.requestFocus();
+             } else if (txtPreProCom.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar el precio promedio de compra");
+            txtPreProCom.requestFocus();
+             } else if (txtCntUltCom.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar la Ultima Cantidad Comprada");
+            txtCntUltCom.requestFocus();
+             } else if (txtStockMin.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Minimo");
+            txtStockMin.requestFocus();
+             } else if (txtStockMax.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Maximo");
+            txtStockMax.requestFocus();
             try {
                 conexion_mysql cc = new conexion_mysql();
                 Connection cn = (Connection) cc.conectar();
-                String COD_PROD, DES_PROD, UNI_PROD, UNI_ALT_PRO, CATE_PRO_PROD, PRES_PROD, FAM_PROD, SUB_FAM_PROD, PREC_BASE, PRE1_PROD, PRE2_PROD;
+                String COD_PROD, DES_PROD, UNI_PROD, UNI_ALT_PRO, CATE_PRO_PROD, PRES_PROD, FAM_PROD, SUB_FAM_PROD,
+                        PREC_BASE, PRE1_PROD, PRE2_PROD,ULT_PRE_COM_PROD,ULT_PRO_COM_PROD,CNT_ULT_COM_PROD,
+                        STOCK_MIN,STOCK_MAX,POR_MAX_DES_PROD,stock_pro,GRAB_IVA_P;
                 String sql = "";
-                sql = "insert into autos(COD_PROD,DES_PROD,UNI_PROD,UNI_ALT_PRO,CATE_PRO_PROD,PRES_PROD)"
-                        + " values(?,?,?,?,?,?)";
+                sql = "insert into autos(COD_PROD,DES_PROD,UNI_PROD,UNI_ALT_PRO,CATE_PRO_PROD,PRES_PROD,FAM_PROD, SUB_FAM_PROD"
+                        + ",PREC_BASE, PRE1_PROD, PRE2_PROD,ULT_PRE_COM_PROD,ULT_PRO_COM_PROD,CNT_ULT_COM_PROD,STOCK_MIN"
+                        + ")"
+                        + " values(?,?,?,?,?,?,?,?,?,?,?)";
                 COD_PROD = txtCod.getText().toUpperCase().trim();
                 if (txtDesc.getText().isEmpty()) {
                     DES_PROD = "NO HAY DESCRIPCION";
@@ -176,8 +195,17 @@ public class productos extends javax.swing.JFrame {
                 PRES_PROD = String.valueOf(jcbPresentaciones.getSelectedItem()).trim();
                 FAM_PROD = String.valueOf(cbxFam.getSelectedItem()).trim();
                 SUB_FAM_PROD = String.valueOf(cbxSubFam.getSelectedItem()).trim();
+                PREC_BASE = txtPreBas.getText().toUpperCase().trim();
+                PRE1_PROD = txtPre1.getText().toUpperCase().trim();
+                PRE2_PROD = txtPre2.getText().toUpperCase().trim();
+                ULT_PRE_COM_PROD = txtUltPreCo.getText().toUpperCase().trim();
+                ULT_PRO_COM_PROD = txtPreProCom.getText().toUpperCase().trim();
+                CNT_ULT_COM_PROD = txtCntUltCom.getText().toUpperCase().trim();
+                STOCK_MIN = txtStockMin.getText().toUpperCase().trim();
+                STOCK_MAX = txtStockMax.getText().toUpperCase().trim();
 
                 PreparedStatement psd = cn.prepareStatement(sql);
+                
                 psd.setString(1, COD_PROD);
                 psd.setString(2, DES_PROD);
                 psd.setString(3, UNI_PROD);
@@ -186,6 +214,15 @@ public class productos extends javax.swing.JFrame {
                 psd.setString(6, PRES_PROD);
                 psd.setString(7, PRES_PROD);
                 psd.setString(8, PRES_PROD);
+                psd.setString(9, PREC_BASE);
+                psd.setString(10, PRE1_PROD);
+                psd.setString(11, PRE2_PROD);
+                psd.setString(12, ULT_PRE_COM_PROD);
+                psd.setString(13, ULT_PRO_COM_PROD);
+                psd.setString(14, CNT_ULT_COM_PROD);
+                psd.setString(15, CNT_ULT_COM_PROD);
+                psd.setString(16, STOCK_MIN);
+                psd.setString(17, STOCK_MAX);
 
                 int n = psd.executeUpdate();
                 if (n > 0) {
