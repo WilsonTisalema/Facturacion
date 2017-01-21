@@ -21,7 +21,7 @@ public class conexion_mysql {
             //Class.forName("com.mysql.jdbc.Driver"); 
             //conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "root", "");
             Class.forName("com.mysql.jdbc.Driver");
-            conexion=DriverManager.getConnection("jdbc:mysql://172.21.101.84/leb", "root", "password");
+            conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
             //JOptionPane.showMessageDialog(null, "Conexion correcta");
             System.out.println("conexion");
         } catch (Exception ex) {
