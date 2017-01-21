@@ -683,11 +683,6 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel1.setText("Cédula:");
 
-        txtCedulaC.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCedulaCFocusLost(evt);
-            }
-        });
         txtCedulaC.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCedulaCKeyTyped(evt);
@@ -702,11 +697,6 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel19.setText("Apellido 1:");
 
-        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombreFocusLost(evt);
-            }
-        });
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombreKeyReleased(evt);
@@ -716,11 +706,6 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
-        txtApellido.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtApellidoFocusLost(evt);
-            }
-        });
         txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtApellidoKeyReleased(evt);
@@ -730,11 +715,6 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
-        txtNombre1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNombre1FocusLost(evt);
-            }
-        });
         txtNombre1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNombre1KeyReleased(evt);
@@ -744,11 +724,6 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
-        txtApellido1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtApellido1FocusLost(evt);
-            }
-        });
         txtApellido1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtApellido1KeyReleased(evt);
@@ -1093,11 +1068,6 @@ public class Clientes extends javax.swing.JFrame {
         cantones();
     }//GEN-LAST:event_cbxProvinciaItemStateChanged
 
-    private void txtCedulaCFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaCFocusLost
-        // TODO add your handling code here:
-        // comprovacionCedula();
-    }//GEN-LAST:event_txtCedulaCFocusLost
-
     private void cbxProvinciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProvinciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxProvinciaActionPerformed
@@ -1108,22 +1078,37 @@ public class Clientes extends javax.swing.JFrame {
 
     private void txtCedulaCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaCKeyTyped
         soloNumeros(evt);
+        if (txtCedulaC.getText().length() > 9) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCedulaCKeyTyped
 
     private void txtCelUnoCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelUnoCKeyTyped
         soloNumeros(evt);
+        if (txtCelUnoC.getText().length() > 9) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCelUnoCKeyTyped
 
     private void txtTelfUnoCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfUnoCKeyTyped
         soloNumeros(evt);
+        if (txtTelfUnoC.getText().length() > 8) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelfUnoCKeyTyped
 
     private void txtCelDosCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelDosCKeyTyped
         soloNumeros(evt);
+        if (txtCelUnoC.getText().length() > 9) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCelDosCKeyTyped
 
     private void txtTelDosCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelDosCKeyTyped
         soloNumeros(evt);
+        if (txtTelDosC.getText().length() > 8) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtTelDosCKeyTyped
 
     private void txtDireccionCFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDireccionCFocusLost
@@ -1131,7 +1116,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDireccionCFocusLost
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
         botonNuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -1140,48 +1124,35 @@ public class Clientes extends javax.swing.JFrame {
         botonBorara();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
-    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
-        // TODO add your handling code here:
-        mayusculas(txtNombre);
-    }//GEN-LAST:event_txtNombreFocusLost
-
-    private void txtApellidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidoFocusLost
-        // TODO add your handling code here:
-        mayusculas(txtApellido);
-    }//GEN-LAST:event_txtApellidoFocusLost
-
-    private void txtNombre1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombre1FocusLost
-        // TODO add your handling code here
-        mayusculas(txtNombre1);
-    }//GEN-LAST:event_txtNombre1FocusLost
-
-    private void txtApellido1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellido1FocusLost
-        // TODO add your handling code here:
-        mayusculas(txtApellido1);
-    }//GEN-LAST:event_txtApellido1FocusLost
-
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        // TODO add your handling code here:
         soloLetras(evt);
+        if (txtNombre.getText().length() > 19) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-        // TODO add your handling code here:
         soloLetras(evt);
+        if (txtApellido.getText().length() > 19) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
     private void txtNombre1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombre1KeyTyped
-        // TODO add your handling code here:
         soloLetras(evt);
+        if (txtNombre1.getText().length() > 19) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombre1KeyTyped
 
     private void txtApellido1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellido1KeyTyped
-        // TODO add your handling code here:
         soloLetras(evt);
+        if (txtApellido1.getText().length() > 19) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtApellido1KeyTyped
 
     private void btnGuargarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarCActionPerformed
-        // TODO add your handling code here:
         controlCampos();
     }//GEN-LAST:event_btnGuargarCActionPerformed
 
@@ -1202,7 +1173,6 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtApellido1KeyReleased
 
     private void txtRucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRucFocusLost
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtRucFocusLost
 
     private void txtRucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyReleased
