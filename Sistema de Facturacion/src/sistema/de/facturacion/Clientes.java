@@ -545,49 +545,37 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public void controlCampos() {
-        if (txtCedulaC.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Cèdula no ingresada");
-        }
-        if (txtNombre1.getText().length() == 0) {
+        if (!verificaCedula(txtCedulaC.getText())) {
+            JOptionPane.showMessageDialog(this, "Cèdula no Valida");
+        } else if (txtRuc.getText().length() != 13) {
+            JOptionPane.showMessageDialog(this, "Ruc no Valida");
+        } else if (txtNombre1.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Nombre1 no ingresada");
-        }
-        if (txtNombre.getText().length() == 0) {
+        } else if (txtNombre.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Nombre no ingresada");
-        }
-        if (txtApellido.getText().length() == 0) {
+        } else if (txtApellido.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Apellido no ingresada");
-        }
-        if (txtApellido1.getText().length() == 0) {
+        } else if (txtApellido1.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Apellido1 no ingresada");
-        }
-        if (cbxGeneroC.getSelectedIndex() == 0) {
+        } else if (cbxGeneroC.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione genero");
-        }
-        if (cbxProvincia.getSelectedIndex() == 0) {
+        } else if (cbxProvincia.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Provincia");
-        }
-        if (cbxCanton.getSelectedIndex() == 0) {
+        } else if (cbxCanton.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Canton");
-        }
-        if (jDateChooser1.getDate().toString().isEmpty()) {
+        } else if (jDateChooser1.getDate().toString().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
-        }
-        if (txtDireccionC.getText().length() == 0) {
+        } else if (txtDireccionC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Direccion no ingresada");
-        }
-        if (txtCelUnoC.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Celular uno no ingresado");
-        }
-        if (txtCelDosC.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Celular dos no ingresado");
-        }
-        if (txtTelfUnoC.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Telefono uno no ingresado");
-        }
-        if (txtTelDosC.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Telefono dos no ingresado");
-        }
-        if (txtEmailC.getText().length() == 0) {
+        } else if (txtCelUnoC.getText().length() != 10 || txtCelUnoC.getText().charAt(0) == '0' || txtCelUnoC.getText().charAt(1) == '9') {
+            JOptionPane.showMessageDialog(this, "Celular uno no Valido");
+        } else if (txtCelDosC.getText().length() != 10 || txtCelDosC.getText().charAt(0) == '0' || txtCelUnoC.getText().charAt(1) == '9') {
+            JOptionPane.showMessageDialog(this, "Celular dos no Valido");
+        } else if (txtTelfUnoC.getText().length() != 9 || txtTelfUnoC.getText().charAt(0) == '0' || txtTelfUnoC.getText().charAt(1) == '3' || txtTelfUnoC.getText().charAt(2) == '2') {
+            JOptionPane.showMessageDialog(this, "Telefono uno no Valido");
+        } else if (txtTelDosC.getText().length() != 9 || txtTelDosC.getText().charAt(0) == '0' || txtTelDosC.getText().charAt(1) == '3' || txtTelDosC.getText().charAt(2) == '2') {
+            JOptionPane.showMessageDialog(this, "Telefono dos no Valido");
+        } else if (txtEmailC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Email no ingresado");
         }
 
@@ -624,6 +612,8 @@ public class Clientes extends javax.swing.JFrame {
         txtNombre1 = new javax.swing.JTextField();
         txtApellido1 = new javax.swing.JTextField();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel22 = new javax.swing.JLabel();
+        txtRuc = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         cbxProvincia = new javax.swing.JComboBox<String>();
@@ -768,6 +758,22 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
+        jLabel22.setText("Ruc: ");
+
+        txtRuc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtRucFocusLost(evt);
+            }
+        });
+        txtRuc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRucKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -804,15 +810,19 @@ public class Clientes extends javax.swing.JFrame {
                                     .addComponent(cbxGeneroC, 0, 153, Short.MAX_VALUE)
                                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(32, 32, 32)
-                                .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(44, 44, 44))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -821,7 +831,9 @@ public class Clientes extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCedulaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCedulaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22)
+                    .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -1189,6 +1201,18 @@ public class Clientes extends javax.swing.JFrame {
         mayusculas(txtApellido1);
     }//GEN-LAST:event_txtApellido1KeyReleased
 
+    private void txtRucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRucFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRucFocusLost
+
+    private void txtRucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRucKeyReleased
+
+    private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRucKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -1253,6 +1277,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1270,6 +1295,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmailC;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombre1;
+    private javax.swing.JTextField txtRuc;
     private javax.swing.JTextField txtTelDosC;
     private javax.swing.JTextField txtTelfUnoC;
     // End of variables declaration//GEN-END:variables
