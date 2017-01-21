@@ -16,11 +16,7 @@ import javax.swing.JTextField;
  * @author Juank
  */
 public class Clientes extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Clientes
-     */
-    public Clientes() {
+public Clientes() {
         initComponents();
         tipoContri();
         genero();
@@ -490,9 +486,7 @@ public class Clientes extends javax.swing.JFrame {
         cbxCanton.setEnabled(false);
         txtDireccionC.setEnabled(false);
         txtCelUnoC.setEnabled(false);
-        txtCelDosC.setEnabled(false);
         txtTelfUnoC.setEnabled(false);
-        txtTelDosC.setEnabled(false);
         txtEmailC.setEnabled(false);
         btnNuevo.setEnabled(true);
         btnBorrar.setEnabled(true);
@@ -517,9 +511,7 @@ public class Clientes extends javax.swing.JFrame {
         cbxCanton.setEnabled(true);
         txtDireccionC.setEnabled(true);
         txtCelUnoC.setEnabled(true);
-        txtCelDosC.setEnabled(true);
         txtTelfUnoC.setEnabled(true);
-        txtTelDosC.setEnabled(true);
         txtEmailC.setEnabled(true);
         btnNuevo.setEnabled(false);
         btnBorrar.setEnabled(true);
@@ -538,9 +530,7 @@ public class Clientes extends javax.swing.JFrame {
         cbxCanton.setSelectedIndex(0);
         txtDireccionC.setText("");
         txtCelUnoC.setText("");
-        txtCelDosC.setText("");
         txtTelfUnoC.setText("");
-        txtTelDosC.setText("");
         txtEmailC.setText("");
         btnNuevo.setEnabled(true);
         btnBorrar.setEnabled(false);
@@ -550,38 +540,38 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public void controlCampos() {
-        if (Extranjero.isSelected() == false) {
-            if (!verificaCedula(txtCedulaC.getText())) {
-                JOptionPane.showMessageDialog(this, "Cèdula o Ruc no Valida");
-            }
+        if (txtCedulaC.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cédula o RUC no ingresados");
+        } else if (!verificaCedula(txtCedulaC.getText())) {
+            JOptionPane.showMessageDialog(this, "Cèdula o Ruc no Valida");
         } else if (txtRuc.getText().length() != 13) {
             JOptionPane.showMessageDialog(this, "Ruc no Valida");
-        } else if (txtNombre1.getText().length() == 0) {
+        } else if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nombre1 no ingresada");
-        } else if (txtNombre.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Nombre no ingresada");
-        } else if (txtApellido.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Apellido no ingresada");
-        } else if (txtApellido1.getText().length() == 0) {
+        } else if (txtNombre1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nombre2 no ingresada");
+        } else if (txtApellido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Apellido1 no ingresada");
+        } else if (txtApellido1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Apellido2 no ingresada");
+        } else if (txtFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
         } else if (cbxGeneroC.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione genero");
+        } else if (cbxEstadocivil.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione Estado Civil");
+        } else if (cbxTipContribuyente.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un Tipo");
         } else if (cbxProvincia.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Provincia");
         } else if (cbxCanton.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Canton");
-        } else if (txtFecha.getDate().toString().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
         } else if (txtDireccionC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Direccion no ingresada");
-        } else if (txtCelUnoC.getText().length() != 10 || txtCelUnoC.getText().charAt(0) == '0' || txtCelUnoC.getText().charAt(1) == '9') {
-            JOptionPane.showMessageDialog(this, "Celular uno no Valido");
-        } else if (txtCelDosC.getText().length() != 10 || txtCelDosC.getText().charAt(0) == '0' || txtCelUnoC.getText().charAt(1) == '9') {
-            JOptionPane.showMessageDialog(this, "Celular dos no Valido");
-        } else if (txtTelfUnoC.getText().length() != 9 || txtTelfUnoC.getText().charAt(0) == '0' || txtTelfUnoC.getText().charAt(1) == '3' || txtTelfUnoC.getText().charAt(2) == '2') {
-            JOptionPane.showMessageDialog(this, "Telefono uno no Valido");
-        } else if (txtTelDosC.getText().length() != 9 || txtTelDosC.getText().charAt(0) == '0' || txtTelDosC.getText().charAt(1) == '3' || txtTelDosC.getText().charAt(2) == '2') {
-            JOptionPane.showMessageDialog(this, "Telefono dos no Valido");
+        } else if ( txtCelUnoC.getText().length() != 10 || txtCelUnoC.getText().charAt(0) != '0' || txtCelUnoC.getText().charAt(1) != '9' ) {//
+            JOptionPane.showMessageDialog(this, "Celular no Valido");
+        } else if (txtTelfUnoC.getText().length() != 9 || txtTelfUnoC.getText().charAt(0) != '0' ) {
+            JOptionPane.showMessageDialog(this, "Telefono no Valido");
         } else if (txtEmailC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Email no ingresado");
         }
@@ -607,9 +597,7 @@ public class Clientes extends javax.swing.JFrame {
             ps.setString(11, cbxCanton.getSelectedItem().toString());
             ps.setString(12, txtDireccionC.getText());
             ps.setString(13, txtCelUnoC.getText());
-            ps.setString(14, txtCelDosC.getText());
             ps.setString(15, txtTelfUnoC.getText());
-            ps.setString(16, txtTelDosC.getText());
             ps.setString(17, txtEmailC.getText());
             ps.setString(18, txtRuc.getText());
 
