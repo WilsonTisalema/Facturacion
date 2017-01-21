@@ -24,7 +24,14 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     public void guardar(){
+        if(!controles()){
+            
+        }
+    }
+    public boolean controles(){
+        boolean error=false;
         
+        return error;
     }
     public void TipoContriyentes() {
         cbxTipoCont.removeAllItems();
@@ -482,20 +489,12 @@ public class Proveedores extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtRzon = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtComen = new javax.swing.JTextField();
+        txtDir = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtReLe = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtExt1 = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        txtPlaCo = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
-        txtMon = new javax.swing.JTextField();
-        jLabel26 = new javax.swing.JLabel();
-        tctCorri = new javax.swing.JTextField();
-        jLabel28 = new javax.swing.JLabel();
-        txtCueCon = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jbtNuevo = new javax.swing.JButton();
         jbtGuardar = new javax.swing.JButton();
@@ -658,7 +657,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         jLabel12.setText("E-mail:");
 
-        jLabel13.setText("Comentario:");
+        jLabel13.setText("Direccion:");
 
         txtRzon.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -668,17 +667,17 @@ public class Proveedores extends javax.swing.JFrame {
 
         jLabel14.setText("Forma Pago:");
 
-        txtComen.addActionListener(new java.awt.event.ActionListener() {
+        txtDir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtComenActionPerformed(evt);
+                txtDirActionPerformed(evt);
             }
         });
-        txtComen.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtDir.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtComenKeyReleased(evt);
+                txtDirKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtComenKeyTyped(evt);
+                txtDirKeyTyped(evt);
             }
         });
 
@@ -721,7 +720,7 @@ public class Proveedores extends javax.swing.JFrame {
                         .addComponent(jLabel13)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtComen, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(288, 288, 288))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -749,7 +748,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtComen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -771,62 +770,20 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel24.setText("Pazo Compra:");
-
-        jLabel25.setText("Monto:");
-
-        txtMon.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMonKeyTyped(evt);
-            }
-        });
-
-        jLabel26.setText("Corriente:");
-
-        tctCorri.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tctCorriKeyTyped(evt);
-            }
-        });
-
-        jLabel28.setText("Cuenta Cont:");
-
-        txtCueCon.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCueConKeyTyped(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel15))
+                .addComponent(jLabel15)
                 .addGap(40, 40, 40)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtReLe, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(txtMon))
+                .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel26))
+                .addComponent(jLabel16)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tctCorri, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addComponent(txtExt1))
-                .addGap(49, 49, 49)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPlaCo)
-                    .addComponent(txtCueCon))
-                .addContainerGap())
+                .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -836,22 +793,8 @@ public class Proveedores extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24)
-                    .addComponent(txtPlaCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel25))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tctCorri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26)
-                            .addComponent(jLabel28)
-                            .addComponent(txtCueCon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -936,7 +879,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addComponent(jbtCancelar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtSalir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -957,8 +900,8 @@ public class Proveedores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -989,14 +932,14 @@ public class Proveedores extends javax.swing.JFrame {
         mayusclasRazonSocial(evt);
     }//GEN-LAST:event_txtRazonSoKeyReleased
 
-    private void txtComenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtComenKeyReleased
+    private void txtDirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirKeyReleased
         // TODO add your handling code here:
         mayusclasComen(evt);
-    }//GEN-LAST:event_txtComenKeyReleased
+    }//GEN-LAST:event_txtDirKeyReleased
 
-    private void txtComenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtComenActionPerformed
+    private void txtDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtComenActionPerformed
+    }//GEN-LAST:event_txtDirActionPerformed
 
     private void txtTelfComveKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfComveKeyTyped
         // TODO add your handling code here:
@@ -1027,21 +970,6 @@ public class Proveedores extends javax.swing.JFrame {
         soloNumeros(evt);
     }//GEN-LAST:event_txtExt1KeyTyped
 
-    private void txtMonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMonKeyTyped
-        // TODO add your handling code here:s
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtMonKeyTyped
-
-    private void tctCorriKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tctCorriKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_tctCorriKeyTyped
-
-    private void txtCueConKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCueConKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtCueConKeyTyped
-
     private void txtCedKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedKeyTyped
         // TODO add your handling code here:
         soloNumeros(evt);
@@ -1058,10 +986,10 @@ public class Proveedores extends javax.swing.JFrame {
         contTelCel();
     }//GEN-LAST:event_txtTelfCeluFocusLost
 
-    private void txtComenKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtComenKeyTyped
+    private void txtDirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirKeyTyped
         // TODO add your handling code here:
         soloLetras(evt);
-    }//GEN-LAST:event_txtComenKeyTyped
+    }//GEN-LAST:event_txtDirKeyTyped
 
     private void txtTelfComveKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfComveKeyReleased
         // TODO add your handling code here:
@@ -1146,10 +1074,6 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1167,15 +1091,11 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JButton jbtGuardar;
     private javax.swing.JButton jbtNuevo;
     private javax.swing.JButton jbtSalir;
-    private javax.swing.JTextField tctCorri;
     private javax.swing.JTextField txtCed;
     private javax.swing.JTextField txtCodEmpresa;
-    private javax.swing.JTextField txtComen;
-    private javax.swing.JTextField txtCueCon;
+    private javax.swing.JTextField txtDir;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtExt1;
-    private javax.swing.JTextField txtMon;
-    private javax.swing.JTextField txtPlaCo;
     private javax.swing.JTextField txtRUC;
     private javax.swing.JTextField txtRazonSo;
     private javax.swing.JTextField txtReLe;

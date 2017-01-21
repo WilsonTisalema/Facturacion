@@ -967,6 +967,11 @@ public class productos extends javax.swing.JFrame {
         guardar();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        guardar();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     /**
      * @param args the command line arguments
      */

@@ -159,7 +159,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
         String sql = "";
-        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RAZON_SOCI_USU,RUC_CLI,TIPO_CONT_CLI,ACT_CLI from clientes where ci_cli='" + cedula + "'";
+        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RUC_CLI,TIPO_CONT_CLI,ACT_CLI from clientes where ci_cli='" + cedula + "'";
         // String[] filas=new String[8];
         Statement ps;
         try {
@@ -171,7 +171,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtCelular.setText(rs.getString("CEL1_CLI"));
                 txtEmail.setText(rs.getString("E_MAIL_CLI"));
                 txtDireccion.setText(rs.getString("DIR_CLI"));
-                txtRazonS.setText(rs.getString("RAZON_SOCI_USU"));
+                
                 txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
                 txtRuc.setText(rs.getString("RUC_CLI"));
                 int activo = Integer.valueOf(rs.getString("ACT_CLI"));
@@ -334,11 +334,11 @@ public class FacturaVenta extends javax.swing.JFrame {
         int dato_stock = Integer.valueOf(txtCant.getText());
         int dato_descuento = Integer.valueOf(txtDescPro.getText());
         if (dato_stock > stockProBase) {
-            JOptionPane.showMessageDialog(null, "No hay stock, El stock es = " + stockProBase);
+            JOptionPane.showMessageDialog(null, "El stock es = " + stockProBase);
             y++;
         }
         if (dato_descuento > max_descuento) {
-            JOptionPane.showMessageDialog(null, "Descuento excede el maximo, Maximo descuento es = " + max_descuento);
+            JOptionPane.showMessageDialog(null, "Descuento Maximo descuento es = " + max_descuento);
             y++;
         }
         if(txtCant.getText().trim().length()==0){
@@ -413,6 +413,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
 
     }
+    
     public void imprimir(){
         conexion_mysql cn=new conexion_mysql();
         Connection cc=cn.conectar();
@@ -489,11 +490,11 @@ public class FacturaVenta extends javax.swing.JFrame {
             NUM_FAC_PER = txtSecuencial.getText().trim();
             COD_PRO_P = jtbProductos.getValueAt(i, 0).toString();
             CANT_PRO = jtbProductos.getValueAt(i, 2).toString();
-            System.out.println(CANT_PRO);
+            //System.out.println(CANT_PRO);
             DES_PRO = jtbProductos.getValueAt(i, 4).toString();
             PRE_UNI_PRO = jtbProductos.getValueAt(i, 3).toString();
             tot_det=Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
-            System.out.println(sql2);
+            //System.out.println(sql2);
             try {
                 PreparedStatement ps1 = cc.prepareStatement(sql2);
                 ps1.setString(1, SEC_NUM_FAC_P);
@@ -505,19 +506,53 @@ public class FacturaVenta extends javax.swing.JFrame {
                 ps1.setFloat(7, tot_det);
                 insertar = insertar + ps1.executeUpdate();
                 System.out.println(sql2);
+                actualizarStock(COD_PRO_P,CANT_PRO);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No se puede insertar productos " + ex);
             }
             if (insertar == 2) {
                 JOptionPane.showMessageDialog(null, "Factura guardada con exito");
-                generarCobros gc=new generarCobros(null, false, txtSecuencial.getText(), txtNumFac.getText(), txtTotal.getText());
+                generarCobros gc=new generarCobros(null, false, txtNumFac.getText(), txtSecuencial.getText(), txtTotal.getText());
                 gc.show();
                 jbtnImprimit.setEnabled(true);
                 jbtnImprimit.requestFocus();
             }
-
         }
 
+    }
+    public void actualizarStock(String codigo,String cantidad){
+        conexion_mysql cc=new conexion_mysql();
+        Connection cn=cc.conectar();
+        float cantidadB=Float.valueOf(cantidad);
+        float stockActual=Float.valueOf(stockBaseM(codigo));
+        float nuevoStock=stockActual-cantidadB;
+        String sql="";
+        sql="update productos set stock_pro='"+String.valueOf(nuevoStock)+"' where cod_prod='"+codigo+"'";
+        System.out.println("actualizacion "+sql);
+        try {
+            PreparedStatement ps=cn.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "update "+ex);
+        }
+    }
+    public String stockBaseM(String codigo){
+        String data="0";
+        conexion_mysql cn=new conexion_mysql();
+        Connection cc=cn.conectar();
+        String sql="";
+        sql="select stock_pro from productos where cod_prod='"+codigo+"'";
+        try {
+            Statement ps=cc.createStatement();
+            ResultSet rs=ps.executeQuery(sql);
+            while(rs.next()){
+                data=rs.getString("stock_pro");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
     }
     public void limpiarTodo(){
         FacturaVenta fv=new FacturaVenta(txtVendedor.getText());
