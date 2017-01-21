@@ -47,7 +47,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
     }
 
     private void guardar() {
-        if(camposLlenos()){
+        if(!camposLlenos()){
             conexion_mysql cn=new conexion_mysql();
             Connection cc=cn.conectar();
             String sql="";
@@ -232,8 +232,15 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     public boolean camposLlenos() {
         int y = 0;
-
-        if (txtCedula.getText().length() == 10) {
+        Date ini = jdtNac.getDate();
+        final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+        Calendar actual = new GregorianCalendar();
+        Date fin=actual.getTime();  
+        float diferencia = (fin.getTime() - ini.getTime()) / MILLSECS_PER_DAY;
+        if(txtCedula.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "ingrese numero de cedula");
+            y++;
+        }else if (txtCedula.getText().length() == 10) {
             if (verficacion_cedula_ec.verificaCedula(txtCedula.getText().trim())) {
 
             } else {
@@ -241,73 +248,49 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
                 txtCedula.setText("");
                 txtCedula.requestFocus();
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese la cedula completa");
-            y++;
-            txtCedula.requestFocus();
-        }
-
-        if (txtNombre.getText().length() < 2) {
+        } else if (txtNombre.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar nombre mayor a 2 caracteres");
             txtNombre.requestFocus();
             y++;
-        }
-        if (txtNombre1.getText().length() < 2) {
+        }else if (txtNombre1.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar nombre mayor a 2 caracteres");
             txtNombre1.requestFocus();
             y++;
-        }
-        if (txtApellido.getText().length() < 2) {
+        }else if (txtApellido.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar apellido mayor a 2 caracteres");
             txtApellido.requestFocus();
             y++;
-        }
-        
-        if (txtApellido1.getText().length() < 2) {
+        }else if (txtApellido1.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar apellido mayor a 2 caracteres");
             txtApellido1.requestFocus();
             y++;
-        }
-        if (txtCelular.getText().length() < 10 || txtCelular.getText().length() > 10 ) {
+        }else if (txtCelular.getText().length() < 10 || txtCelular.getText().length() > 10 ) {
             
             JOptionPane.showMessageDialog(null, "Debe ingresar ceular de 10 digitos");
             txtCelular.requestFocus();
             y++;
-        }
-        if (txtCorreo.getText().length() < 2) {
+        }else  if (txtCorreo.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un correo valido");
             txtCorreo.requestFocus();
             y++;
-        }
-        if (txtDireccion.getText().length() < 2) {
+        }else if (txtDireccion.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
             txtDireccion.requestFocus();
             y++;
-        }
-        //restar para ver mayoria edad
-        Date ini = jdtNac.getDate();
-        final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-        Calendar actual = new GregorianCalendar();
-        Date fin=actual.getTime();  
-        float diferencia = (fin.getTime() - ini.getTime()) / MILLSECS_PER_DAY;
-        if (diferencia <= 6570) {
+        }else if (diferencia <= 6570) {
             //y++;
             JOptionPane.showMessageDialog(this, "Fecha Nacimiento ingresada no es valida");
             y++;
             jdtNac.requestFocus();
-        } 
-        if(jcmbEstadoCivil.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbEstadoCivil.getSelectedItem().toString().equals("Seleccione uno")){
             JOptionPane.showMessageDialog(this, "Seleccion un estado civil");
             y++;
             jcmbEstadoCivil.requestFocus();
-        }
-        if(jcmbGenero.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbGenero.getSelectedItem().toString().equals("Seleccione uno")){
             JOptionPane.showMessageDialog(this, "Seleccion un género");
             y++;
             jcmbGenero.requestFocus();
-        }
-        
-        if(jcmbjerarquia.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbjerarquia.getSelectedItem().toString().equals("Seleccione uno")){
             JOptionPane.showMessageDialog(this, "Seleccion una Jerarquia");
             y++;
             jcmbjerarquia.requestFocus();
