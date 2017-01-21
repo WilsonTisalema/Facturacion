@@ -6,12 +6,15 @@
      detalle_fac_ven.`SEC_NUM_FAC_P` AS detalle_fac_ven_SEC_NUM_FAC_P,
      detalle_fac_ven.`NUM_FAC_PER` AS detalle_fac_ven_NUM_FAC_PER,
      detalle_fac_ven.`COD_PRO_P` AS detalle_fac_ven_COD_PRO_P,
-     detalle_fac_ven.`CANT_PRO` AS detalle_fac_ven_CANT_PRO,
      detalle_fac_ven.`DES_PRO` AS detalle_fac_ven_DES_PRO,
-     detalle_fac_ven.`PRE_UNI_PRO` AS detalle_fac_ven_PRE_UNI_PRO
+     detalle_fac_ven.`PRE_UNI_PRO` AS detalle_fac_ven_PRE_UNI_PRO,
+     detalle_fac_ven.`tot_det` AS detalle_fac_ven_total,
+     detalle_fac_ven.`CANT_PRO` AS detalle_fac_ven_CANT_PRO,
+     productos.`des_prod` AS detalle_fac_destalle_pro
 FROM
-     `detalle_fac_ven` detalle_fac_ven
-where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
+     `detalle_fac_ven` detalle_fac_ven, `productos` productos
+WHERE
+     detalle_fac_ven.`NUM_FAC_PER` = $P{numero} and productos.`cod_prod`=detalle_fac_ven.`cod_pro_p`]]>
 	</queryString>
 	<field name="detalle_fac_ven_SEC_NUM_FAC_P" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -31,6 +34,8 @@ where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 	<field name="detalle_fac_ven_PRE_UNI_PRO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="detalle_fac_ven_total" class="java.lang.String"/>
+	<field name="detalle_fac_destalle_pro" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -54,18 +59,32 @@ where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 				<text><![CDATA[Detalle]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="423" y="4" width="132" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<reportElement mode="Opaque" x="401" y="4" width="83" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Precio Unitario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="279" y="4" width="144" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<reportElement mode="Opaque" x="279" y="4" width="54" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="333" y="4" width="68" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Descuento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="484" y="4" width="71" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -79,25 +98,35 @@ where detalle_fac_ven.`NUM_FAC_PER`=$P{numero}]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_COD_PRO_P}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="279" y="0" width="144" height="20"/>
+				<reportElement x="333" y="0" width="68" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_DES_PRO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="423" y="0" width="132" height="20"/>
+				<reportElement x="401" y="0" width="83" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_PRE_UNI_PRO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="96" y="0" width="183" height="20"/>
+				<reportElement x="279" y="0" width="54" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_CANT_PRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="0" width="71" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_ven_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="0" width="183" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{detalle_fac_destalle_pro}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
