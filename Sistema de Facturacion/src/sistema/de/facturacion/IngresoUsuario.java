@@ -30,7 +30,7 @@ import javax.swing.JTextField;
  *
  * @author ADMIN
  */
-public class IngresoUsuario extends javax.swing.JFrame {
+public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IngresoUsuario
@@ -179,7 +179,7 @@ public class IngresoUsuario extends javax.swing.JFrame {
     }
 
     public void buscar() {
-        consultaPer con = new consultaPer(this, rootPaneCheckingEnabled, txtCedula.getText());
+        consultaPer con = new consultaPer(null, rootPaneCheckingEnabled, txtCedula.getText());
         con.show();
         txtCedula.setText(con.cedulas);
     }
