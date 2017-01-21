@@ -34,12 +34,14 @@ public class login extends javax.swing.JFrame {
         if(VerUsuario()){
             String password=encriptaEnMD5(txtPass.getText().trim());
             if(password.equals(verClave())){
+               
                principal pl=new principal(txtUser.getText());
                pl.setVisible(true);
                this.dispose();
             }
         }
     }
+  
     public boolean VerUsuario(){
         conexion_mysql cc=new conexion_mysql();
         Connection cn=cc.conectar();
