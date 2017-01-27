@@ -87,6 +87,7 @@ public class generarCobros extends javax.swing.JDialog {
             ps.setFloat(4, abo_cob);
             if(ps.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null, "Cobro Guaradado");
+                dispose();
             }
         } catch (SQLException ex) {
             Logger.getLogger(generarCobros.class.getName()).log(Level.SEVERE, null, ex);

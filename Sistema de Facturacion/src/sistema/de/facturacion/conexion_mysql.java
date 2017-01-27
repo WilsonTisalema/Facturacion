@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -19,9 +19,9 @@ public class conexion_mysql {
         try {
             //Class.forName("com.mysql.jdbc.Drive");//empresa a la que hace referencia papi
             //Class.forName("com.mysql.jdbc.Driver"); 
-            //conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "root", "");
+            conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "root", "");
             Class.forName("com.mysql.jdbc.Driver");
-            conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
+            //conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
             //JOptionPane.showMessageDialog(null, "Conexion correcta");
             System.out.println("conexion");
         } catch (Exception ex) {
