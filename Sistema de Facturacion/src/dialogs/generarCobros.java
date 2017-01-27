@@ -71,7 +71,7 @@ public class generarCobros extends javax.swing.JDialog {
         conexion_mysql cn=new conexion_mysql();
         Connection cc=cn.conectar();
         String sql="";
-        sql="insert into cobros(`sec_fac`,`num_fac_p`,`tot_fac`,`abo_cob`) "
+        sql="insert into cobros(`sec_fac_p`,`num_fac_p`,`tot_fac`,`abo_cob`) "
                 + "values(?,?,?,?)";
         String sec_fac,num_fac_p;
         float tot_fac,abo_cob;
