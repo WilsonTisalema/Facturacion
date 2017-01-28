@@ -27,9 +27,40 @@ public class FabricanteProductos extends javax.swing.JFrame {
     public FabricanteProductos() {
         initComponents();
         ProvinciasEc();
+        botonesInicio();
 
     }
-
+     public void botonesInicio() {
+        txtCodigo.setEnabled(false);
+        txtDirecion.setEnabled(false);
+        txtEmail.setEnabled(false);
+        cbxCan.setEnabled(false);
+        txtEmpresa.setEnabled(false);
+        txtTelefono.setEnabled(false);
+        txtWeb.setEnabled(false);
+        cbxProv.setEnabled(false);
+        btnNuevo.setEnabled(true);
+        btnBorrar.setEnabled(true);
+        btnCerrarC.setEnabled(true);
+        btnGuargarC.setEnabled(false);
+        btnEditar.setEnabled(false);
+    }
+      public void botonesNuevo() {
+        txtCodigo.requestFocus();
+        txtCodigo.setEnabled(true);
+        txtDirecion.setEnabled(true);
+        txtEmail.setEnabled(true);
+        cbxCan.setEnabled(true);
+        txtEmpresa.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        txtWeb.setEnabled(true);
+        cbxProv.setEnabled(true);
+     btnNuevo.setEnabled(false);
+        btnBorrar.setEnabled(true);
+        btnCerrarC.setEnabled(true);
+        btnGuargarC.setEnabled(true);
+        btnEditar.setEnabled(false);
+      }
     public void soloNumeros(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -413,6 +444,7 @@ public void buscarFabricante(String codigo) {
         
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -773,7 +805,7 @@ public void buscarFabricante(String codigo) {
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        
+        botonesNuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
