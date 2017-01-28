@@ -170,9 +170,9 @@ public class AgregarProductos extends javax.swing.JFrame {
         try {
             Statement psd = cn.createStatement();
             ResultSet rs = psd.executeQuery(sql);
-            while (rs.next()) {
-                jLabel2.add("COD_PROD", this);
-            }
+//            while (rs.next()) {
+//                jLabel2.add("COD_PROD", this);
+//            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -245,7 +245,6 @@ public class AgregarProductos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblIngreso = new javax.swing.JTable();
         jbtnConfirmar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -279,8 +278,6 @@ public class AgregarProductos extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("jLabel2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -298,10 +295,6 @@ public class AgregarProductos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnConfirmar)
                         .addGap(44, 44, 44))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,9 +306,7 @@ public class AgregarProductos extends javax.swing.JFrame {
                     .addComponent(jbtnConfirmar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,7 +359,6 @@ public class AgregarProductos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnConfirmar;
     private javax.swing.JTable jtblIngreso;
