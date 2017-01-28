@@ -28,6 +28,7 @@ public class login extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("INGRESO A PUNTO DE VENTA");
+        lblMensaje.setVisible(false);
     }
     public void ingreso() {
         //System.out.println("ok");
@@ -52,7 +53,11 @@ public class login extends javax.swing.JFrame {
                     this.dispose();
                 }
 
+            }else{
+                lblMensaje.setVisible(true);
             }
+        }else{
+                lblMensaje.setVisible(true);
         }
     }
     public String jerarquia(String ced){
@@ -86,7 +91,6 @@ public class login extends javax.swing.JFrame {
                 data=true;
             }else{
                 data=false;
-                JOptionPane.showMessageDialog(this, "El usuario no existe");
                 txtUser.setText("");
                         
             }
@@ -107,9 +111,7 @@ public class login extends javax.swing.JFrame {
             if(rs.next()){
                 data=rs.getString("clave_usu");
             }else{
-                
-                JOptionPane.showMessageDialog(this, "El usuario no existe");
-                txtUser.setText("");
+                  txtUser.setText("");
                         
             }
         } catch (Exception ex) {
@@ -155,6 +157,7 @@ public class login extends javax.swing.JFrame {
         jbtnIngreso = new javax.swing.JButton();
         jbtnSalir = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        lblMensaje = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,6 +179,11 @@ public class login extends javax.swing.JFrame {
         txtPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPassActionPerformed(evt);
+            }
+        });
+        txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPassFocusGained(evt);
             }
         });
 
@@ -203,6 +211,9 @@ public class login extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
 
+        lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
+        lblMensaje.setText("Usuario o Contraseña incorrecto. Vuelva a intentarlo ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,33 +221,34 @@ public class login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jbtnSalir)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jbtnIngreso))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(86, 86, 86)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPass)
-                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jbtnSalir)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jbtnIngreso))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(86, 86, 86)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtPass)
+                                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(lblMensaje)))
                 .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jLabel4)
-                .addContainerGap(52, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -245,10 +257,16 @@ public class login extends javax.swing.JFrame {
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblMensaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnIngreso)
                     .addComponent(jbtnSalir))
-                .addGap(19, 19, 19))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel4)
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,6 +285,11 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         ingreso();
     }//GEN-LAST:event_jbtnIngresoActionPerformed
+
+    private void txtPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusGained
+        // TODO add your handling code here:
+        lblMensaje.setVisible(false);
+    }//GEN-LAST:event_txtPassFocusGained
 
     /**
      * @param args the command line arguments
@@ -311,6 +334,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtnIngreso;
     private javax.swing.JButton jbtnSalir;
+    private javax.swing.JLabel lblMensaje;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
