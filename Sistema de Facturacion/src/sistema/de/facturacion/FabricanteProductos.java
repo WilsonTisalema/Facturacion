@@ -660,6 +660,11 @@ public void buscarFabricante(String codigo) {
         btnEditar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ACTUALIZAR1.png"))); // NOI18N
         btnEditar.setText("Actualizar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnBorrar.setBackground(new java.awt.Color(51, 204, 255));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -834,6 +839,18 @@ public void buscarFabricante(String codigo) {
                                             
 
     }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+         if (txtCodigo.getText().trim().length() != 10) {
+            consultaFabricantes cn = new consultaFabricantes(this, rootPaneCheckingEnabled, txtCodigo.getText().trim());
+            cn.show();
+            txtCodigo.setText(cn.codigo);
+            buscarFabricante(txtCodigo.getText());
+        } else {
+            buscarFabricante(txtCodigo.getText());
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
