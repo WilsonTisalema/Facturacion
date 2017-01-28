@@ -232,11 +232,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     public boolean camposLlenos() {
         int y = 0;
-        Date ini = jdtNac.getDate();
-        final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-        Calendar actual = new GregorianCalendar();
-        Date fin=actual.getTime();  
-        float diferencia = (fin.getTime() - ini.getTime()) / MILLSECS_PER_DAY;
+       
         if(txtCedula.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "ingrese numero de cedula");
             y++;
@@ -277,12 +273,23 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
             txtDireccion.requestFocus();
             y++;
-        }else if (diferencia <= 6570) {
+        }else if(jdtNac.getDate()==null){
+            JOptionPane.showMessageDialog(null, "Escoja un dia de nacimiento");
+            txtDireccion.requestFocus();
+            y++;
+        }else  if(jdtNac.getDate()!=null){
+            Date ini = jdtNac.getDate();
+        final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+        Calendar actual = new GregorianCalendar();
+        Date fin=actual.getTime();  
+        float diferencia = (fin.getTime() - ini.getTime()) / MILLSECS_PER_DAY;
+            if (diferencia <= 6570) {
             //y++;
             JOptionPane.showMessageDialog(this, "Fecha Nacimiento ingresada no es valida");
             y++;
             jdtNac.requestFocus();
-        }else if(jcmbEstadoCivil.getSelectedItem().toString().equals("Seleccione uno")){
+        } 
+        } else if(jcmbEstadoCivil.getSelectedItem().toString().equals("Seleccione uno")){
             JOptionPane.showMessageDialog(this, "Seleccion un estado civil");
             y++;
             jcmbEstadoCivil.requestFocus();
