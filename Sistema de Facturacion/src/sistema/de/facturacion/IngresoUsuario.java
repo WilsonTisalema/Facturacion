@@ -30,7 +30,7 @@ import javax.swing.JTextField;
  *
  * @author ADMIN
  */
-public class IngresoUsuario extends javax.swing.JInternalFrame {
+public class IngresoUsuario extends javax.swing.JFrame {
 
     /**
      * Creates new form IngresoUsuario
@@ -47,7 +47,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
     }
 
     private void guardar() {
-        if(!camposLlenos()){
+        if(camposLlenos()){
             conexion_mysql cn=new conexion_mysql();
             Connection cc=cn.conectar();
             String sql="";
@@ -62,12 +62,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
             NOM2_USU=txtNombre1.getText().trim();
             APE1_USU=txtApellido.getText().trim();
             APE2_USU=txtApellido1.getText().trim();
-            Date ini = jdtNac.getDate();
-            String dia,mes,anio;
-            dia=String.valueOf(ini.getDate());
-            mes=String.valueOf(ini.getMonth()+1);
-            anio=String.valueOf(ini.getYear()+1900);
-            FEC_NAC_USU=anio+"-"+mes+"-"+dia;
+            FEC_NAC_USU=new SimpleDateFormat("yyyy-MM-dd").format(jdtNac.getDate());
             TLF_USU=txtTelefono.getText().trim();
             CELU_USU=txtCelular.getText().trim();
             DIR_USU=txtDireccion.getText().trim();
@@ -172,6 +167,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
         txtTelefono.setText("");
         txtDireccion.setText("");
         txtCorreo.setText("");
+        jdtNac.setDate(new Date());
         jcmbEstadoCivil.setSelectedIndex(0);
         jcmbGenero.setSelectedIndex(0);
 //        jcmbProceso.setSelectedIndex(0);
@@ -236,15 +232,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
         if(txtCedula.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "ingrese numero de cedula");
             y++;
-        }else if (txtCedula.getText().length() == 10) {
-            if (verficacion_cedula_ec.verificaCedula(txtCedula.getText().trim())) {
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Número de cedula no valido");
-                txtCedula.setText("");
-                txtCedula.requestFocus();
-            }
-        } else if (txtNombre.getText().length() < 2) {
+        }else if (txtNombre.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar nombre mayor a 2 caracteres");
             txtNombre.requestFocus();
             y++;
@@ -260,44 +248,32 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar apellido mayor a 2 caracteres");
             txtApellido1.requestFocus();
             y++;
-        }else if (txtCelular.getText().length() < 10 || txtCelular.getText().length() > 10 ) {
+        }else if (txtCelular.getText().length() < 10  ) {
             
-            JOptionPane.showMessageDialog(null, "Debe ingresar ceular de 10 digitos");
+            JOptionPane.showMessageDialog(null, "Debe ingresar celular de 10 digitos");
             txtCelular.requestFocus();
-            y++;
-        }else  if (txtCorreo.getText().length() < 2) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un correo valido");
-            txtCorreo.requestFocus();
             y++;
         }else if (txtDireccion.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
             txtDireccion.requestFocus();
             y++;
-        }else if(jdtNac.getDate()==null){
-            JOptionPane.showMessageDialog(null, "Escoja un dia de nacimiento");
-            txtDireccion.requestFocus();
+        } else  if (txtCorreo.getText().length() < 2) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un correo valido");
+            txtCorreo.requestFocus();
             y++;
-        }else  if(jdtNac.getDate()!=null){
-            Date ini = jdtNac.getDate();
-        final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-        Calendar actual = new GregorianCalendar();
-        Date fin=actual.getTime();  
-        float diferencia = (fin.getTime() - ini.getTime()) / MILLSECS_PER_DAY;
-            if (diferencia <= 6570) {
-            //y++;
-            JOptionPane.showMessageDialog(this, "Fecha Nacimiento ingresada no es valida");
+        }else if(jdtNac.getDate()==null){
+            JOptionPane.showMessageDialog(this, "Seleccion fecha de nacimiento");
             y++;
             jdtNac.requestFocus();
-        } 
-        } else if(jcmbEstadoCivil.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbEstadoCivil.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(this, "Seleccion un estado civil");
             y++;
             jcmbEstadoCivil.requestFocus();
-        }else if(jcmbGenero.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbGenero.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(this, "Seleccion un género");
             y++;
             jcmbGenero.requestFocus();
-        }else if(jcmbjerarquia.getSelectedItem().toString().equals("Seleccione uno")){
+        }else if(jcmbjerarquia.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(this, "Seleccion una Jerarquia");
             y++;
             jcmbjerarquia.requestFocus();
@@ -373,17 +349,13 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
         } else {
             activo = "1";
         }
-        Date fec = jdtNac.getDate();
-        String dia = String.valueOf(fec.getDate());
-        String mes = String.valueOf(fec.getMonth() + 1);
-        String anio = String.valueOf(fec.getYear() + 1900);
-        String fecha = anio + "-" + mes + "-" + dia;
+     
         //System.out.println(fecha);
         sql = "update usuarios set NOM1_USU='" + txtNombre.getText().trim() + "' ,NOM2_USU='" + txtNombre1.getText().trim() + "' "
                 + ",APE1_USU='" + txtApellido.getText().trim() + "' ,APE2_USU='" + txtApellido1.getText().trim() + "'"
                 + ",TLF_USU='" + txtTelefono.getText().trim() + "' ,CELU_USU='" + txtCelular.getText().trim() + "' ,DIR_USU='" + txtDireccion.getText().trim() + "',"
                 + "E_MAIL_USU='" + txtCorreo.getText().trim() + "' ,GEN_USU='" + jcmbGenero.getSelectedItem()
-                + "' ,EST_CIV_USU='" + jcmbEstadoCivil.getSelectedItem() + "',JERAR_USU='" + jcmbjerarquia.getSelectedItem() + "' ,ESTADO_USU='" + activo + "',FEC_NAC_USU='" + fecha + "' where CI_USU='" + txtCedula.getText() + "'";
+                + "' ,EST_CIV_USU='" + jcmbEstadoCivil.getSelectedItem() + "',JERAR_USU='" + jcmbjerarquia.getSelectedItem() + "' ,ESTADO_USU='" + activo + "',FEC_NAC_USU='" + new SimpleDateFormat("yyyy-MM-dd").format(jdtNac.getDate()) + "' where CI_USU='" + txtCedula.getText() + "'";
         //System.out.println(sql);
         try {
             PreparedStatement ps = cc.prepareStatement(sql);
@@ -929,9 +901,7 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGuardarActionPerformed
-        // TODO add your handling code here:
-        
-       
+        // TODO add your handling code here:       
         guardar();
     }//GEN-LAST:event_jbtGuardarActionPerformed
 
@@ -977,18 +947,8 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_jbtBuscarActionPerformed
-
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        // TODO add your handling code here:
-
-        jbtBuscar.requestFocus();
-    }//GEN-LAST:event_txtCedulaActionPerformed
-
-    private void jbtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtBuscarKeyTyped
-        // TODO add your handling code here:
-
+       // buscar();
+       
         if (txtCedula.getText().length() == 10) {
             txtCedula.setEnabled(false);
             buscarCedulaCompleta(txtCedula.getText());
@@ -1009,6 +969,17 @@ public class IngresoUsuario extends javax.swing.JInternalFrame {
             txtClave.setEnabled(true);
             jbtPassword.setEnabled(true);
         }
+    }//GEN-LAST:event_jbtBuscarActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+
+        jbtBuscar.requestFocus();
+    }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void jbtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtBuscarKeyTyped
+        // TODO add your handling code here:
+
     }//GEN-LAST:event_jbtBuscarKeyTyped
     
     private void txtCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyPressed
