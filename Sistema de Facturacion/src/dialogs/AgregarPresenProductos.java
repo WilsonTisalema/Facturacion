@@ -35,6 +35,7 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
         txtCodPro.setEnabled(false);
         descargarDatos();
         sacarDatos();
+        bloquear();
     }
     DefaultTableModel modelo;
     public AgregarPresenProductos(java.awt.Frame parent, boolean modal,String code) {
@@ -44,6 +45,28 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
         txtCodPro.setEnabled(false);
         descargarDatos();
         sacarDatos();
+    }
+    public void bloquear(){
+        jbtnNuevo.setEnabled(true);
+        jbtnGuardar.setEnabled(false);
+        jbtnActualizar.setEnabled(false);
+        jbtnCancelar.setEnabled(false);
+        jbtnSalir.setEnabled(true);
+        txtCodigoPre.setEnabled(false);
+        txtDesPresentacion.setEnabled(false);
+    }
+    public void desbloquear(){
+        jbtnNuevo.setEnabled(false);
+        jbtnGuardar.setEnabled(true);
+        jbtnActualizar.setEnabled(true);
+        jbtnCancelar.setEnabled(true);
+        jbtnSalir.setEnabled(true);
+        txtCodigoPre.setEnabled(true);
+        txtDesPresentacion.setEnabled(true);
+    }
+     public void limpiar(){
+        txtCodigoPre.setText("");
+        txtDesPresentacion.setText("");
     }
     public void descargarDatos(){
         String[] titulos={"Código Presentacion","Descripcion"};
@@ -81,6 +104,36 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
             }
         });
     }
+    public void actualizar() {
+        if(txtCodigoPre.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe insertar la codigo");
+            txtCodigoPre.requestFocus();
+        }else{
+            if(txtDesPresentacion.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe insertar la presentacion");
+            txtDesPresentacion.requestFocus();
+        }else{
+            conexion_mysql cc=new conexion_mysql();
+            Connection cn=cc.conectar();
+            String sql;
+            sql = "update presentaciones_productos set COD_PRO_P='" + txtCodigoPre.getText() + "',"
+                    + "DES_PRES_PRO='" + txtDesPresentacion.getText() + "',"
+                    + "'where COD_PRES='" + txtCodPro.getText() + "'";
+                try {
+                PreparedStatement psd = cn.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+                }
+                }catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                        }
+                descargarDatos();
+                }
+            limpiar();
+            }
+        }
+  
     public void guardar(){
         try {
             // TODO add your handling code here:
@@ -148,6 +201,11 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
         jbtnActualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbtnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ACTUALIZAR1.png"))); // NOI18N
         jbtnActualizar.setText("Actualizar");
+        jbtnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Descripcion Presentacion:");
@@ -195,6 +253,11 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
         jbtnNuevo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jbtnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/nuevo.png"))); // NOI18N
         jbtnNuevo.setText("Nuevo");
+        jbtnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -290,8 +353,18 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
         // TODO add your handling code here:
-        dispose();
+        limpiar();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
+
+    private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
+        // TODO add your handling code here:
+        desbloquear();
+    }//GEN-LAST:event_jbtnNuevoActionPerformed
+
+    private void jbtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActualizarActionPerformed
+        // TODO add your handling code here:
+        actualizar();
+    }//GEN-LAST:event_jbtnActualizarActionPerformed
 
     /**
      * @param args the command line arguments

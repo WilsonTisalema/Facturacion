@@ -111,19 +111,18 @@ public class productos extends javax.swing.JFrame {
     }
 
     
-     public void cancelar(){
-              
+     public void cancelar(){           
         txtCod.setText("");
         txtDesc.setText("");
-        jcbPresentaciones.setSelectedIndex(0);
+        jcbPresentaciones.setSelectedItem(" ");
         jcbiva.setText("");
         txtUnid.setText("");
         txtUnidAl.setText("");
         txtPreBas.setText("");
         txtPre1.setText("");
         txtUltPreCo.setText("");
-        cbxFam.setSelectedIndex(0);
-        cbxSubFam.setSelectedIndex(0);
+        cbxFam.setSelectedItem(" ");
+        cbxSubFam.setSelectedItem(" ");
         txtCateg.setText("");
         txtPre2.setText("");
         txtPreProCom.setText("");
@@ -480,12 +479,13 @@ public class productos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBusqueda)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jcbiva))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbiva, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBusqueda)
+                        .addComponent(jLabel2)
+                        .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -519,6 +519,11 @@ public class productos extends javax.swing.JFrame {
         cbxFam.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxFamItemStateChanged(evt);
+            }
+        });
+        cbxFam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxFamActionPerformed(evt);
             }
         });
 
@@ -1090,6 +1095,10 @@ public class productos extends javax.swing.JFrame {
         // TODO add your handling code here:
         cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbxFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxFamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxFamActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
