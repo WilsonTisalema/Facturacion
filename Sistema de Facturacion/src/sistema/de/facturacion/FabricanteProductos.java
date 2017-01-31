@@ -5,14 +5,16 @@
  */
 package sistema.de.facturacion;
 
-import dialogs.consultaCliente;
 import dialogs.consultaFabricantes;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -24,43 +26,16 @@ public class FabricanteProductos extends javax.swing.JFrame {
     /**
      * Creates new form FabricanteProductos
      */
+    DefaultListModel modelo;
+
     public FabricanteProductos() {
         initComponents();
         ProvinciasEc();
-        botonesInicio();
+        bloquearTodoBotones();
+        bloquearTodasCajas();
 
     }
-     public void botonesInicio() {
-        txtCodigo.setEnabled(false);
-        txtDirecion.setEnabled(false);
-        txtEmail.setEnabled(false);
-        cbxCan.setEnabled(false);
-        txtEmpresa.setEnabled(false);
-        txtTelefono.setEnabled(false);
-        txtWeb.setEnabled(false);
-        cbxProv.setEnabled(false);
-        btnNuevo.setEnabled(true);
-        btnBorrar.setEnabled(true);
-        btnCerrarC.setEnabled(true);
-        btnGuargarC.setEnabled(false);
-        btnEditar.setEnabled(false);
-    }
-      public void botonesNuevo() {
-        txtCodigo.requestFocus();
-        txtCodigo.setEnabled(true);
-        txtDirecion.setEnabled(true);
-        txtEmail.setEnabled(true);
-        cbxCan.setEnabled(true);
-        txtEmpresa.setEnabled(true);
-        txtTelefono.setEnabled(true);
-        txtWeb.setEnabled(true);
-        cbxProv.setEnabled(true);
-     btnNuevo.setEnabled(false);
-        btnBorrar.setEnabled(true);
-        btnCerrarC.setEnabled(true);
-        btnGuargarC.setEnabled(true);
-        btnEditar.setEnabled(false);
-      }
+
     public void soloNumeros(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -411,38 +386,219 @@ public class FabricanteProductos extends javax.swing.JFrame {
             cbxCan.addItem("ZAMORA");
         }
     }
-public void buscarFabricante(String codigo) {
-        conexion_mysql cn = new conexion_mysql();
-        Connection cc = cn.conectar();
-        String sql = "";
-        sql = "select emp_fab,prov_fab,cant_fab,email_fab,dir_fab,telf_fab,web_fab from fabricante_producto where cod_fab='" + codigo + "'";
-        // String[] filas=new String[8];
-        Statement ps;
+
+    public void buscarFabricante(String codigo) {
         try {
-            ps = cc.createStatement();
+            conexion_mysql cn = new conexion_mysql();
+            Connection cc = cn.conectar();
+            String sql = "";
+            sql = "select emp_fab,prov_fab,cant_fab,email_fab,dir_fab,telf_fab,web_fab from fabricante_producto"
+                    + " where cod_fab=" + codigo;
+            // String[] filas=new String[8];
+            Statement ps = cc.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             while (rs.next()) {
-                txtEmpresa.setText(rs.getString("emp_fab") );
+                txtEmpresa.setText(rs.getString("emp_fab"));
                 cbxProv.setSelectedItem(rs.getString("prov_fab"));
                 cbxCan.setSelectedItem(rs.getString("cant_fab"));
                 txtEmail.setText(rs.getString("email_fab"));
                 txtDirecion.setText(rs.getString("dir_fab"));
                 txtTelefono.setText(rs.getString("telf_fab"));
                 txtWeb.setText(rs.getString("web_fab"));
-                ;
-                txtEmpresa.setEnabled(false);
-                txtTelefono.setEnabled(false);
-                cbxCan.setEnabled(false);
-                txtEmail.setEnabled(false);
-                cbxProv.setEnabled(false);
-                txtDirecion.setEnabled(false);
-                txtWeb.setEnabled(false);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
 
+            }
+        } catch (Exception ex) {
+            //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void controlactualizar() {
+        txtCodigo.requestFocus();
+        txtCodigo.setEnabled(false);
+        txtDirecion.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtEmpresa.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        txtWeb.setEnabled(true);
+        cbxCan.setEnabled(true);
+        cbxProv.setEnabled(true);
+        btnNuevo.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnCerrar.setEnabled(true);
+        btnGuargar.setEnabled(false);
+        btnActualizar.setEnabled(true);
+    }
+
+    public void ActivarTodasCajas() {
+        // txtCodigo.setEnabled(true);
+        txtEmpresa.setEnabled(true);
+        cbxProv.setEnabled(true);
+        cbxCan.setEnabled(true);
+        txtDirecion.setEnabled(true);
+        txtEmail.setEnabled(true);
+
+        txtTelefono.setEnabled(true);
+        txtWeb.setEnabled(true);
+
+    }
+
+    public void ActivarTodoBotones() {
+        btnActualizar.setEnabled(true);
+        btnGuargar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+
+    public void bloquearTodasCajas() {
+        //txtCodigo.setEnabled(false);
+        txtDirecion.setEnabled(false);
+        txtEmail.setEnabled(false);
+        txtEmpresa.setEnabled(false);
+        txtTelefono.setEnabled(false);
+        txtWeb.setEnabled(false);
+        cbxCan.setEnabled(false);
+        cbxProv.setEnabled(false);
+
+    }
+
+    private void nuevo() {
+        txtCodigo.setText("");
+        txtEmpresa.setText("");
+        cbxProv.setSelectedItem(0);
+        cbxCan.setSelectedItem(0);
+        txtDirecion.setText("");
+        txtEmail.setText("");
+        txtTelefono.setText("");
+        txtWeb.setText("");
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////7
+    public void buscar() {
+        consultaFabricantes con = new consultaFabricantes(null, rootPaneCheckingEnabled, txtCodigo.getText());
+        con.show();
+        txtCodigo.setText(con.codigos);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////77
+    public boolean camposLlenos() {
+        int y = 0;
+
+        if (txtCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese codigo");
+            txtCodigo.requestFocus();
+            y++;
+        } else if (txtEmpresa.getText().length() < 2) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar empresa mayor a 2 caracteres");
+            txtEmpresa.requestFocus();
+            y++;
+        } else if (cbxProv.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccion una provincia");
+            y++;
+            cbxProv.requestFocus();
+        } else if (cbxCan.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccion un canton");
+            y++;
+            cbxCan.requestFocus();
+        } else if (txtDirecion.getText().length() < 2) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
+            txtDirecion.requestFocus();
+            y++;
+        } else if (txtEmail.getText().length() < 2) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un correo valido");
+            txtEmail.requestFocus();
+            y++;
+        } else if (txtTelefono.getText().length() < 10) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar celular de 10 digitos");
+            txtTelefono.requestFocus();
+            y++;
+        } else if (txtWeb.getText().length() < 2) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar una web valida");
+            txtWeb.requestFocus();
+            y++;
+        }
+        if (y > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+///////////////////////////////////////////////////////////////////////////////////
+
+    private void guardar() {
+        if (camposLlenos()) {
+            conexion_mysql cn = new conexion_mysql();
+            Connection cc = cn.conectar();
+            String sql = "";
+            sql = "Insert into  fabricante_producto(cod_fab,emp_fab,prov_fab,cant_fab,email_fab,dir_fab,telf_fab,web_fab)"
+                    + " values(?,?,?,?,?,?,?,?)";
+            String cod_fab, emp_fab, prov_fab, cant_fab, email_fab, dir_fab, telf_fab, web_fab;
+            cod_fab = txtCodigo.getText().trim();
+            emp_fab = txtEmpresa.getText().trim();
+            prov_fab = cbxProv.getSelectedItem().toString();
+            cant_fab = cbxCan.getSelectedItem().toString();
+            email_fab = txtEmail.getText().trim();
+            dir_fab = txtDirecion.getText().trim();
+            telf_fab = txtTelefono.getText().trim();
+            web_fab = txtWeb.getText().trim();
+            try {
+                PreparedStatement ps = cc.prepareStatement(sql);
+                ps.setString(1, cod_fab);
+                ps.setString(2, emp_fab);
+                ps.setString(3, prov_fab);
+                ps.setString(4, cant_fab);
+                ps.setString(5, email_fab);
+                ps.setString(6, dir_fab);
+                ps.setString(7, telf_fab);
+                ps.setString(8, web_fab);
+
+                if (ps.executeUpdate() > 0) {
+                    JOptionPane.showMessageDialog(this, "Se ha guardado correctamente");
+                    bloquearTodasCajas();
+                    nuevo();
+                    bloquearTodoBotones();
+                    bntBuscar.setEnabled(true);
+                    txtCodigo.setEnabled(true);
+                    btnNuevo.setEnabled(true);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(IngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+/////////////////////////////////////////////////////////////////////
+
+    public void bloquearTodoBotones() {
+        btnActualizar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnGuargar.setEnabled(false);
+    }
+//////////////////////////////////////////////////////////////////7
+
+    public void actualizar() {
+        if (camposLlenos()) {
+            conexion_mysql cn = new conexion_mysql();
+            Connection cc = cn.conectar();
+            String sql = "";
+            sql = "update fabricante_producto set emp_fab='" + txtEmpresa.getText().trim() + "' ,prov_fab='" + cbxProv.getSelectedItem() + "' "
+                    + ",cant_fab='" + cbxCan.getSelectedItem() + "' ,email_fab='" + txtEmail.getText().trim() + "'"
+                    + ",dir_fab='" + txtDirecion.getText().trim() + "',telf_fab='" + txtTelefono.getText().trim() + "' ,web_fab='" + txtWeb.getText().trim() + "' where cod_fab='" + txtCodigo.getText() + "'";
+            //System.out.println(sql);
+            try {
+                PreparedStatement ps = cc.prepareStatement(sql);
+                int n = ps.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Actualización Correcta");
+                    nuevo();
+                    bloquearTodasCajas();
+                    bloquearTodoBotones();
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error en la actualización de datos");
+            }
+        }
     }
 
     /**
@@ -459,6 +615,7 @@ public void buscarFabricante(String codigo) {
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtEmpresa = new javax.swing.JTextField();
+        bntBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -475,13 +632,15 @@ public void buscarFabricante(String codigo) {
         jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnBorrar = new javax.swing.JButton();
-        btnGuargarC = new javax.swing.JButton();
-        btnCerrarC = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnGuargar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Codigo :");
@@ -509,6 +668,14 @@ public void buscarFabricante(String codigo) {
             }
         });
 
+        bntBuscar.setBackground(new java.awt.Color(0, 204, 204));
+        bntBuscar.setText("Buscar");
+        bntBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -520,9 +687,12 @@ public void buscarFabricante(String codigo) {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bntBuscar))
                     .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,13 +700,16 @@ public void buscarFabricante(String codigo) {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bntBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Provincia:");
@@ -547,6 +720,15 @@ public void buscarFabricante(String codigo) {
         cbxProv.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxProvItemStateChanged(evt);
+            }
+        });
+
+        txtDirecion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDirecionKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDirecionKeyTyped(evt);
             }
         });
 
@@ -577,7 +759,7 @@ public void buscarFabricante(String codigo) {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
@@ -589,6 +771,14 @@ public void buscarFabricante(String codigo) {
                     .addComponent(txtDirecion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("E-mail:");
@@ -602,6 +792,12 @@ public void buscarFabricante(String codigo) {
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtTelefonoKeyTyped(evt);
+            }
+        });
+
+        txtWeb.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtWebKeyReleased(evt);
             }
         });
 
@@ -656,43 +852,43 @@ public void buscarFabricante(String codigo) {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(51, 204, 255));
-        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ACTUALIZAR1.png"))); // NOI18N
-        btnEditar.setText("Actualizar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setBackground(new java.awt.Color(51, 204, 255));
+        btnActualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ACTUALIZAR1.png"))); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
-        btnBorrar.setBackground(new java.awt.Color(51, 204, 255));
-        btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar.png"))); // NOI18N
-        btnBorrar.setText("Cancelar");
-        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(51, 204, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
-        btnGuargarC.setBackground(new java.awt.Color(51, 204, 255));
-        btnGuargarC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnGuargarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
-        btnGuargarC.setText("Guardar");
-        btnGuargarC.addActionListener(new java.awt.event.ActionListener() {
+        btnGuargar.setBackground(new java.awt.Color(51, 204, 255));
+        btnGuargar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnGuargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        btnGuargar.setText("Guardar");
+        btnGuargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuargarCActionPerformed(evt);
+                btnGuargarActionPerformed(evt);
             }
         });
 
-        btnCerrarC.setBackground(new java.awt.Color(51, 204, 255));
-        btnCerrarC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCerrarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
-        btnCerrarC.setText("Salir");
-        btnCerrarC.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrar.setBackground(new java.awt.Color(51, 204, 255));
+        btnCerrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
+        btnCerrar.setText("Salir");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarCActionPerformed(evt);
+                btnCerrarActionPerformed(evt);
             }
         });
 
@@ -703,11 +899,11 @@ public void buscarFabricante(String codigo) {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnGuargarC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCerrarC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -716,13 +912,13 @@ public void buscarFabricante(String codigo) {
                 .addGap(25, 25, 25)
                 .addComponent(btnNuevo)
                 .addGap(18, 18, 18)
-                .addComponent(btnGuargarC)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btnBorrar)
-                .addGap(26, 26, 26)
-                .addComponent(btnCerrarC)
+                .addComponent(btnGuargar)
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(18, 18, 18)
+                .addComponent(btnCerrar)
                 .addGap(28, 28, 28))
         );
 
@@ -738,31 +934,31 @@ public void buscarFabricante(String codigo) {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(276, 276, 276)
                         .addComponent(jLabel5)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(81, 81, 81))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(113, 113, 113))
         );
 
         pack();
@@ -770,27 +966,36 @@ public void buscarFabricante(String codigo) {
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
+        int n = txtTelefono.getText().toString().length();
         soloNumeros(evt);
-        if (txtTelefono.getText().length() > 9) {
+        if (n > 9) {
             evt.consume();
+
         }
+
 
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         // TODO add your handling code here:
-         soloNumeros(evt);
-        if (txtCodigo.getText().length() > 9) {
+
+        int n = txtCodigo.getText().toString().length();
+        soloNumeros(evt);
+        if (n > 9) {
             evt.consume();
+
         }
-    
+
+
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyTyped
         // TODO add your handling code here:
+        int n = txtEmpresa.getText().toString().length();
         soloLetras(evt);
-        if (txtEmpresa.getText().length() > 40) {
+        if (n > 20) {
             evt.consume();
+
         }
 
     }//GEN-LAST:event_txtEmpresaKeyTyped
@@ -810,47 +1015,96 @@ public void buscarFabricante(String codigo) {
     }//GEN-LAST:event_txtTelefonoKeyReleased
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        botonesNuevo();
+        nuevo();
+        ActivarTodasCajas();
+        ActivarTodoBotones();
+        bntBuscar.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        txtCodigo.setEnabled(true);
+        txtCodigo.requestFocus();
+        btnNuevo.setEnabled(false);
+
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_btnBorrarActionPerformed
 
-    private void btnGuargarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarCActionPerformed
-        
-    }//GEN-LAST:event_btnGuargarCActionPerformed
+        nuevo();
+        bloquearTodasCajas();
+        bloquearTodoBotones();
+        txtCodigo.setEnabled(true);
+        txtCodigo.requestFocus();
+        bntBuscar.setEnabled(true);
+        btnNuevo.setEnabled(true);
 
-    private void btnCerrarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarCActionPerformed
+
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarActionPerformed
+        guardar();
+    }//GEN-LAST:event_btnGuargarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
-    }//GEN-LAST:event_btnCerrarCActionPerformed
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-          if (txtCodigo.getText().trim().length() != 10) {
-            consultaFabricantes cn = new consultaFabricantes(this, rootPaneCheckingEnabled, txtCodigo.getText().trim());
-            cn.show();
-            txtCodigo.setText(cn.codigo);
-            buscarFabricante(txtCodigo.getText());
-        } else {
-            buscarFabricante(txtCodigo.getText());
-        }
-                                            
 
+        bntBuscar.requestFocus();
     }//GEN-LAST:event_txtCodigoActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-         if (txtCodigo.getText().trim().length() != 10) {
-            consultaFabricantes cn = new consultaFabricantes(this, rootPaneCheckingEnabled, txtCodigo.getText().trim());
-            cn.show();
-            txtCodigo.setText(cn.codigo);
+        actualizar();
+        btnNuevo.setEnabled(true);
+        txtCodigo.setEnabled(true);
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
+        // TODO add your handling code here:
+        if (txtCodigo.getText().length() == 10) {
+            txtCodigo.setEnabled(false);
             buscarFabricante(txtCodigo.getText());
-        } else {
-            buscarFabricante(txtCodigo.getText());
+            btnNuevo.setEnabled(false);
+            ActivarTodasCajas();
+            ActivarTodoBotones();
+            btnGuargar.setEnabled(false);
+
         }
-    }//GEN-LAST:event_btnEditarActionPerformed
+        if (txtCodigo.getText().length() < 10) {
+            buscar();
+            buscarFabricante(txtCodigo.getText());
+            ActivarTodasCajas();
+            ActivarTodoBotones();
+            btnGuargar.setEnabled(false);
+
+        }
+    }//GEN-LAST:event_bntBuscarActionPerformed
+
+    private void txtDirecionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirecionKeyReleased
+        // TODO add your handling code here:
+        mayusculas(txtDirecion);
+    }//GEN-LAST:event_txtDirecionKeyReleased
+
+    private void txtDirecionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirecionKeyTyped
+        // TODO add your handling code here:
+        int n = txtDirecion.getText().toString().length();
+        soloLetras(evt);
+        if (n > 30) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDirecionKeyTyped
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        // TODO add your handling code here:
+        mayusculas(txtEmail);
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtWebKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtWebKeyReleased
+        // TODO add your handling code here:
+        mayusculas(txtWeb);
+    }//GEN-LAST:event_txtWebKeyReleased
 
     /**
      * @param args the command line arguments
@@ -888,10 +1142,11 @@ public void buscarFabricante(String codigo) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnCerrarC;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuargarC;
+    private javax.swing.JButton bntBuscar;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnGuargar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox cbxCan;
     private javax.swing.JComboBox cbxProv;

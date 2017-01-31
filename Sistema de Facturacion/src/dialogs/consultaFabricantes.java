@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dialogs;
 
 import java.sql.Connection;
@@ -25,72 +24,57 @@ import sistema.de.facturacion.conexion_mysql;
  */
 public class consultaFabricantes extends javax.swing.JDialog {
 
+    public String codigo;
+
     /**
      * Creates new form consultaCliente
      */
-    DefaultTableModel modelo;
     public consultaFabricantes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        sacarDatos();
-        //jtblClientes.setModel(modelo);
-        
         buscar("");
     }
-    public consultaFabricantes(java.awt.Frame parent, boolean modal,String codigo) {
+    DefaultTableModel modelo;
+
+    public consultaFabricantes(java.awt.Frame parent, boolean modal, String codigo) {
         super(parent, modal);
         initComponents();
-        sacarDatos();
-        //jtblClientes.setModel(modelo);
-        
         buscar(codigo);
+        txtFabricante.setText(codigo);
     }
-    
-    public String codigo;
-    public void sacarDatos(){
-                jtblFabricantes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        int n=jtblFabricantes.getSelectedRow();
-                        
-                        txtFabricante.setText(jtblFabricantes.getValueAt(n, 0).toString());
-                        codigo=txtFabricante.getText();
-                        dispose();
-                        
-                    }
-                });
-           
-    }
-    
-    public void buscar(String datos){
-        conexion_mysql cc=new conexion_mysql();
-        Connection cn=cc.conectar();
-        String sql="";
-        String[] titulos={"codigo","empresa"};
-        modelo=new DefaultTableModel(null, titulos);
-        String[] fila=new String[2];
-        sql="SELECT COD_FAB,EMP_FAB FROM fabricante_producto WHERE COD_FAB LIKE '%"+datos+"%' or EMP_FAB LIKE '%"+datos+"%'";
-        //System.out.println(sql);
-        Statement ps;
+    public String buscar(String datos) {
+
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        String[] titulos = {"codigo", "empresa"};
+        modelo = new DefaultTableModel(null, titulos);
+        String[] fila = new String[2];
+        sql = "SELECT COD_FAB,EMP_FAB FROM fabricante_producto WHERE COD_FAB LIKE '%" + datos + "%' or EMP_FAB LIKE '%" + datos + "%'";
+        String codigo = "";
         try {
-            ps = cn.createStatement();
-            ResultSet rs=ps.executeQuery(sql);
-            while(rs.next()){
-                fila[0]=rs.getString("COD_FAB");
-                String nom1=rs.getString("EMP_FAB");
-                
-                
-                fila[1]=nom1;
-                
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                fila[0] = rs.getString("COD_FAB");
+                fila[1] = rs.getString("EMP_FAB");
                 modelo.addRow(fila);
-                
             }
-            jtblFabricantes.setModel(modelo);
+
         } catch (SQLException ex) {
-            Logger.getLogger(consultaFabricantes.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-        
+        tblFabricantes.setModel(modelo);
+        return sql;
+    }
+    public String codigos;
+
+    public void mostrarDatos1() {
+        int n = tblFabricantes.getSelectedRow();
+        codigos = tblFabricantes.getValueAt(n, 0).toString();
+        dispose();
+
     }
 
     /**
@@ -105,7 +89,7 @@ public class consultaFabricantes extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtFabricante = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtblFabricantes = new javax.swing.JTable();
+        tblFabricantes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,7 +105,7 @@ public class consultaFabricantes extends javax.swing.JDialog {
             }
         });
 
-        jtblFabricantes.setModel(new javax.swing.table.DefaultTableModel(
+        tblFabricantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -132,7 +116,12 @@ public class consultaFabricantes extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jtblFabricantes);
+        tblFabricantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblFabricantesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblFabricantes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,12 +155,19 @@ public class consultaFabricantes extends javax.swing.JDialog {
 
     private void txtFabricanteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFabricanteKeyTyped
         // TODO add your handling code here:
+        buscar(txtFabricante.getText().trim());
     }//GEN-LAST:event_txtFabricanteKeyTyped
 
     private void txtFabricanteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFabricanteKeyPressed
         // TODO add your handling code here:
-        buscar(txtFabricante.getText().trim());
+
     }//GEN-LAST:event_txtFabricanteKeyPressed
+
+    private void tblFabricantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFabricantesMouseClicked
+        // TODO add your handling code here:
+        mostrarDatos1();
+    }//GEN-LAST:event_tblFabricantesMouseClicked
+    public static String dat;
 
     /**
      * @param args the command line arguments
@@ -207,6 +203,7 @@ public class consultaFabricantes extends javax.swing.JDialog {
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
+                        dat = "Hola";
                         System.exit(0);
                     }
                 });
@@ -218,7 +215,7 @@ public class consultaFabricantes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtblFabricantes;
+    private javax.swing.JTable tblFabricantes;
     private javax.swing.JTextField txtFabricante;
     // End of variables declaration//GEN-END:variables
 }
