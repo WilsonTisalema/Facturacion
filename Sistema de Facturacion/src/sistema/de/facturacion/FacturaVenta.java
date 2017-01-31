@@ -5,6 +5,7 @@
  */
 package sistema.de.facturacion;
 
+import dialogs.busquedaFactura;
 import dialogs.consultaCliente;
 import dialogs.consultaProductos;
 import dialogs.generarCobros;
@@ -56,7 +57,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtFecha.setEnabled(false);
         cargarSecuencial();
         cargarNumeroFactura();
-        String[] titulos = {"Código", "Descripcion", "Cantidad", "Pre. Uni","IVA", "Descuento %", "Total"};
+        String[] titulos = {"Código", "Descripcion", "Cantidad", "Pre. Uni", "IVA", "Descuento %", "Total"};
         modelo = new DefaultTableModel(null, titulos);
         jtbProductos.setModel(modelo);
         txtNumFac.setEnabled(false);
@@ -64,9 +65,13 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtVendedor.setText("1804181400");
         setLocationRelativeTo(null);
         bloquear();
+        //jbtnAnular.setEnabled(true);
+        jbtnAnul.setEnabled(false);
     }
-     public void bloquear(){
+
+    public void bloquear() {
         jbtnNuevo.setEnabled(true);
+        jbtnAnular.setEnabled(true);
         jbtnGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
         jbtnImprimit.setEnabled(false);
@@ -94,9 +99,10 @@ public class FacturaVenta extends javax.swing.JFrame {
         jbtAgregar.setEnabled(false);
         jbtCancela.setEnabled(false);
         jcbPagos.setEnabled(false);
-                
+
     }
-    public void limpiar(){
+
+    public void limpiar() {
         txtCliente.setText("");
         txtNomCli.setText("");
         txtTelefono.setText("");
@@ -120,14 +126,15 @@ public class FacturaVenta extends javax.swing.JFrame {
         jbtAgregar.setText("");
         jbtCancela.setText("");
         jcbPagos.setSelectedIndex(0);
-               
+
     }
-    public void inNuevo(){
+
+    public void inNuevo() {
         jbtnNuevo.setEnabled(false);
         jbtnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
         jbtnImprimit.setEnabled(true);
-       txtCliente.setEnabled(true);
+        txtCliente.setEnabled(true);
         txtNomCli.setEnabled(true);
         txtTelefono.setEnabled(true);
         txtCelular.setEnabled(true);
@@ -151,9 +158,10 @@ public class FacturaVenta extends javax.swing.JFrame {
         jbtCancela.setEnabled(true);
         jcbPagos.setEnabled(true);
         txtCliente.requestFocus();
-        
+
     }
-     public void inCancelar(){
+
+    public void inCancelar() {
         jbtnNuevo.setEnabled(true);
         jbtnGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
@@ -395,15 +403,15 @@ public class FacturaVenta extends javax.swing.JFrame {
             txtDescuento.setText("0");
         }
         float suma = 0;
-        float conIva=0;
-        float sinIva=0;
-        float descuentos=0;
+        float conIva = 0;
+        float sinIva = 0;
+        float descuentos = 0;
         for (int i = 0; i < jtbProductos.getRowCount(); i++) {
             suma = suma + Float.valueOf(jtbProductos.getValueAt(i, 6).toString());
-            if("0".equals(jtbProductos.getValueAt(i, 4).toString())){
-                sinIva=sinIva+Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
-            }else{
-                conIva=conIva+Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
+            if ("0".equals(jtbProductos.getValueAt(i, 4).toString())) {
+                sinIva = sinIva + Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
+            } else {
+                conIva = conIva + Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
             }
             descuentos = descuentos + Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
         }
@@ -441,7 +449,7 @@ public class FacturaVenta extends javax.swing.JFrame {
     public void agregarAtabla() {
         int y = 0;
         if (txtCant.getText().trim().length() > 0) {
-            int dato_stock = Integer.valueOf(txtCant.getText());
+            int dato_stock = Integer.valueOf(txtCant.getText().trim());
             if (dato_stock > stockProBase && stockProBase <= 0) {
                 JOptionPane.showMessageDialog(null, "El stock es = " + stockProBase);
                 y++;
@@ -451,7 +459,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             y++;
         }
         if (txtDescPro.getText().trim().length() > 0) {
-            int dato_descuento = Integer.valueOf(txtDescPro.getText());
+            float dato_descuento = Float.valueOf(txtDescPro.getText());
 
             if (dato_descuento > max_descuento) {
                 JOptionPane.showMessageDialog(null, "Descuento Maximo descuento es = " + max_descuento);
@@ -466,7 +474,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             String[] datos = new String[7];
             datos[0] = txtCodProd.getText().trim().toUpperCase();
             datos[1] = txtDesPro.getText().trim();
-            
+
             datos[3] = txtPreU.getText().trim();
             //datos[5] = String.valueOf(Integer.valueOf(txtDescPro.getText().trim()));
             float cantidad = Float.valueOf(Float.valueOf(txtCant.getText().trim()) * Float.valueOf(txtPresentacion.getText().trim()));
@@ -474,19 +482,19 @@ public class FacturaVenta extends javax.swing.JFrame {
             //System.out.println(cantidad + " cantidad a comprar");
             float precioU = Float.valueOf(txtPreU.getText().trim());
             float descuento = Float.valueOf(txtDescPro.getText().trim());
-            
+
             float totalS = (cantidad * precioU) * (descuento / 100);
             datos[5] = String.valueOf(totalS);
             float total = ((cantidad * precioU) - totalS);
-            float ivaProducto=0;
-            if(jchkIvaP.isSelected()){
-                datos[4] = String.valueOf(total*(iva_ecuador/100));
-                ivaProducto=total*(iva_ecuador/100);
-            }else{
+            float ivaProducto = 0;
+            if (jchkIvaP.isSelected()) {
+                datos[4] = String.valueOf(total * (iva_ecuador / 100));
+                ivaProducto = total * (iva_ecuador / 100);
+            } else {
                 datos[4] = "0";
-                ivaProducto=0;
+                ivaProducto = 0;
             }
-            datos[6] = String.valueOf(total+ivaProducto);
+            datos[6] = String.valueOf(total + ivaProducto);
             modelo.addRow(datos);
             calculoTotalesPie();
             limiparCajasProductos();
@@ -528,10 +536,10 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtPresentacion.setText(rs.getString("DES_PRES_PRO"));
                 txtPreU.setEnabled(false);
                 txtCant.requestFocus();
-                String iv=rs.getString("GRAB_IVA_P");
-                if(Integer.valueOf(iv)==0){
+                String iv = rs.getString("GRAB_IVA_P");
+                if (Integer.valueOf(iv) == 0) {
                     jchkIvaP.setSelected(true);
-                }else{
+                } else {
                     jchkIvaP.setSelected(false);
                 }
                 jchkIvaP.setEnabled(false);
@@ -557,19 +565,21 @@ public class FacturaVenta extends javax.swing.JFrame {
             Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    int y = 0;
 
     public void guardarFactura() {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
         String sql = "";
         int insertar = 0;
-        sql = "insert into encabezadofactura(SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC) values(?,?,?,?,?,?,?,?,?,?)";
+        sql = "insert into encabezadofactura(SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC,EST_FAC) values(?,?,?,?,?,?,?,?,?,?,?)";
 
-        String SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC;
+        String SEC_FAC, NUM_FAC, FEC_HOR_FAC, VEN_FAC, CLIE_FAC, SUB_TO_FAC, DES_TO_FAC, IVA_FAC, TOT_FAC, PAG_FAC, EST_FAC;
         SEC_FAC = txtNumFac.getText().trim();
         NUM_FAC = txtSecuencial.getText().trim();
         String fecha = txtFecha.getText().trim();
         Calendar calendario = Calendar.getInstance();
+        EST_FAC = "0";
         String hora, minutos, segundos;
         hora = String.valueOf(calendario.get(Calendar.HOUR_OF_DAY));
         if (hora.length() == 1) {
@@ -605,6 +615,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             ps.setString(8, IVA_FAC);
             ps.setString(9, TOT_FAC);
             ps.setString(10, PAG_FAC);
+            ps.setString(11, EST_FAC);
             //System.out.println(sql);
             insertar = ps.executeUpdate();
 
@@ -622,9 +633,9 @@ public class FacturaVenta extends javax.swing.JFrame {
             COD_PRO_P = jtbProductos.getValueAt(i, 0).toString();
             CANT_PRO = jtbProductos.getValueAt(i, 2).toString();
             //System.out.println(CANT_PRO);
-            DES_PRO = jtbProductos.getValueAt(i, 4).toString();
+            DES_PRO = jtbProductos.getValueAt(i, 5).toString();
             PRE_UNI_PRO = jtbProductos.getValueAt(i, 3).toString();
-            tot_det = Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
+            tot_det = Float.valueOf(jtbProductos.getValueAt(i, 6).toString());
             //System.out.println(sql2);
             try {
                 PreparedStatement ps1 = cc.prepareStatement(sql2);
@@ -670,6 +681,24 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
     }
 
+    public void actualizarStockmenos(String codigo, String cantidad) {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        float cantidadB = Float.valueOf(cantidad);
+        float stockActual = Float.valueOf(stockBaseM(codigo));
+        float nuevoStock = stockActual + cantidadB;
+        String sql = "";
+        sql = "update productos set stock_pro='" + String.valueOf(nuevoStock) + "' where cod_prod='" + codigo + "'";
+        System.out.println("actualizacion " + sql);
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "update " + ex);
+        }
+    }
+
     public String stockBaseM(String codigo) {
         String data = "0";
         conexion_mysql cn = new conexion_mysql();
@@ -694,6 +723,108 @@ public class FacturaVenta extends javax.swing.JFrame {
         fv.show();
     }
 
+    public void anulacion() {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "update encabezadofactura set est_fac='1' where num_fac='" + txtSecuencial.getText() + "'";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Se anula exitosamente");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String codigo = "";
+        String cantidad = "";
+        String sql2 = "";
+        for (int i = 0; i < jtbProductos.getRowCount(); i++) {
+            codigo = jtbProductos.getValueAt(i, 0).toString();
+            cantidad = jtbProductos.getValueAt(i, 2).toString();
+            //System.out.println(codigo+"+"+cantidad);
+            actualizarStockmenos(codigo, cantidad);
+
+        }
+
+    }
+    public void eliminarTodasFilas(){
+        String[] titulos = {"Código", "Descripcion", "Cantidad", "Pre. Uni", "IVA", "Descuento %", "Total"};
+        modelo = new DefaultTableModel(null, titulos);
+        jtbProductos.setModel(modelo);
+
+        
+    }
+    public void eliminarFila(){
+        int fila=jtbProductos.getSelectedRow();
+        if(fila>-1){
+        modelo=(DefaultTableModel) jtbProductos.getModel();
+        jtbProductos.setModel(modelo);
+        modelo.removeRow(fila);
+        jtbProductos.setModel(modelo);
+        }
+    }
+
+    public void buequedaDeFactura() {
+        //traerDetalle
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        sql = "select df.COD_PRO_P,df.CANT_PRO,df.DES_PRO,df.PRE_UNI_PRO,ef.SUB_TO_FAC,ef.DES_TO_FAC,ef.EST_FAC"
+                + " from detalle_fac_ven df, encabezadofactura ef where df.num_fac_per='" + txtSecuencial.getText() + "' "
+                + "and  ef.NUM_FAC=df.NUM_FAC_PER";
+        String[] datos = new String[7];
+        try {
+            Statement ps = cn.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                txtCodProd.setText(String.valueOf(rs.getString("COD_PRO_P")));
+                buscarProd(String.valueOf(rs.getString("COD_PRO_P")));
+                txtCant.setText(String.valueOf(rs.getString("CANT_PRO")));
+                txtPreU.setText(String.valueOf(rs.getString("PRE_UNI_PRO")));
+                txtDescPro.setText(String.valueOf(rs.getString("DES_PRO")));
+                txtPresentacion.setText("1");
+                int an = Integer.valueOf(String.valueOf(rs.getString("EST_FAC")));
+                if (an == 0) {
+                    lblFacturaAnulada.setText("");
+                } else {
+                    lblFacturaAnulada.setText("Anulada");
+                }
+                agregarAtabla();
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    public void limpiarTxt(){
+        txtCant.setText("");
+        txtCelular.setText("");
+        txtCliente.setText("");
+        txtCodProd.setText("");
+        txtDesPro.setText("");
+        txtDescPro.setText("");
+        txtDescuento.setText("");
+        txtDireccion.setText("");
+        txtEmail.setText("");
+        txtFecha.setText("");
+        txtIva.setText("");
+        txtIva0.setText("");
+        txtNomCli.setText("");
+        txtPreU.setText("");
+        txtPresentacion.setText("");
+        txtRazonS.setText("");
+        txtRuc.setText("");
+        txtSubT.setText("");
+        txtTelefono.setText("");
+        txtTipo.setText("");
+        txtTotal.setText("");
+        lblFacturaAnulada.setText("");
+        //txtVendedor.setText("");
+        
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -714,6 +845,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtVendedor = new javax.swing.JTextField();
         txtSecuencial = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jbtnAnular = new javax.swing.JButton();
         txtNombre = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
@@ -764,6 +896,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         jchkIvaP = new javax.swing.JCheckBox();
         lblIva1 = new javax.swing.JLabel();
         txtIva0 = new javax.swing.JTextField();
+        lblFacturaAnulada = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jbtnNuevo = new javax.swing.JButton();
         jbtnGuardar = new javax.swing.JButton();
@@ -771,6 +904,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jbtnAnul = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -806,6 +940,13 @@ public class FacturaVenta extends javax.swing.JFrame {
 
         jLabel13.setText("--");
 
+        jbtnAnular.setText("Buscar");
+        jbtnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAnularActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -823,6 +964,8 @@ public class FacturaVenta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtSecuencial, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnAnular)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -839,7 +982,8 @@ public class FacturaVenta extends javax.swing.JFrame {
                     .addComponent(txtSecuencial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel4)
-                    .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnAnular))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1004,7 +1148,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         jLabel14.setText("Subtotal $:");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel15.setText("Descuento:");
+        jLabel15.setText("Descuento$ :");
 
         lblIva.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblIva.setText("IVA");
@@ -1058,6 +1202,9 @@ public class FacturaVenta extends javax.swing.JFrame {
         lblIva1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblIva1.setText("IVA 0%:");
 
+        lblFacturaAnulada.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        lblFacturaAnulada.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1106,10 +1253,11 @@ public class FacturaVenta extends javax.swing.JFrame {
                             .addComponent(jLabel20)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(517, 517, 517)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblFacturaAnulada, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(399, 399, 399)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(lblIva)
                                         .addComponent(jLabel17))
@@ -1134,7 +1282,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1158,16 +1306,16 @@ public class FacturaVenta extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12)
-                                    .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGap(1, 1, 1)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(jLabel18)
-                                                .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(jchkIvaP))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel18)
+                                            .addComponent(txtDescPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jchkIvaP)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel12)
+                                        .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1179,7 +1327,8 @@ public class FacturaVenta extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel20)
-                        .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbPagos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFacturaAnulada, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
@@ -1257,6 +1406,19 @@ public class FacturaVenta extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 204, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton1.setText("AgregarCliente");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jbtnAnul.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/anular.png"))); // NOI18N
+        jbtnAnul.setText("Anular");
+        jbtnAnul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAnulActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1265,13 +1427,14 @@ public class FacturaVenta extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jbtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnImprimit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jbtnAnul, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnNuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnImprimit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -1283,13 +1446,15 @@ public class FacturaVenta extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnAnul, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
                 .addGap(26, 26, 26)
                 .addComponent(jbtnImprimit, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1310,16 +1475,17 @@ public class FacturaVenta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1344,9 +1510,16 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void jbtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNuevoActionPerformed
         // TODO add your handling code here:
         //limpiarTodo();
-        cargarSecuencial();
-        inNuevo();
+        y = 0;
        
+        inNuevo();
+        eliminarTodasFilas();
+        txtSecuencial.setText("");
+         cargarSecuencial();
+             cargarNumeroFactura();
+             limpiarTxt();
+             jbtnAnul.setEnabled(false);
+
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnImprimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimitActionPerformed
@@ -1356,7 +1529,7 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         // TODO add your handling code here:
-
+        y = 0;
         if (jchActivo.isSelected()) {
             modelo = (DefaultTableModel) jtbProductos.getModel();
             jtbProductos.setModel(modelo);
@@ -1364,7 +1537,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Cliente inactivo");
         }
-
+        y = 0;
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jbtCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelaActionPerformed
@@ -1372,6 +1545,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtCodProd.setText("");
         txtCodProd.setEnabled(true);
         txtCodProd.requestFocus();
+        eliminarFila();
+        
     }//GEN-LAST:event_jbtCancelaActionPerformed
 
     private void jbtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAgregarActionPerformed
@@ -1446,11 +1621,47 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-         //limpiarTodo();
-         inCancelar();
-         limpiar();
-         bloquear();
+        //limpiarTodo();
+        inCancelar();
+        limpiar();
+        bloquear();
+        y = 0;
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jbtnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnularActionPerformed
+        // TODO add your handling code here:
+        busquedaFactura bf = new busquedaFactura(null, true);
+        bf.show();
+        txtSecuencial.setText(bf.numero);
+        txtCliente.setText(bf.cliente);
+        buscarCliente(bf.cliente);
+        buequedaDeFactura();
+        y = 1;
+        txtCodProd.setEnabled(false);
+        jbtnAnul.setEnabled(true);
+    }//GEN-LAST:event_jbtnAnularActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        y = 0;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jbtnAnulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnulActionPerformed
+        // TODO add your handling code here:
+        if (y == 1) {
+            System.out.println("Anulada".equals(lblFacturaAnulada.getText()));
+            if ("Anulada".equals(lblFacturaAnulada.getText())) {
+                
+                JOptionPane.showMessageDialog(null, "La factura ya se encuentra anulada");
+            } else {
+                anulacion();
+                jbtnAnul.setEnabled(false);
+                
+                bloquear();
+                //inNuevo();
+            }
+        }
+    }//GEN-LAST:event_jbtnAnulActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1522,6 +1733,8 @@ public class FacturaVenta extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtAgregar;
     private javax.swing.JButton jbtCancela;
+    private javax.swing.JButton jbtnAnul;
+    private javax.swing.JButton jbtnAnular;
     private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnImprimit;
     private javax.swing.JButton jbtnNuevo;
@@ -1529,6 +1742,7 @@ public class FacturaVenta extends javax.swing.JFrame {
     private javax.swing.JCheckBox jchActivo;
     private javax.swing.JCheckBox jchkIvaP;
     private javax.swing.JTable jtbProductos;
+    private javax.swing.JLabel lblFacturaAnulada;
     private javax.swing.JLabel lblIva;
     private javax.swing.JLabel lblIva1;
     private javax.swing.JTextField txtCant;
