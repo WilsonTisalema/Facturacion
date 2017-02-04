@@ -816,6 +816,13 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
 
     }
+    public void soloNumeros(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }
     public void limpiarTxt(){
         txtCant.setText("");
         txtCelular.setText("");
@@ -936,7 +943,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
@@ -1014,6 +1021,11 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtClienteActionPerformed(evt);
             }
         });
+        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClienteKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Nombres y Apellidos:");
@@ -1021,8 +1033,20 @@ public class FacturaVenta extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("Teléfono:");
 
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Celular:");
+
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularKeyTyped(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("E-mail:");
@@ -1160,6 +1184,11 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtCantActionPerformed(evt);
             }
         });
+        txtCant.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantKeyTyped(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("Subtotal $:");
@@ -1181,9 +1210,20 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtDescProActionPerformed(evt);
             }
         });
+        txtDescPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescProKeyTyped(evt);
+            }
+        });
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel19.setText("Pre. Unit");
+
+        txtPreU.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPreUKeyTyped(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel20.setText("Pago:");
@@ -1538,13 +1578,10 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         // TODO add your handling code here:
         y = 0;
-        if (jchActivo.isSelected()) {
             modelo = (DefaultTableModel) jtbProductos.getModel();
             jtbProductos.setModel(modelo);
             guardarFactura();
-        } else {
-            JOptionPane.showMessageDialog(null, "Cliente inactivo");
-        }
+       
         y = 0;
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
@@ -1672,6 +1709,36 @@ public class FacturaVenta extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jbtnAnulActionPerformed
+
+    private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtClienteKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtCelularKeyTyped
+
+    private void txtCantKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtCantKeyTyped
+
+    private void txtPreUKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPreUKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtPreUKeyTyped
+
+    private void txtDescProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescProKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtDescProKeyTyped
 
     /**
      * @param args the command line arguments

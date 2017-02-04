@@ -106,6 +106,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRecibo">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtReciboKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbtnGenerar">
       <Properties>

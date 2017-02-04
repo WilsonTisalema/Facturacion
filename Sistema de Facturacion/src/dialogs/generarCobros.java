@@ -82,7 +82,7 @@ public class generarCobros extends javax.swing.JDialog {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
         String sql = "";
-        sql = "insert into cobros(`sec_fac_p`,`num_fac_p`,`tot_fac`,`abo_cob`) "
+        sql = "insert into cobros(`sec_fac`,`num_fac_p`,`tot_fac`,`abo_cob`) "
                 + "values(?,?,?,?)";
         String sec_fac, num_fac_p;
         float tot_fac, abo_cob;
@@ -102,6 +102,13 @@ public class generarCobros extends javax.swing.JDialog {
             }
         } catch (SQLException ex) {
             Logger.getLogger(generarCobros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void soloNumeros(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
         }
     }
 
@@ -130,6 +137,12 @@ public class generarCobros extends javax.swing.JDialog {
         jLabel2.setText("Total Pagar");
 
         jLabel3.setText("Recibo $:");
+
+        txtRecibo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtReciboKeyTyped(evt);
+            }
+        });
 
         jbtnGenerar.setText("Generar Pago");
         jbtnGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +207,11 @@ public class generarCobros extends javax.swing.JDialog {
         // TODO add your handling code here:
         generar();
     }//GEN-LAST:event_jbtnGenerarActionPerformed
+
+    private void txtReciboKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtReciboKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtReciboKeyTyped
 
     /**
      * @param args the command line arguments

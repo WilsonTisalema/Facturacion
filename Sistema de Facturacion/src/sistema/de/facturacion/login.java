@@ -137,7 +137,13 @@ public class login extends javax.swing.JFrame {
             return null;
         }
     }
-
+public void soloNumeros(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -184,6 +190,12 @@ public class login extends javax.swing.JFrame {
         txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtPassFocusGained(evt);
+            }
+        });
+
+        txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUserKeyTyped(evt);
             }
         });
 
@@ -290,6 +302,11 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         lblMensaje.setVisible(false);
     }//GEN-LAST:event_txtPassFocusGained
+
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtUserKeyTyped
 
     /**
      * @param args the command line arguments
