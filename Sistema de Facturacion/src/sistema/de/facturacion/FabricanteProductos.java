@@ -30,7 +30,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     public FabricanteProductos() {
         initComponents();
-        ProvinciasEc();
         bloquearTodoBotones();
         bloquearTodasCajas();
 
@@ -58,349 +57,19 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     }
 
-    public void ProvinciasEc() {
-        cbxProv.removeAllItems();
-        cbxProv.addItem("SELECCIONE UNO");
-        cbxProv.addItem("AZUAY");
-        cbxProv.addItem("BOLÍVAR");
-        cbxProv.addItem("CAÑAR");
-        cbxProv.addItem("CARCHI");
-        cbxProv.addItem("CHIMBORAZO");
-        cbxProv.addItem("COTOPAXI");
-        cbxProv.addItem("EL ORO");
-        cbxProv.addItem("ESMERALDAS");
-        cbxProv.addItem("GALÁPAGOS");
-        cbxProv.addItem("GUAYAS");
-        cbxProv.addItem("IMBABURA");
-        cbxProv.addItem("LOJA");
-        cbxProv.addItem("LOS RÍOS");
-        cbxProv.addItem("MANABÍ");
-        cbxProv.addItem("MORONA SANTIAGO");
-        cbxProv.addItem("NAPO");
-        cbxProv.addItem("ORELLANA");
-        cbxProv.addItem("PASTAZA");
-        cbxProv.addItem("PICHINCHA");
-        cbxProv.addItem("SANTA ELENA");
-        cbxProv.addItem("SANTO DOMINGO DE LOS TSÁCHILAS");
-        cbxProv.addItem("SUCUMBÍOS");
-        cbxProv.addItem("TUNGURAHUA");
-        cbxProv.addItem("ZAMORA CHINCHIPE");
-        cbxProv.setToolTipText("SELECCIONE UNO");
-    }
-
-    public void Cantones() {
-        if (cbxProv.getSelectedIndex() == 1) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("CHORDELEG");
-            cbxCan.addItem("CUENCA");
-            cbxCan.addItem("EL PAN");
-            cbxCan.addItem("GIRÓN");
-            cbxCan.addItem("GUACHAPALA");
-            cbxCan.addItem("GUALACEO");
-            cbxCan.addItem("NABÓN");
-            cbxCan.addItem("OÑA");
-            cbxCan.addItem("PAUTE");
-            cbxCan.addItem("PONCE ENRIQUEZ");
-            cbxCan.addItem("PUCARÁ");
-            cbxCan.addItem("SAN FERNANDO");
-            cbxCan.addItem("SANTA ISABEL");
-            cbxCan.addItem("SEVILLA DE ORO");
-            cbxCan.addItem("SÍGSIG");
-
-        } else if (cbxProv.getSelectedIndex() == 2) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("CALUMA");
-            cbxCan.addItem("CHILLANES");
-            cbxCan.addItem("CHIMBO");
-            cbxCan.addItem("ECHEANDÍA");
-            cbxCan.addItem("GUARANDA");
-            cbxCan.addItem("LAS NAVES");
-            cbxCan.addItem("SAN MIGUEL");
-        } else if (cbxProv.getSelectedIndex() == 3) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("AZOGUES");
-            cbxCan.addItem("BIBLIÁN");
-            cbxCan.addItem("CAÑAR");
-            cbxCan.addItem("DÉLEG");
-            cbxCan.addItem("EL TAMBO");
-            cbxCan.addItem("LA TRONCAL ");
-            cbxCan.addItem("SUSCAL");
-        } else if (cbxProv.getSelectedIndex() == 4) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("BOLÍVAR");
-            cbxCan.addItem("ESPEJO");
-            cbxCan.addItem("MIRA");
-            cbxCan.addItem("MONTÚFAR");
-            cbxCan.addItem("SAN PEDRO DE HUACA");
-            cbxCan.addItem("TULCÁN");
-        } else if (cbxProv.getSelectedIndex() == 5) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ALAUSÍ");
-            cbxCan.addItem("CHAMBO");
-            cbxCan.addItem("CHUNCHI");
-            cbxCan.addItem("COLTA");
-            cbxCan.addItem("CUMANDÁ");
-            cbxCan.addItem("GUAMOTE");
-            cbxCan.addItem("GUANO");
-            cbxCan.addItem("PALLATANGA");
-            cbxCan.addItem("PENIPE");
-            cbxCan.addItem("RIOBAMBA");
-        } else if (cbxProv.getSelectedIndex() == 6) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("LA MANÁ");
-            cbxCan.addItem("LATACUNGA");
-            cbxCan.addItem("PANGUA");
-            cbxCan.addItem("PUJILÍ");
-            cbxCan.addItem("SALCEDO");
-            cbxCan.addItem("SAQUISILÍ");
-            cbxCan.addItem("SIGCHOS");
-
-        } else if (cbxProv.getSelectedIndex() == 7) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ARENILLAS");
-            cbxCan.addItem("ATAHUALPA");
-            cbxCan.addItem("BALSAS");
-            cbxCan.addItem("CHILLA");
-            cbxCan.addItem("EL GUABO");
-            cbxCan.addItem("HUAQUILLAS");
-            cbxCan.addItem("LAS LAJAS");
-            cbxCan.addItem("MACHALA");
-            cbxCan.addItem("MARCABELÍ");
-            cbxCan.addItem("PASAJE");
-            cbxCan.addItem("PIÑAS");
-            cbxCan.addItem("PORTOVELO");
-            cbxCan.addItem("SANTA ROSA");
-            cbxCan.addItem("ZARUMA");
-        } else if (cbxProv.getSelectedIndex() == 8) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ATACAMES");
-            cbxCan.addItem("ELOY ALFARO");
-            cbxCan.addItem("ESMERALDAS");
-            cbxCan.addItem("MUISNE");
-            cbxCan.addItem("QUININDÉ");
-            cbxCan.addItem("RIOVERDE");
-            cbxCan.addItem("SAN LORENZO");
-        } else if (cbxProv.getSelectedIndex() == 9) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ISABELA");
-            cbxCan.addItem("SAN CRISTÓBAL");
-            cbxCan.addItem("SANTA CRUZ");
-        } else if (cbxProv.getSelectedIndex() == 10) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ALFREDO BAQUERIZO MORENO");
-            cbxCan.addItem("BALAO");
-            cbxCan.addItem("BALZAR");
-            cbxCan.addItem("COLIMES");
-            cbxCan.addItem("DAULE");
-            cbxCan.addItem("EL EMPALME");
-            cbxCan.addItem("EL TRIUNFO");
-            cbxCan.addItem("DURÁN");
-            cbxCan.addItem("GENERAL ANTONIO ELIZALDE");
-            cbxCan.addItem("PLAYAS");
-            cbxCan.addItem("GUAYAQUIL");
-            cbxCan.addItem("ISIDRO AYORA");
-            cbxCan.addItem("LOMAS DE SARGENTILLO");
-            cbxCan.addItem("MARCELINO MARIDUEÑA");
-            cbxCan.addItem("MILAGRO");
-            cbxCan.addItem("NARANJAL");
-            cbxCan.addItem("NARANJITO");
-            cbxCan.addItem("NOBOL");
-            cbxCan.addItem("PALESTINA");
-            cbxCan.addItem("PEDRO CARBO");
-            cbxCan.addItem("SALITRE");
-            cbxCan.addItem("SAMBORONDÓN");
-            cbxCan.addItem("SANTA LUCÍA");
-            cbxCan.addItem("SIMÓN BOLÍVAR");
-            cbxCan.addItem("YAGUACHI");
-        } else if (cbxProv.getSelectedIndex() == 11) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ANTONIO ANTE");
-            cbxCan.addItem("COTACACHI");
-            cbxCan.addItem("IBARRA");
-            cbxCan.addItem("OTAVALO");
-            cbxCan.addItem("PIMAMPIRO");
-            cbxCan.addItem("SAN MIGUEL DE URCUQUÍ");
-        } else if (cbxProv.getSelectedIndex() == 12) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("CALVAS");
-            cbxCan.addItem("CATAMAYO");
-            cbxCan.addItem("CELICA");
-            cbxCan.addItem("CHAGUARPAMBA");
-            cbxCan.addItem("ESPÍNDOLA");
-            cbxCan.addItem("GONZANAMÁ");
-            cbxCan.addItem("LOJA");
-            cbxCan.addItem("MACARÁ");
-            cbxCan.addItem("OLMEDO");
-            cbxCan.addItem("PALTAS");
-            cbxCan.addItem("PINDAL");
-            cbxCan.addItem("PUYANGO");
-            cbxCan.addItem("QUILANGA");
-            cbxCan.addItem("SARAGURO");
-            cbxCan.addItem("SOZORANGA");
-        } else if (cbxProv.getSelectedIndex() == 13) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("BABA");
-            cbxCan.addItem("BABAHOYO");
-            cbxCan.addItem("BUENA FE");
-            cbxCan.addItem("MOCACHE");
-            cbxCan.addItem("MONTALVO");
-            cbxCan.addItem("PALENQUE");
-            cbxCan.addItem("PUEBLOVIEJO");
-            cbxCan.addItem("QUEVEDO");
-            cbxCan.addItem("QUINSALOMA");
-            cbxCan.addItem("URDANETA");
-            cbxCan.addItem("VALENCIA");
-            cbxCan.addItem("VENTANAS");
-            cbxCan.addItem("VINCES");
-        } else if (cbxProv.getSelectedIndex() == 14) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("BABA");
-            cbxCan.addItem("BABAHOYO");
-            cbxCan.addItem("BUENA FE");
-            cbxCan.addItem("MOCACHE");
-            cbxCan.addItem("MONTALVO");
-            cbxCan.addItem("PALENQUE");
-            cbxCan.addItem("PUEBLOVIEJO");
-            cbxCan.addItem("QUEVEDO");
-            cbxCan.addItem("QUINSALOMA");
-            cbxCan.addItem("URDANETA");
-            cbxCan.addItem("VALENCIA");
-            cbxCan.addItem("VENTANAS");
-            cbxCan.addItem("VINCES");
-        } else if (cbxProv.getSelectedIndex() == 15) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("BOLÍVAR");
-            cbxCan.addItem("CHONE");
-            cbxCan.addItem("EL CARMEN");
-            cbxCan.addItem("FLAVIO ALFARO");
-            cbxCan.addItem("JAMA");
-            cbxCan.addItem("JARAMIJÓ");
-            cbxCan.addItem("JIPIJAPA");
-            cbxCan.addItem("JUNÍN");
-            cbxCan.addItem("MANTA");
-            cbxCan.addItem("MONTECRISTI");
-            cbxCan.addItem("OLMEDO");
-            cbxCan.addItem("PAJÁN");
-            cbxCan.addItem("PEDERNALES");
-            cbxCan.addItem("PICHINCHA");
-            cbxCan.addItem("PORTOVIEJO");
-            cbxCan.addItem("PUERTO LÓPEZ");
-            cbxCan.addItem("ROCAFUERTE");
-            cbxCan.addItem("SAN VICENTE");
-            cbxCan.addItem("SANTA ANA");
-            cbxCan.addItem("SUCRE");
-            cbxCan.addItem("TOSAGUA");
-            cbxCan.addItem("VEINTICUATRO DE MAYO");
-        } else if (cbxProv.getSelectedIndex() == 16) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ARCHIDONA");
-            cbxCan.addItem("CARLOS JULIO AROSEMENA TOLA");
-            cbxCan.addItem("EL CHACO");
-            cbxCan.addItem("QUIJOS");
-            cbxCan.addItem("TENA");
-        } else if (cbxProv.getSelectedIndex() == 17) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("AGUARICO");
-            cbxCan.addItem("ORELLANA");
-            cbxCan.addItem("LA JOYA DE LOS SACHAS");
-            cbxCan.addItem("LORETO");
-        } else if (cbxProv.getSelectedIndex() == 18) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("ARAJUNO");
-            cbxCan.addItem("MERA");
-            cbxCan.addItem("PASTAZA");
-            cbxCan.addItem("SANTA CLARA");
-        } else if (cbxProv.getSelectedIndex() == 19) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("QUITO");
-            cbxCan.addItem("CAYAMBE");
-            cbxCan.addItem("MEJÍA");
-            cbxCan.addItem("PEDRO MONCAYO");
-            cbxCan.addItem("PEDRO VICENTE MALDONADO");
-            cbxCan.addItem("PUERTO QUITO");
-            cbxCan.addItem("RUMIÑAHUI");
-            cbxCan.addItem("SAN MIGUEL DE LOS BANCOS");
-        } else if (cbxProv.getSelectedIndex() == 20) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("LA LIBERTAD");
-            cbxCan.addItem("SALINAS");
-            cbxCan.addItem("SANTA ELENA");
-        } else if (cbxProv.getSelectedIndex() == 21) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("SANTO DOMINGO");
-            cbxCan.addItem("LA CONCORDIA");
-        } else if (cbxProv.getSelectedIndex() == 22) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("CASCALES");
-            cbxCan.addItem("CUYABENO");
-            cbxCan.addItem("GONZALO PIZARRO");
-            cbxCan.addItem("LAGO AGRIO");
-            cbxCan.addItem("PUTUMAYO");
-            cbxCan.addItem("SHUSHUFINDI");
-            cbxCan.addItem("SUCUMBÍOS");
-        } else if (cbxProv.getSelectedIndex() == 23) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("AMBATO");
-            cbxCan.addItem("BAÑOS");
-            cbxCan.addItem("CEVALLOS");
-            cbxCan.addItem("MOCHA");
-            cbxCan.addItem("PATATE");
-            cbxCan.addItem("PELILEO");
-            cbxCan.addItem("QUERO");
-            cbxCan.addItem("SANTIAGO DE PÍLLARO");
-            cbxCan.addItem("TISALEO");
-        } else if (cbxProv.getSelectedIndex() == 24) {
-            cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
-            cbxCan.addItem("CENTINELA DEL CÓNDOR");
-            cbxCan.addItem("CHINCHIPE");
-            cbxCan.addItem("EL PANGUI");
-            cbxCan.addItem("NANGARITZA");
-            cbxCan.addItem("PALANDA");
-            cbxCan.addItem("PAQUISHA");
-            cbxCan.addItem("YACUAMBI");
-            cbxCan.addItem("YANTZAZA");
-            cbxCan.addItem("ZAMORA");
-        }
-    }
-
     public void buscarFabricante(String codigo) {
         try {
             conexion_mysql cn = new conexion_mysql();
             Connection cc = cn.conectar();
             String sql = "";
-            sql = "select emp_fab,prov_fab,cant_fab,email_fab,dir_fab,telf_fab,web_fab from fabricante_producto"
+            sql = "select emp_fab,email_fab,dir_fab,telf_fab,web_fab from fabricante_producto"
                     + " where cod_fab=" + codigo;
             // String[] filas=new String[8];
             Statement ps = cc.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             while (rs.next()) {
                 txtEmpresa.setText(rs.getString("emp_fab"));
-                cbxProv.setSelectedItem(rs.getString("prov_fab"));
-                cbxCan.setSelectedItem(rs.getString("cant_fab"));
+                
                 txtEmail.setText(rs.getString("email_fab"));
                 txtDirecion.setText(rs.getString("dir_fab"));
                 txtTelefono.setText(rs.getString("telf_fab"));
@@ -415,14 +84,13 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     public void controlactualizar() {
         txtCodigo.requestFocus();
-        txtCodigo.setEnabled(false);
-        txtDirecion.setEnabled(true);
-        txtEmail.setEnabled(true);
-        txtEmpresa.setEnabled(true);
-        txtTelefono.setEnabled(true);
-        txtWeb.setEnabled(true);
-        cbxCan.setEnabled(true);
-        cbxProv.setEnabled(true);
+        txtCodigo.setEditable(false);
+        txtDirecion.setEditable(true);
+        txtEmail.setEditable(true);
+        txtEmpresa.setEditable(true);
+        txtTelefono.setEditable(true);
+        txtWeb.setEditable(true);
+       
         btnNuevo.setEnabled(false);
         btnCancelar.setEnabled(true);
         btnCerrar.setEnabled(true);
@@ -432,14 +100,13 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     public void ActivarTodasCajas() {
         // txtCodigo.setEnabled(true);
-        txtEmpresa.setEnabled(true);
-        cbxProv.setEnabled(true);
-        cbxCan.setEnabled(true);
-        txtDirecion.setEnabled(true);
-        txtEmail.setEnabled(true);
+        txtEmpresa.setEditable(true);
+       
+        txtDirecion.setEditable(true);
+        txtEmail.setEditable(true);
 
-        txtTelefono.setEnabled(true);
-        txtWeb.setEnabled(true);
+        txtTelefono.setEditable(true);
+        txtWeb.setEditable(true);
 
     }
 
@@ -451,21 +118,27 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     public void bloquearTodasCajas() {
         //txtCodigo.setEnabled(false);
+        txtDirecion.setEditable(false);
+        txtEmail.setEditable(false);
+        txtEmpresa.setEditable(false);
+        txtTelefono.setEditable(false);
+        txtWeb.setEditable(false);
+       
+
+    }
+ public void ParaVisualizar() {
+        //txtCodigo.setEnabled(false);
         txtDirecion.setEnabled(false);
         txtEmail.setEnabled(false);
         txtEmpresa.setEnabled(false);
         txtTelefono.setEnabled(false);
         txtWeb.setEnabled(false);
-        cbxCan.setEnabled(false);
-        cbxProv.setEnabled(false);
+       
 
     }
-
     private void nuevo() {
         txtCodigo.setText("");
         txtEmpresa.setText("");
-        cbxProv.setSelectedItem(0);
-        cbxCan.setSelectedItem(0);
         txtDirecion.setText("");
         txtEmail.setText("");
         txtTelefono.setText("");
@@ -491,15 +164,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar empresa mayor a 2 caracteres");
             txtEmpresa.requestFocus();
             y++;
-        } else if (cbxProv.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccion una provincia");
-            y++;
-            cbxProv.requestFocus();
-        } else if (cbxCan.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccion un canton");
-            y++;
-            cbxCan.requestFocus();
-        } else if (txtDirecion.getText().length() < 2) {
+        }  else if (txtDirecion.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
             txtDirecion.requestFocus();
             y++;
@@ -531,13 +196,12 @@ public class FabricanteProductos extends javax.swing.JFrame {
             conexion_mysql cn = new conexion_mysql();
             Connection cc = cn.conectar();
             String sql = "";
-            sql = "Insert into  fabricante_producto(cod_fab,emp_fab,prov_fab,cant_fab,email_fab,dir_fab,telf_fab,web_fab)"
+            sql = "Insert into  fabricante_producto(cod_fab,emp_fab,email_fab,dir_fab,telf_fab,web_fab)"
                     + " values(?,?,?,?,?,?,?,?)";
-            String cod_fab, emp_fab, prov_fab, cant_fab, email_fab, dir_fab, telf_fab, web_fab;
+            String cod_fab, emp_fab,email_fab, dir_fab, telf_fab, web_fab;
             cod_fab = txtCodigo.getText().trim();
             emp_fab = txtEmpresa.getText().trim();
-            prov_fab = cbxProv.getSelectedItem().toString();
-            cant_fab = cbxCan.getSelectedItem().toString();
+          
             email_fab = txtEmail.getText().trim();
             dir_fab = txtDirecion.getText().trim();
             telf_fab = txtTelefono.getText().trim();
@@ -546,12 +210,10 @@ public class FabricanteProductos extends javax.swing.JFrame {
                 PreparedStatement ps = cc.prepareStatement(sql);
                 ps.setString(1, cod_fab);
                 ps.setString(2, emp_fab);
-                ps.setString(3, prov_fab);
-                ps.setString(4, cant_fab);
-                ps.setString(5, email_fab);
-                ps.setString(6, dir_fab);
-                ps.setString(7, telf_fab);
-                ps.setString(8, web_fab);
+                ps.setString(3, email_fab);
+                ps.setString(4, dir_fab);
+                ps.setString(5, telf_fab);
+                ps.setString(6, web_fab);
 
                 if (ps.executeUpdate() > 0) {
                     JOptionPane.showMessageDialog(this, "Se ha guardado correctamente");
@@ -582,8 +244,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
             conexion_mysql cn = new conexion_mysql();
             Connection cc = cn.conectar();
             String sql = "";
-            sql = "update fabricante_producto set emp_fab='" + txtEmpresa.getText().trim() + "' ,prov_fab='" + cbxProv.getSelectedItem() + "' "
-                    + ",cant_fab='" + cbxCan.getSelectedItem() + "' ,email_fab='" + txtEmail.getText().trim() + "'"
+            sql = "update fabricante_producto set emp_fab='" + txtEmpresa.getText().trim() + "',email_fab='" + txtEmail.getText().trim() + "'"
                     + ",dir_fab='" + txtDirecion.getText().trim() + "',telf_fab='" + txtTelefono.getText().trim() + "' ,web_fab='" + txtWeb.getText().trim() + "' where cod_fab='" + txtCodigo.getText() + "'";
             //System.out.println(sql);
             try {
@@ -617,10 +278,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
         txtEmpresa = new javax.swing.JTextField();
         bntBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        cbxProv = new javax.swing.JComboBox();
-        cbxCan = new javax.swing.JComboBox();
         txtDirecion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -711,18 +368,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Provincia:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Canton:");
-
-        cbxProv.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxProvItemStateChanged(evt);
-            }
-        });
-
         txtDirecion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDirecionKeyReleased(evt);
@@ -741,31 +386,15 @@ public class FabricanteProductos extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxProv, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbxCan, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDirecion, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29))
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDirecion, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(cbxProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtDirecion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -856,6 +485,11 @@ public class FabricanteProductos extends javax.swing.JFrame {
         btnActualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ACTUALIZAR1.png"))); // NOI18N
         btnActualizar.setText("Actualizar");
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseClicked(evt);
+            }
+        });
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
@@ -923,7 +557,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
         );
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("FABRICANTES ");
+        jLabel5.setText("     FABRICANTES ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -940,25 +574,25 @@ public class FabricanteProductos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(276, 276, 276)
-                        .addComponent(jLabel5)))
+                        .addGap(230, 230, 230)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(113, 113, 113))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(147, 147, 147))
         );
 
         pack();
@@ -1000,11 +634,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtEmpresaKeyTyped
 
-    private void cbxProvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxProvItemStateChanged
-        // TODO add your handling code here:
-        Cantones();
-    }//GEN-LAST:event_cbxProvItemStateChanged
-
     private void txtEmpresaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyReleased
         // TODO add your handling code here:
         mayusculas(txtEmpresa);
@@ -1020,7 +649,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
         ActivarTodoBotones();
         bntBuscar.setEnabled(false);
         btnActualizar.setEnabled(false);
-        txtCodigo.setEnabled(true);
+        txtCodigo.setEditable(true);
         txtCodigo.requestFocus();
         btnNuevo.setEnabled(false);
 
@@ -1033,7 +662,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
         nuevo();
         bloquearTodasCajas();
         bloquearTodoBotones();
-        txtCodigo.setEnabled(true);
+        txtCodigo.setEditable(true);
         txtCodigo.requestFocus();
         bntBuscar.setEnabled(true);
         btnNuevo.setEnabled(true);
@@ -1056,18 +685,22 @@ public class FabricanteProductos extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
+       
+        
         actualizar();
         btnNuevo.setEnabled(true);
-        txtCodigo.setEnabled(true);
+        txtCodigo.setEditable(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
         // TODO add your handling code here:
+        
         if (txtCodigo.getText().length() == 10) {
-            txtCodigo.setEnabled(false);
+            txtCodigo.setEditable(false);
             buscarFabricante(txtCodigo.getText());
             btnNuevo.setEnabled(false);
-            ActivarTodasCajas();
+            ParaVisualizar();
+           // ActivarTodasCajas();
             ActivarTodoBotones();
             btnGuargar.setEnabled(false);
 
@@ -1075,7 +708,8 @@ public class FabricanteProductos extends javax.swing.JFrame {
         if (txtCodigo.getText().length() < 10) {
             buscar();
             buscarFabricante(txtCodigo.getText());
-            ActivarTodasCajas();
+            ParaVisualizar();
+            //ActivarTodasCajas();
             ActivarTodoBotones();
             btnGuargar.setEnabled(false);
 
@@ -1105,6 +739,11 @@ public class FabricanteProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         mayusculas(txtWeb);
     }//GEN-LAST:event_txtWebKeyReleased
+
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
+        // TODO add your handling code here:
+        ActivarTodasCajas();
+    }//GEN-LAST:event_btnActualizarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1148,12 +787,8 @@ public class FabricanteProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGuargar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JComboBox cbxCan;
-    private javax.swing.JComboBox cbxProv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
