@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -231,7 +230,14 @@ public class IngresoUsuario extends javax.swing.JFrame {
        
         if(txtCedula.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "ingrese numero de cedula");
+            txtCedula.requestFocus();
             y++;
+        }else if(txtCedula.getText().toString().length()>0){
+           if(!verficacion_cedula_ec.verificaCedula(txtCedula.getText().toString())){
+              JOptionPane.showMessageDialog(null, "Cedula incorrecta");
+            y++; 
+           }
+            
         }else if (txtNombre.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar nombre mayor a 2 caracteres");
             txtNombre.requestFocus();
