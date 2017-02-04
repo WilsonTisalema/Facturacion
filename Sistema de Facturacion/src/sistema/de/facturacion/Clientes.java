@@ -5,6 +5,7 @@
  */
 package sistema.de.facturacion;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import dialogs.consultaCliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,12 +33,11 @@ public class Clientes extends javax.swing.JFrame {
         estadoCivil();
         provincias();
         txtFecha.setEnabled(false);
-        cbxCanton.removeAllItems();
         botonesInicio();
         lbExtranjero.setVisible(false);
         if (!Extranjero.isSelected()) {
             lbExtranjero.setText("Ecuatoriano");
-        }
+        } 
     }
 
     public void soloNumeros(java.awt.event.KeyEvent evt) {
@@ -135,24 +135,16 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public void genero() {
-        cbxGeneroC.removeAllItems();
-        cbxGeneroC.addItem("SELECCIONE UNO");
-        cbxGeneroC.addItem("FEMENINO");
-        cbxGeneroC.addItem("MASCULINO");
-        cbxGeneroC.addItem("NO DEFINIDO");
-        cbxGeneroC.setToolTipText("SELECCIONE UNO");
+        cbxGeneroC.addItem("F");
+        cbxGeneroC.addItem("M");
     }
 
     public void estadoCivil() {
-        cbxEstadocivil.removeAllItems();
-        cbxEstadocivil.addItem("SELECCIONE UNO");
         cbxEstadocivil.addItem("SOLTERO(A)");
         cbxEstadocivil.addItem("CASADO(A)");
         cbxEstadocivil.addItem("DIVORCIADO(A)");
         cbxEstadocivil.addItem("VIUDO(A)");
         cbxEstadocivil.addItem("UNIÓN LIBRE");
-        cbxEstadocivil.setToolTipText("SELECCIONE UNO");
-
     }
 
     public void provincias() {
@@ -182,7 +174,6 @@ public class Clientes extends javax.swing.JFrame {
         cbxProvincia.addItem("SUCUMBÍOS");
         cbxProvincia.addItem("TUNGURAHUA");
         cbxProvincia.addItem("ZAMORA CHINCHIPE");
-        cbxProvincia.setToolTipText("SELECCIONE UNO");
     }
 
     public void cantones() {
@@ -537,62 +528,84 @@ public class Clientes extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
     }
 
-    public void botonBorara() {
+    public void incio() {
         txtCedulaC.setText("");
-        cbxTipContribuyente.setSelectedIndex(0);
-        cbxGeneroC.setSelectedIndex(0);
-        txtFecha.setDate(null);
-        cbxEstadocivil.setSelectedIndex(0);
-        cbxProvincia.setSelectedIndex(0);
-        cbxCanton.setSelectedIndex(0);
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtApellido1.setText("");
+        txtNombre1.setText("");
         txtDireccionC.setText("");
         txtCelUnoC.setText("");
         txtTelfUnoC.setText("");
         txtEmailC.setText("");
+        txtRuc.setText("");
+        cbxProvincia.setSelectedIndex(0);
+        cbxCanton.setSelectedIndex(0);
+        cbxTipContribuyente.setSelectedIndex(0);
+        cbxGeneroC.setSelectedIndex(0);
+        cbxEstadocivil.setSelectedIndex(0);
+        cbxProvincia.setSelectedIndex(0);
+        cbxCanton.setSelectedIndex(0);
         btnNuevo.setEnabled(true);
         btnBorrar.setEnabled(false);
         btnCerrarC.setEnabled(true);
         btnGuargarC.setEnabled(false);
         btnEditar.setEnabled(false);
+        Extranjero.setSelected(false);
     }
 
-    public void controlCampos() {
+    public boolean controlCampos() {
         if (txtCedulaC.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Cédula no ingresados");
-        } else if (!verificaCedula(txtCedulaC.getText())) {
-            JOptionPane.showMessageDialog(this, "Cèdula no Valida");
+            return false;
         } else if (txtRuc.getText().length() != 13) {
             JOptionPane.showMessageDialog(this, "Ruc no Valida");
+            return false;
         } else if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nombre1 no ingresada");
+            return false;
         } else if (txtNombre1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nombre2 no ingresada");
+            return false;
         } else if (txtApellido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Apellido1 no ingresada");
+            return false;
         } else if (txtApellido1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Apellido2 no ingresada");
+            return false;
         } else if (txtFecha.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
+            return false;
         } else if (cbxGeneroC.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione genero");
+            return false;
         } else if (cbxEstadocivil.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Estado Civil");
+            return false;
         } else if (cbxTipContribuyente.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione un Tipo");
+            return false;
         } else if (cbxProvincia.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Provincia");
+            return false;
         } else if (cbxCanton.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione Canton");
+            return false;
         } else if (txtDireccionC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Direccion no ingresada");
+            return false;
         } else if (txtCelUnoC.getText().length() != 10 || txtCelUnoC.getText().charAt(0) != '0' || txtCelUnoC.getText().charAt(1) != '9') {//
             JOptionPane.showMessageDialog(this, "Celular no Valido");
+            return false;
         } else if (txtTelfUnoC.getText().length() != 9 || txtTelfUnoC.getText().charAt(0) != '0') {
             JOptionPane.showMessageDialog(this, "Telefono no Valido");
+            return false;
         } else if (txtEmailC.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Email no ingresado");
+            return false;
         }
 
+        return true;
     }
 
     public void controlactualizar() {
@@ -628,34 +641,36 @@ public class Clientes extends javax.swing.JFrame {
         Connection cn = cx.conectar();
         String sql = "insert into clientes(CI_CLI, NOM_CLI, NOM_CLI1, APE_CLI, APE_CLI1, TIPO_CONT_CLI, FEC_NAC_CLI, EST_CIV_CLI, GEN_CLI, PRO_CLI, CANT_CLI, DIR_CLI, CEL1_CLI, TLF1_CLI, E_MAIL_CLI, RUC_CLI,EXT_CLI)values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
-        try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setString(1, txtCedulaC.getText());
-            ps.setString(2, txtNombre.getText());
-            ps.setString(3, txtNombre1.getText());
-            ps.setString(4, txtApellido.getText());
-            ps.setString(5, txtApellido1.getText());
-            ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
-            ps.setString(7, fecha);
-            ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
-            ps.setString(9, cbxGeneroC.getSelectedItem().toString());
-            ps.setString(10, cbxProvincia.getSelectedItem().toString());
-            ps.setString(11, cbxCanton.getSelectedItem().toString());
-            ps.setString(12, txtDireccionC.getText());
-            ps.setString(13, txtCelUnoC.getText());
-            ps.setString(14, txtTelfUnoC.getText());
-            ps.setString(15, txtEmailC.getText());
-            ps.setString(16, txtRuc.getText());
-            ps.setString(17, lbExtranjero.getText());
-            int n = ps.executeUpdate();
-
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Guardado Exitoso");
+        if (controlCampos()) {
+            try {
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setString(1, txtCedulaC.getText());
+                ps.setString(2, txtNombre.getText());
+                ps.setString(3, txtNombre1.getText());
+                ps.setString(4, txtApellido.getText());
+                ps.setString(5, txtApellido1.getText());
+                ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
+                ps.setString(7, fecha);
+                ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
+                ps.setString(9, cbxGeneroC.getSelectedItem().toString());
+                ps.setString(10, cbxProvincia.getSelectedItem().toString());
+                ps.setString(11, cbxCanton.getSelectedItem().toString());
+                ps.setString(12, txtDireccionC.getText());
+                ps.setString(13, txtCelUnoC.getText());
+                ps.setString(14, txtTelfUnoC.getText());
+                ps.setString(15, txtEmailC.getText());
+                ps.setString(16, txtRuc.getText());
+                ps.setString(17, lbExtranjero.getText());
+                int n = ps.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Guardado Exitoso");
+                    botonesInicio();
+                    incio();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
         }
-
     }
 
     public void buscarCliente(String cedula) throws ParseException {
@@ -698,38 +713,41 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public void editar() {
+        if (controlCampos()) {
+            conexion_mysql cn = new conexion_mysql();
+            Connection cc = cn.conectar();
+            String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
+            String sql = "";
+            sql = "update clientes set NOM_CLI ='" + txtNombre.getText() + "',"
+                    + "NOM_CLI1 ='" + txtNombre1.getText() + "',"
+                    + "APE_CLI ='" + txtApellido.getText() + "',"
+                    + "APE_CLI1 ='" + txtApellido1.getText() + "',"
+                    + "TIPO_CONT_CLI ='" + cbxTipContribuyente.getSelectedItem() + "',"
+                    + "FEC_NAC_CLI ='" + fecha + "',"
+                    + "EST_CIV_CLI ='" + cbxEstadocivil.getSelectedItem().toString() + "',"
+                    + "GEN_CLI ='" + cbxGeneroC.getSelectedItem().toString() + "',"
+                    + "PRO_CLI ='" + cbxProvincia.getSelectedItem().toString() + "',"
+                    + "CANT_CLI ='" + cbxCanton.getSelectedItem().toString() + "',"
+                    + "DIR_CLI ='" + txtDireccionC.getText() + "',"
+                    + "CEL1_CLI ='" + txtCelUnoC.getText() + "',"
+                    + "TLF1_CLI ='" + txtTelfUnoC.getText() + "',"
+                    + "E_MAIL_CLI ='" + txtEmailC.getText() + "',"
+                    + "RUC_CLI ='" + txtRuc.getText() + "',"
+                    + "EXT_CLI ='" + lbExtranjero.getText() + "' where CI_CLI ='" + txtCedulaC.getText() + "'";
 
-        conexion_mysql cn = new conexion_mysql();
-        Connection cc = cn.conectar();
-        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
-        String sql = "";
-        sql = "update clientes set NOM_CLI ='" + txtNombre.getText() + "',"
-                + "NOM_CLI1 ='" + txtNombre1.getText() + "',"
-                + "APE_CLI ='" + txtApellido.getText() + "',"
-                + "APE_CLI1 ='" + txtApellido1.getText() + "',"
-                + "TIPO_CONT_CLI ='" + cbxTipContribuyente.getSelectedItem() + "',"
-                + "FEC_NAC_CLI ='" + fecha + "',"
-                + "EST_CIV_CLI ='" + cbxEstadocivil.getSelectedItem().toString() + "',"
-                + "GEN_CLI ='" + cbxGeneroC.getSelectedItem().toString() + "',"
-                + "PRO_CLI ='" + cbxProvincia.getSelectedItem().toString() + "',"
-                + "CANT_CLI ='" + cbxCanton.getSelectedItem().toString() + "',"
-                + "DIR_CLI ='" + txtDireccionC.getText() + "',"
-                + "CEL1_CLI ='" + txtCelUnoC.getText() + "',"
-                + "TLF1_CLI ='" + txtTelfUnoC.getText() + "',"
-                + "E_MAIL_CLI ='" + txtEmailC.getText() + "',"
-                + "RUC_CLI ='" + txtRuc.getText() + "',"
-                + "EXT_CLI ='" + lbExtranjero.getText() + "' where CI_CLI ='" + txtCedulaC.getText() + "'";
+            try {
+                PreparedStatement psd = cc.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se actualizo Correctamente");
+                    incio();
+                    botonesInicio();
 
-        try {
-            PreparedStatement psd = cc.prepareStatement(sql);
-            int n = psd.executeUpdate();
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Se actualizo Correctamente");
-                botonesInicio();
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -752,7 +770,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cbxEstadocivil = new javax.swing.JComboBox<String>();
-        jLabel1 = new javax.swing.JLabel();
+        jbpasaporte = new javax.swing.JLabel();
         txtCedulaC = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -824,10 +842,10 @@ public class Clientes extends javax.swing.JFrame {
         jLabel7.setText("Estado Civil :");
 
         cbxEstadocivil.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxEstadocivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Esado civil:" }));
+        cbxEstadocivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esado civil:" }));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("Cédula:");
+        jbpasaporte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jbpasaporte.setText("Cédula:");
 
         txtCedulaC.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -909,7 +927,7 @@ public class Clientes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jbpasaporte)
                             .addComponent(jLabel9))
                         .addGap(85, 85, 85)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -950,7 +968,7 @@ public class Clientes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jbpasaporte)
                     .addComponent(txtCedulaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22)
                     .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1200,6 +1218,11 @@ public class Clientes extends javax.swing.JFrame {
 
         Extranjero.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Extranjero.setText("Extranjero");
+        Extranjero.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ExtranjeroStateChanged(evt);
+            }
+        });
         Extranjero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ExtranjeroActionPerformed(evt);
@@ -1304,8 +1327,8 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
-        botonBorara();
+        incio();
+        botonesInicio();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
@@ -1337,8 +1360,17 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtApellido1KeyTyped
 
     private void btnGuargarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarCActionPerformed
-        controlCampos();
-
+        if (controlCampos()) {
+            if (!Extranjero.isSelected()) {
+                if (!verificaCedula(txtCedulaC.getText())) {
+                    JOptionPane.showMessageDialog(this, "Cèdula no Valida");
+                } else {
+                    guardar();
+                }
+            } else {
+                guardar();
+            }
+        }
     }//GEN-LAST:event_btnGuargarCActionPerformed
 
     private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
@@ -1365,14 +1397,14 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRucKeyReleased
 
     private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
-    soloNumeros(evt);
+        soloNumeros(evt);
         if (txtRuc.getText().length() > 12) {
             evt.consume();
-        }       
+        }
     }//GEN-LAST:event_txtRucKeyTyped
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-      if (txtCedulaC.getText().equals("")) {
+        if (txtCedulaC.getText().equals("")) {
             if (txtCedulaC.getText().trim().length() != 10) {
                 consultaCliente cn = new consultaCliente(this, rootPaneCheckingEnabled, txtCedulaC.getText().trim());
                 cn.show();
@@ -1392,21 +1424,27 @@ public class Clientes extends javax.swing.JFrame {
                 controlactualizar();
             }
         } else {
-            System.out.println("entro");
-            controlCampos();
             editar();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void ExtranjeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExtranjeroActionPerformed
-if (Extranjero.isSelected()) {
+        if (Extranjero.isSelected()) {
             lbExtranjero.setText("Extranjero");
             lbExtranjero.setVisible(true);
         } else {
             lbExtranjero.setText("Ecuatoriano");
             lbExtranjero.setVisible(true);
-        }       
+        }
     }//GEN-LAST:event_ExtranjeroActionPerformed
+
+    private void ExtranjeroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ExtranjeroStateChanged
+        if(Extranjero.isSelected()){   
+        jbpasaporte.setText("Id Pass:");
+        }else{
+        jbpasaporte.setText("Cedula:");
+        }
+    }//GEN-LAST:event_ExtranjeroStateChanged
 
     /**
      * @param args the command line arguments
@@ -1458,7 +1496,6 @@ if (Extranjero.isSelected()) {
     private javax.swing.JComboBox<String> cbxGeneroC;
     private javax.swing.JComboBox<String> cbxProvincia;
     private javax.swing.JComboBox<String> cbxTipContribuyente;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1480,6 +1517,7 @@ if (Extranjero.isSelected()) {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel jbpasaporte;
     private javax.swing.JLabel lbExtranjero;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtApellido1;
