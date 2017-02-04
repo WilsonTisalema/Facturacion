@@ -132,12 +132,12 @@ public class IngresoUsuario extends javax.swing.JFrame {
         jcmbjerarquia.setEnabled(true);
     }
 
-    public void bloquearTodoBotones() {
+    
+public void bloquearTodoBotones() {
         jbtActualizar.setEnabled(false);
         jbtCancelar.setEnabled(false);
         jbtGuardar.setEnabled(false);
     }
-
     public void bloquearTodasCajas() {
         txtApellido.setEnabled(false);
         txtApellido1.setEnabled(false);
@@ -1117,7 +1117,6 @@ public class IngresoUsuario extends javax.swing.JFrame {
         int n = txtCorreo.getText().toString().length();
         if (n > 24) {
             evt.consume();
-
         }
     }//GEN-LAST:event_txtCorreoKeyTyped
 

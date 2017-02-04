@@ -5,9 +5,11 @@
  */
 package dialogs;
 
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,7 +28,7 @@ public class generarCobros extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         lblSecuencial.setText("002-001");
-        lblNumero.setText("000000002");
+        lblNumero.setText("000000011");
         txtTotal.setText("18.20");
         txtTotal.setEnabled(false);
         txtRecibo.requestFocus();
@@ -43,49 +45,58 @@ public class generarCobros extends javax.swing.JDialog {
     }
 
     public void generar() {
-        int ope=0;
+        int ope = 0;
         float totat = Float.valueOf(txtTotal.getText().toString());
         float recibo = Float.valueOf(txtRecibo.getText().toString());
         if (totat > recibo) {
             double resultado = totat - recibo;
-            resultado = (Math.floor(resultado * 100) / 100.0) + 0.01;
-            JOptionPane.showMessageDialog(null, "Falta pagar $= " + resultado);
+            //resultado = (Math.floor(resultado * 100) / 100.0) + 0.001;
+
+            DecimalFormat df = new DecimalFormat("##.##");
+            //df.setRoundingMode(RoundingMode.DOWN);
+            String resulta = df.format(resultado);
+            //JOptionPane.showMessageDialog(null, "Debe dar de vuelto $= " + resulta);
+            JOptionPane.showMessageDialog(null, "Falta pagar $= " + resulta);
             ope++;
         } else {
             if (totat == recibo) {
                 JOptionPane.showMessageDialog(null, "Factura Cancelada");
-                
+
             } else {
                 double resultado = recibo - totat;
-                resultado = (Math.floor(resultado * 100) / 100.0) + 0.01;
-                JOptionPane.showMessageDialog(null, "Debe dar de vuelto $= " + resultado);
+                //resultado = (Math.floor(resultado * 100) / 100.0) + 0.01;
+                //resultado = (resultado * 100) / 100 ;
+                DecimalFormat df = new DecimalFormat("##.##");
+                //df.setRoundingMode(RoundingMode.DOWN);
+                String resulta = df.format(resultado);
+                JOptionPane.showMessageDialog(null, "Debe dar de vuelto $= " + resulta);
             }
         }
-        System.out.println("ope"+ope);
-        if(ope==0){
+        System.out.println("ope" + ope);
+        if (ope == 0) {
             guardar();
         }
     }
 
     public void guardar() {
-        conexion_mysql cn=new conexion_mysql();
-        Connection cc=cn.conectar();
-        String sql="";
-        sql="insert into cobros(`sec_fac_p`,`num_fac_p`,`tot_fac`,`abo_cob`) "
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        String sql = "";
+        sql = "insert into cobros(`sec_fac_p`,`num_fac_p`,`tot_fac`,`abo_cob`) "
                 + "values(?,?,?,?)";
-        String sec_fac,num_fac_p;
-        float tot_fac,abo_cob;
-        sec_fac=lblSecuencial.getText().trim();
-        num_fac_p=lblNumero.getText().trim();
-        tot_fac=Float.valueOf(txtTotal.getText().trim());
-        abo_cob=Float.valueOf(txtTotal.getText().trim());
+        String sec_fac, num_fac_p;
+        float tot_fac, abo_cob;
+        sec_fac = lblSecuencial.getText().trim();
+        num_fac_p = lblNumero.getText().trim();
+        tot_fac = Float.valueOf(txtTotal.getText().trim());
+        abo_cob = Float.valueOf(txtTotal.getText().trim());
         try {
-            PreparedStatement ps=cc.prepareStatement(sql);
+            PreparedStatement ps = cc.prepareStatement(sql);
             ps.setString(1, sec_fac);
             ps.setString(2, num_fac_p);
             ps.setFloat(3, tot_fac);
             ps.setFloat(4, abo_cob);
-            if(ps.executeUpdate()>0){
+            if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Cobro Guaradado");
                 dispose();
             }
