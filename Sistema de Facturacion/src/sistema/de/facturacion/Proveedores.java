@@ -6,40 +6,387 @@
 package sistema.de.facturacion;
 
 import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 /**
  *
- * @author Cristty
+ * @author Oscar
  */
+
 public class Proveedores extends javax.swing.JFrame {
+public static final int NUMERO_DE_PROVINCIAS = 24;//22;
 
     /**
      * s
      * Creates new form Proveedores
      */
+    DefaultTableModel modelo;
+    int  conbot=0;
     public Proveedores() {
         initComponents();
-        TipoContriyentes();
+        bloquear();
         ProvinciasEc();
-
+        cargarcodigoempresa();
+//        cargartablapro("");
+//        cargarcampos();
+        conbot=0;
+        botonesblo();
     }
-
-    public void guardar(){
-        if(!controles()){
-            
+    public void botonesblo()
+    {
+        jbtActualizar.setEnabled(true);
+        jbtNuevo.setEnabled(true);
+        jbtGuardar.setEnabled(false);
+        jbtSalir.setEnabled(true);
+        jbtCancelar.setEnabled(false);
+    }
+    public void botonesnue()
+    {
+        jbtActualizar.setEnabled(false);
+        jbtNuevo.setEnabled(false);
+        jbtGuardar.setEnabled(true);
+        jbtSalir.setEnabled(true);
+        jbtCancelar.setEnabled(true);
+    }
+     
+    
+    public void actualizar()
+    {
+             if (TxtNombre.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE EL NOMBRE");
+             TxtNombre.requestFocus();
+             } else if (TxtApellido.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE EL APELLIDO");
+             TxtApellido.requestFocus();
+             }else if (cbxProv.getSelectedItem().equals("")) {
+             JOptionPane.showMessageDialog(null, "INGRESE UNA PROVINCIA");
+             cbxProv.requestFocus();
+             } else if (cbxCan.getSelectedItem().equals("")) {
+             JOptionPane.showMessageDialog(null, "INGRESE UN CANTON");
+             cbxCan.requestFocus();
+             } else if (txtTelfCelu.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UN NUMERO DE CELULAR");
+             txtTelfCelu.requestFocus();
+             } else if (txtTelfComve.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UN NUMERO CONVENCIONAL");
+             txtTelfComve.requestFocus();
+             } else if (txtEmail.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UN EMAIL");
+             txtEmail.requestFocus();
+             }  else if (txtRzon.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UNA FORMA DE PAGAR");
+             txtRzon.requestFocus();
+             }  else if (txtReLe.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UN REPRESENTANTE");
+             txtReLe.requestFocus();
+             } else if (txtExt1.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "INGRESE UNA EXTENCION");
+             txtExt1.requestFocus();
+             } 
+               else {
+                       conexion_mysql cc = new conexion_mysql();
+                       Connection cn = cc.conectar();
+                       String sql = "";
+                
+                       sql = "update proveedores set NOM_PRO='" + TxtNombre.getText()
+                    + "', APE_PRO='" + TxtApellido.getText()
+                    + "', PRO_PROV='" + cbxProv.getSelectedItem().toString()
+                    + "', CANT_PROV='" + cbxCan.getSelectedItem().toString()
+                    + "', CEL_PROV='" + txtTelfCelu.getText()
+                    + "', TLF1_PROV='" + txtTelfComve.getText()
+                    + "', E_MAIL_PROV='" + txtEmail.getText()
+                    + "', FOR_PAG_PROV='" + txtRzon.getText()
+                    + "', REP_LEG_PROV='" + txtReLe.getText()
+                    + "', EXT1_PROV='" + txtExt1.getText()
+                    + "'  where  CED_PROV='" + txtCed.getText() + "'";
+            try {
+                PreparedStatement psd = cn.prepareStatement(sql);
+                int n = psd.executeUpdate();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(null, "Se Actualizo Correctamente");
+//                    cargartablapro("");
+                    bloquear();
+                    limpiar();
+                 }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        } 
+    }
+    public void bloquear()
+    {
+                    txtCed.setEnabled(false);
+                    TxtNombre.setEnabled(false);
+                    TxtApellido.setEnabled(false);
+                    txtRUC.setEnabled(false);
+                    CbxCodigoEmpresa.setEnabled(false);
+                    cbxProv.setEnabled(false);
+                    cbxCan.setEnabled(false);
+                    txtTelfCelu.setEnabled(false);
+                    txtTelfComve.setEnabled(false);
+                    txtEmail.setEnabled(false);
+                    txtRzon.setEnabled(false);
+                    txtReLe.setEnabled(false);
+                    txtExt1.setEnabled(false);
+    }
+    public void desbloquearnuevo()
+    {
+                    txtCed.setEnabled(true);
+                    TxtNombre.setEnabled(true);
+                    TxtApellido.setEnabled(true);
+                    txtRUC.setEnabled(true);
+                    CbxCodigoEmpresa.setEnabled(true);
+                    cbxProv.setEnabled(true);
+                    cbxCan.setEnabled(true);
+                    txtTelfCelu.setEnabled(true);
+                    txtTelfComve.setEnabled(true);
+                    txtEmail.setEnabled(true);
+                    txtRzon.setEnabled(true);
+                    txtReLe.setEnabled(true);
+                    txtExt1.setEnabled(true);
+    }
+    
+    public void desbloquearactualizar()
+    {
+                    txtCed.setEnabled(false);
+                    TxtNombre.setEnabled(true);
+                    TxtApellido.setEnabled(true);
+                    txtRUC.setEnabled(false);
+                    CbxCodigoEmpresa.setEnabled(false);
+                    cbxProv.setEnabled(true);
+                    cbxCan.setEnabled(true);
+                    txtTelfCelu.setEnabled(true);
+                    txtTelfComve.setEnabled(true);
+                    txtEmail.setEnabled(true);
+                    txtRzon.setEnabled(true);
+                    txtReLe.setEnabled(true);
+                    txtExt1.setEnabled(true);
+    }
+    
+    public void cargarcodigoempresa()
+    {
+        try {
+            conexion_mysql cc = new conexion_mysql();
+            Connection cn = cc.conectar();
+            String sql = "";
+            sql = "select * from fabricante_producto";
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                String codigo = rs.getString("EMP_FAB");
+                CbxCodigoEmpresa.addItem(codigo);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
+
     }
+    public void guardar()
+    {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String ced = txtCed.getText();
+        if (esCedulaValida(ced) == true) {
+            System.out.println(esCedulaValida(ced));
+            //JOptionPane.showMessageDialog(null, "La cedula= " + ced + "  es correcta");
+            String sql = "";
+            sql = "select count(*) as contar from proveedores where CED_PROV='" + txtCed.getText().replace('-', ' ').replaceAll(" ", "") + "'";
+            try {
+                Statement psd = cn.createStatement();
+                ResultSet rs = psd.executeQuery(sql);
+                while (rs.next()) {
+                    int contar1 = rs.getInt("contar");
+                    if (contar1 > 0) {
+                        JOptionPane.showMessageDialog(null, " EL PROVEEDOR YA EXITE ", "ADVERTENCIA !!!!", JOptionPane.WARNING_MESSAGE);
+                        txtCed.setText("");
+                        txtCed.requestFocus();
+                    } else {
+                            if (txtRUC.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "DEBE INGRESAR UN RUC");
+                            txtRUC.requestFocus();
+                        } else if (CbxCodigoEmpresa.getSelectedItem().equals("")) {
+                            JOptionPane.showMessageDialog(null, "INGRESE EL CODIGO DE LA EMPRESA");
+                            CbxCodigoEmpresa.requestFocus();
+                        } else if (TxtNombre.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE EL NOMBRE");
+                            TxtNombre.requestFocus();
+                        } else if (TxtApellido.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE EL APELLIDO");
+                            TxtApellido.requestFocus();
+                        } else if (cbxProv.getSelectedItem().equals("")) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UNA PROVINCIA");
+                            cbxProv.requestFocus();
+                        } else if (cbxCan.getSelectedItem().equals("")) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UN CANTON");
+                            cbxCan.requestFocus();
+                        } else if (txtTelfCelu.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UN NUMERO DE CELULAR");
+                            txtTelfCelu.requestFocus();
+                        } else if (txtTelfComve.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UN NUMERO CONVENCIONAL");
+                            txtTelfComve.requestFocus();
+                        } else if (txtEmail.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UN EMAIL");
+                            txtEmail.requestFocus();
+                        }  else if (txtRzon.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UNA FORMA DE PAGAR");
+                            txtRzon.requestFocus();
+                        }  else if (txtReLe.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UN REPRESENTANTE");
+                            txtReLe.requestFocus();
+                        } else if (txtExt1.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "INGRESE UNA EXTENCION");
+                            txtExt1.requestFocus();
+                        } 
+                        
+                        else {
+
+                            String cod_emp="",cedu,nom,ape,ruc,tip_con,ra_soc,nom_emp,pro,can,tel,cel,email,for_pag,repre,ext;
+                            cedu=txtCed.getText();
+                            nom=TxtNombre.getText();
+                            ape=TxtApellido.getText();
+                            ruc=txtRUC.getText();
+                            
+                            sql = "select COD_FAB from fabricante_producto where EMP_FAB= '"+ CbxCodigoEmpresa.getSelectedItem().toString()+"'"; 
+                                            try {
+                                     Statement psd9 = cn.createStatement();
+                                     ResultSet rs9 = psd9.executeQuery(sql);
+                                     while(rs9.next())
+                                     {
+                                     cod_emp = rs9.getString("COD_FAB");
+                                     }System.out.println(cod_emp);
+             //                       CbxCodigoEmpresa.addItem(cod_emp);
+                                    } catch (SQLException ex) {
+                                        JOptionPane.showMessageDialog(null, ex);
+                                         }
+                            pro=cbxProv.getSelectedItem().toString();
+                            can=cbxCan.getSelectedItem().toString();
+                            tel=txtTelfComve.getText();
+                            cel=txtTelfCelu.getText();
+                            email=txtEmail.getText();
+                            for_pag=txtRzon.getText();
+                            repre=txtReLe.getText();
+                            ext=txtExt1.getText();
+                            sql = "insert into proveedores (CED_PROV,NOM_PRO,APE_PRO,RUC_PROV,"
+                                  + "COD_EMP_PRO,PRO_PROV,CANT_PROV,CEL_PROV,TLF1_PROV,E_MAIL_PROV,FOR_PAG_PROV,REP_LEG_PROV,EXT1_PROV) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+                                try {
+                                    PreparedStatement psd1 = cn.prepareStatement(sql);
+                                    psd1.setString(1, cedu);
+                                    psd1.setString(2, nom);
+                                    psd1.setString(3, ape);
+                                    psd1.setString(4, ruc);
+                                    psd1.setString(5, cod_emp);
+                                    psd1.setString(6, pro );
+                                    psd1.setString(7, can);
+                                    psd1.setString(8, tel);
+                                    psd1.setString(9, cel);
+                                    psd1.setString(10, email);
+                                    psd1.setString(11, for_pag);
+                                    psd1.setString(12, repre);
+                                    psd1.setString(13, ext);
+                                    int n = psd1.executeUpdate();
+                                    if (n > 0) {
+                                        JOptionPane.showMessageDialog(null, "se inserto correctamente");
+                                        limpiar();
+                                        botonesblo();
+                                        bloquear();
+                                        }
+                                    } catch (SQLException ex) {
+                                    JOptionPane.showMessageDialog(null, ex);
+                                    }
+                                    } 
+
+                        }
+
+                    }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "INGRESE PROVINCIA Y CANTON");
+                }
+
+        }else {
+            JOptionPane.showMessageDialog(null, "La cedula= " + ced + "  es incorrecta");
+            txtCed.setText("");
+            txtCed.requestFocus();
+        }
+}
+    public void limpiar()
+    {
+        txtCed.setText("");
+        TxtApellido.setText("");
+        txtRUC.setText("");
+        //cbxTipoCont.getSelectedItem().toString();
+//        txtRazonSo.setText("");
+        TxtNombre.setText("");
+        cbxProv.removeAllItems();
+        cbxCan.removeAllItems();
+        txtTelfComve.setText("");
+        txtTelfCelu.setText("");
+        txtEmail.setText("");
+        txtRzon.setText("");
+        txtReLe.setText("");
+        txtExt1.setText("");
+        ProvinciasEc();
+        Cantones();
+        
+    }
+
     public boolean controles(){
         boolean error=false;
         
         return error;
     }
-    public void TipoContriyentes() {
-        cbxTipoCont.removeAllItems();
-        cbxTipoCont.addItem("SELECCIONE UNO");
-        cbxTipoCont.addItem("PERSOAN NATURAL");
-        cbxTipoCont.addItem("PERSONA JURÍDICA ");
-        cbxTipoCont.addItem("SOCIEDAD");
+    public boolean esCedulaValida(String cedula) {
+        //verifica que tenga 10 dÃ­gitos y que contenga solo valores numÃ©ricos
+        if (!((cedula.length() == 10) && cedula.matches("^[0-9]{10}$"))) {
+            return false;
+        }
+
+        //verifica que los dos primeros dÃ­gitos correspondan a un valor entre 1 y NUMERO_DE_PROVINCIAS
+        int prov = Integer.parseInt(cedula.substring(0, 2));
+
+        if (!((prov > 0) && (prov <= NUMERO_DE_PROVINCIAS))) {
+            return false;
+        }
+
+        //verifica que el Ãºltimo dÃ­gito de la cÃ©dula sea vÃ¡lido
+        int[] d = new int[10];
+
+        //Asignamos el string a un array
+        for (int i = 0; i < d.length; i++) {
+            d[i] = Integer.parseInt(cedula.charAt(i) + "");
+        }
+
+        int imp = 0;
+        int par = 0;
+
+        //sumamos los duplos de posiciÃ³n impar
+        for (int i = 0; i < d.length; i += 2) {
+            d[i] = ((d[i] * 2) > 9) ? ((d[i] * 2) - 9) : (d[i] * 2);
+            imp += d[i];
+        }
+
+        //sumamos los digitos de posiciÃ³n par
+        for (int i = 1; i < (d.length - 1); i += 2) {
+            par += d[i];
+        }
+
+        //Sumamos los dos resultados
+        int suma = imp + par;
+
+        //Restamos de la decena superior
+        int d10 = Integer.parseInt(String.valueOf(suma + 10).substring(0, 1)
+                + "0") - suma;
+
+        //Si es diez el dÃ©cimo dÃ­gito es cero        
+        d10 = (d10 == 10) ? 0 : d10;
+
+        //si el dÃ©cimo dÃ­gito calculado es igual al digitado la cÃ©dula es correcta
+        return d10 == d[9];
     }
+
 
     public void soloNumeros(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
@@ -53,6 +400,14 @@ public class Proveedores extends javax.swing.JFrame {
         char c = evt.getKeyChar();
 
         if (Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }
+    public void mayusculas(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+
+        if (Character.isLowerCase(c)) {
             getToolkit().beep();
             evt.consume();
         }
@@ -85,32 +440,64 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     public void mayusclasComen(java.awt.event.KeyEvent evt) {
-        char c = evt.getKeyChar();
-
-        String aux = txtRzon.getText();
-        txtRzon.setText("");
-        if (!aux.isEmpty()) {
-            aux = aux.substring(0, aux.length() - 1);
+       char c = evt.getKeyChar();
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
         }
-        aux += String.valueOf(c).toUpperCase();
-        txtRzon.setText(aux);
     }
 
-    public void mayusclasRazonSocial(java.awt.event.KeyEvent evt) {
+    public void mayusclasnombre(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
-
-        String aux = txtRazonSo.getText();
-        txtRazonSo.setText("");
-        if (!aux.isEmpty()) {
-            aux = aux.substring(0, aux.length() - 1);
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
         }
-        aux += String.valueOf(c).toUpperCase();
-        txtRazonSo.setText(aux);
     }
-
+    public void mayusclasape(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }
+    
+public void mayusclemail(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }
+public void mayusformapago(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }
+public void mayusrepre(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        if(Character.isLowerCase(c))
+        {
+            String cad=(""+c).toUpperCase();
+            c=cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }
     public void ProvinciasEc() {
         cbxProv.removeAllItems();
-        cbxProv.addItem("SELECCIONE UNO");
+        cbxProv.addItem("");
         cbxProv.addItem("AZUAY");
         cbxProv.addItem("BOLÍVAR");
         cbxProv.addItem("CAÑAR");
@@ -141,7 +528,7 @@ public class Proveedores extends javax.swing.JFrame {
     public void Cantones() {
         if (cbxProv.getSelectedIndex() == 1) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("CHORDELEG");
             cbxCan.addItem("CUENCA");
             cbxCan.addItem("EL PAN");
@@ -160,7 +547,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         } else if (cbxProv.getSelectedIndex() == 2) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("CALUMA");
             cbxCan.addItem("CHILLANES");
             cbxCan.addItem("CHIMBO");
@@ -170,7 +557,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("SAN MIGUEL");
         } else if (cbxProv.getSelectedIndex() == 3) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("AZOGUES");
             cbxCan.addItem("BIBLIÁN");
             cbxCan.addItem("CAÑAR");
@@ -180,7 +567,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("SUSCAL");
         } else if (cbxProv.getSelectedIndex() == 4) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("BOLÍVAR");
             cbxCan.addItem("ESPEJO");
             cbxCan.addItem("MIRA");
@@ -189,7 +576,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("TULCÁN");
         } else if (cbxProv.getSelectedIndex() == 5) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ALAUSÍ");
             cbxCan.addItem("CHAMBO");
             cbxCan.addItem("CHUNCHI");
@@ -202,7 +589,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("RIOBAMBA");
         } else if (cbxProv.getSelectedIndex() == 6) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("LA MANÁ");
             cbxCan.addItem("LATACUNGA");
             cbxCan.addItem("PANGUA");
@@ -213,7 +600,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         } else if (cbxProv.getSelectedIndex() == 7) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ARENILLAS");
             cbxCan.addItem("ATAHUALPA");
             cbxCan.addItem("BALSAS");
@@ -230,7 +617,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("ZARUMA");
         } else if (cbxProv.getSelectedIndex() == 8) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ATACAMES");
             cbxCan.addItem("ELOY ALFARO");
             cbxCan.addItem("ESMERALDAS");
@@ -240,13 +627,13 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("SAN LORENZO");
         } else if (cbxProv.getSelectedIndex() == 9) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ISABELA");
             cbxCan.addItem("SAN CRISTÓBAL");
             cbxCan.addItem("SANTA CRUZ");
         } else if (cbxProv.getSelectedIndex() == 10) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ALFREDO BAQUERIZO MORENO");
             cbxCan.addItem("BALAO");
             cbxCan.addItem("BALZAR");
@@ -274,7 +661,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("YAGUACHI");
         } else if (cbxProv.getSelectedIndex() == 11) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("ANTONIO ANTE");
             cbxCan.addItem("COTACACHI");
             cbxCan.addItem("IBARRA");
@@ -283,7 +670,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("SAN MIGUEL DE URCUQUÍ");
         } else if (cbxProv.getSelectedIndex() == 12) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("CALVAS");
             cbxCan.addItem("CATAMAYO");
             cbxCan.addItem("CELICA");
@@ -301,7 +688,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("SOZORANGA");
         } else if (cbxProv.getSelectedIndex() == 13) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("BABA");
             cbxCan.addItem("BABAHOYO");
             cbxCan.addItem("BUENA FE");
@@ -317,7 +704,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("VINCES");
         } else if (cbxProv.getSelectedIndex() == 14) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("BABA");
             cbxCan.addItem("BABAHOYO");
             cbxCan.addItem("BUENA FE");
@@ -333,7 +720,7 @@ public class Proveedores extends javax.swing.JFrame {
             cbxCan.addItem("VINCES");
         } else if (cbxProv.getSelectedIndex() == 15) {
             cbxCan.removeAllItems();
-            cbxCan.addItem("SELECCIONE UNO");
+            cbxCan.addItem("");
             cbxCan.addItem("BOLÍVAR");
             cbxCan.addItem("CHONE");
             cbxCan.addItem("EL CARMEN");
@@ -437,21 +824,21 @@ public class Proveedores extends javax.swing.JFrame {
         }
     }
 
-    public void sacarCodigo() {
-        if (txtCodEmpresa.getText().length() == 12) {
-            txtCodEmpresa.setEnabled(false);
-            txtCodEmpresa.setText(txtCodEmpresa.getText().substring(1, 6));
-                txtCodEmpresa.setEnabled(false);
-        } else {
-            if (txtCodEmpresa.getText().length() == 13) {
-                txtCodEmpresa.setText(txtCodEmpresa.getText().substring(2, 7));
-                txtCodEmpresa.setEnabled(false);
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese con pistola de codigo de barras");
-            }
-        }
-
-    }
+//    public void sacarCodigo() {
+//        if (txtcodigoemp.getText().length() == 12) {
+//            txtcodigoemp.setEnabled(false);
+//            txtcodigoemp.setText(txtcodigoemp.getText().substring(1, 6));
+//                txtcodigoemp.setEnabled(false);
+//        } else {
+//            if (txtcodigoemp.getText().length() == 13) {
+//                txtcodigoemp.setText(txtcodigoemp.getText().substring(2, 7));
+//                txtcodigoemp.setEnabled(false);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Ingrese con pistola de codigo de barras");
+//            }
+//        }
+//
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -469,12 +856,13 @@ public class Proveedores extends javax.swing.JFrame {
         txtCed = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtRUC = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        cbxTipoCont = new javax.swing.JComboBox<String>();
-        jLabel4 = new javax.swing.JLabel();
-        txtRazonSo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtCodEmpresa = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        TxtNombre = new javax.swing.JTextField();
+        TxtApellido = new javax.swing.JTextField();
+        CbxCodigoEmpresa = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cbxProv = new javax.swing.JComboBox<String>();
@@ -485,11 +873,9 @@ public class Proveedores extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtTelfCelu = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtRzon = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtDir = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txtReLe = new javax.swing.JTextField();
@@ -518,7 +904,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel1.setText("Cédula*:");
+        jLabel1.setText("CEDULA");
 
         txtCed.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -539,26 +925,44 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Tipo Contribuyente:");
+        jLabel7.setText("CODIGO EMPRESA");
 
-        cbxTipoCont.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel8.setText("NOMBRE");
 
-        jLabel4.setText("Razón Social:");
+        jLabel11.setText("APELLIDO");
 
-        txtRazonSo.addKeyListener(new java.awt.event.KeyAdapter() {
+        TxtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtNombreActionPerformed(evt);
+            }
+        });
+        TxtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtRazonSoKeyReleased(evt);
+                TxtNombreKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtRazonSoKeyTyped(evt);
+                TxtNombreKeyTyped(evt);
             }
         });
 
-        jLabel7.setText("Codigo Empresa:");
-
-        txtCodEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        TxtApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodEmpresaActionPerformed(evt);
+                TxtApellidoActionPerformed(evt);
+            }
+        });
+        TxtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtApellidoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtApellidoKeyTyped(evt);
+            }
+        });
+
+        jButton1.setText("BUSCAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -570,29 +974,29 @@ public class Proveedores extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(42, 42, 42)
-                        .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel8))
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodEmpresa)))
+                        .addComponent(CbxCodigoEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtRUC, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTipoCont, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtRazonSo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtRUC, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(TxtApellido)))
+                    .addComponent(jButton1))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -602,21 +1006,24 @@ public class Proveedores extends javax.swing.JFrame {
                     .addComponent(txtCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtRUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxTipoCont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtRazonSo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel11)
+                    .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtCodEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(419, 419, 419))
+                    .addComponent(CbxCodigoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(382, 382, 382))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel5.setText("Provincia:");
+        jLabel5.setText("PROVINCIA");
 
         cbxProv.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -629,9 +1036,9 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Cantón:");
+        jLabel6.setText("CANTON");
 
-        jLabel9.setText("Celular:");
+        jLabel9.setText("CELULAR");
 
         txtTelfComve.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -642,7 +1049,7 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Teléfono:");
+        jLabel10.setText("TELEFONO");
 
         txtTelfCelu.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -655,31 +1062,27 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("E-mail:");
+        jLabel12.setText("E-MAIL");
 
-        jLabel13.setText("Direccion:");
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailKeyTyped(evt);
+            }
+        });
 
         txtRzon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRzonKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtRzonKeyTyped(evt);
             }
         });
 
-        jLabel14.setText("Forma Pago:");
-
-        txtDir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDirActionPerformed(evt);
-            }
-        });
-        txtDir.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtDirKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDirKeyTyped(evt);
-            }
-        });
+        jLabel14.setText("FORMA PAGO");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -688,40 +1091,35 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel9))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbxProv, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelfCelu, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel9))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxProv, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelfCelu, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(cbxCan, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel14))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtTelfComve, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                                    .addComponent(txtRzon))
-                                .addContainerGap())))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(cbxCan, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(288, 288, 288))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel14))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTelfComve, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(txtRzon))
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -745,24 +1143,23 @@ public class Proveedores extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtRzon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel14)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel15.setText("Rept legal:");
+        jLabel15.setText("REPRESENTANTE");
 
         txtReLe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtReLeKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtReLeKeyTyped(evt);
             }
         });
 
-        jLabel16.setText("Extensión1:");
+        jLabel16.setText("EXTENSION");
 
         txtExt1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -777,13 +1174,13 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
-                .addGap(40, 40, 40)
-                .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
                 .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,10 +1188,10 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(txtExt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtReLe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -879,7 +1276,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addComponent(jbtCancelar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtSalir)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -889,26 +1286,26 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -927,20 +1324,6 @@ public class Proveedores extends javax.swing.JFrame {
         Cantones();
     }//GEN-LAST:event_cbxProvItemStateChanged
 
-    private void txtRazonSoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonSoKeyReleased
-        // TODO add your handling code here:
-        mayusclasRazonSocial(evt);
-    }//GEN-LAST:event_txtRazonSoKeyReleased
-
-    private void txtDirKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirKeyReleased
-        // TODO add your handling code here:
-        mayusclasComen(evt);
-    }//GEN-LAST:event_txtDirKeyReleased
-
-    private void txtDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDirActionPerformed
-
     private void txtTelfComveKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfComveKeyTyped
         // TODO add your handling code here:
         soloNumeros(evt);
@@ -953,16 +1336,13 @@ public class Proveedores extends javax.swing.JFrame {
     private void txtRzonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRzonKeyTyped
         // TODO add your handling code here:
         soloLetras(evt);
+        mayusformapago(evt);
     }//GEN-LAST:event_txtRzonKeyTyped
-
-    private void txtRazonSoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonSoKeyTyped
-        // TODO add your handling code here:
-        soloLetras(evt);
-    }//GEN-LAST:event_txtRazonSoKeyTyped
 
     private void txtReLeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtReLeKeyTyped
         // TODO add your handling code here:
         soloLetras(evt);
+        mayusrepre(evt);
     }//GEN-LAST:event_txtReLeKeyTyped
 
     private void txtExt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExt1KeyTyped
@@ -986,45 +1366,101 @@ public class Proveedores extends javax.swing.JFrame {
         contTelCel();
     }//GEN-LAST:event_txtTelfCeluFocusLost
 
-    private void txtDirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirKeyTyped
-        // TODO add your handling code here:
-        soloLetras(evt);
-    }//GEN-LAST:event_txtDirKeyTyped
-
     private void txtTelfComveKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfComveKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelfComveKeyReleased
 
-    private void txtCodEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodEmpresaActionPerformed
+    private void TxtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNombreActionPerformed
         // TODO add your handling code here:
-        sacarCodigo();
-    }//GEN-LAST:event_txtCodEmpresaActionPerformed
+    }//GEN-LAST:event_TxtNombreActionPerformed
 
-    private void jbtNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNuevoActionPerformed
+    private void TxtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtApellidoActionPerformed
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jbtNuevoActionPerformed
+    }//GEN-LAST:event_TxtApellidoActionPerformed
 
-    private void jbtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGuardarActionPerformed
-        // TODO add your handling code here:
+    private void TxtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombreKeyTyped
+        soloLetras(evt);
+        mayusclasnombre(evt);
+    }//GEN-LAST:event_TxtNombreKeyTyped
 
-    }//GEN-LAST:event_jbtGuardarActionPerformed
+    private void TxtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyTyped
+        soloLetras(evt);
+        mayusclasape(evt);
+    }//GEN-LAST:event_TxtApellidoKeyTyped
 
-    private void jbtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtActualizarActionPerformed
-        // TODO add your handling code here:
+    private void TxtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombreKeyReleased
+        //mayusclasnombre(evt);
+    }//GEN-LAST:event_TxtNombreKeyReleased
 
-    
-    }//GEN-LAST:event_jbtActualizarActionPerformed
+    private void TxtApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyReleased
+        //mayusclasape(evt);
+    }//GEN-LAST:event_TxtApellidoKeyReleased
 
-    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jbtCancelarActionPerformed
+    private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
+        mayusclemail(evt);
+    }//GEN-LAST:event_txtEmailKeyTyped
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        // mayusclemail(evt);
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtRzonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRzonKeyReleased
+       // mayusformapago(evt);
+    }//GEN-LAST:event_txtRzonKeyReleased
+
+    private void txtReLeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtReLeKeyReleased
+       // mayusrepre(evt);
+    }//GEN-LAST:event_txtReLeKeyReleased
 
     private void jbtSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSalirActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jbtSalirActionPerformed
+
+    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
+        botonesblo();
+        limpiar();
+        bloquear();
+//        TblPro.setEnabled(true);
+
+    }//GEN-LAST:event_jbtCancelarActionPerformed
+
+    private void jbtActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtActualizarActionPerformed
+       if(txtCed.getText().isEmpty())
+       {JOptionPane.showMessageDialog(null, "SELECCIONE UN PROVEEDOR");}
+        else
+       {
+           desbloquearactualizar();
+           conbot=1;
+           botonesnue();
+//           TblPro.setEnabled(false);
+       }
+  
+
+    }//GEN-LAST:event_jbtActualizarActionPerformed
+
+    private void jbtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGuardarActionPerformed
+        if(conbot==0)
+        {guardar();}
+        if(conbot==1)
+        {actualizar();botonesblo();}
+        conbot=0;
+//        TblPro.setEnabled(true);
+        
+    }//GEN-LAST:event_jbtGuardarActionPerformed
+
+    private void jbtNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNuevoActionPerformed
+        desbloquearnuevo();
+        botonesnue();
+        limpiar();
+
+    }//GEN-LAST:event_jbtNuevoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        BuscarProveedores bpro = new BuscarProveedores();
+        bpro.show();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1063,22 +1499,24 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxCan;
-    private javax.swing.JComboBox<String> cbxProv;
-    private javax.swing.JComboBox<String> cbxTipoCont;
+    public static javax.swing.JComboBox CbxCodigoEmpresa;
+    public static javax.swing.JTextField TxtApellido;
+    public static javax.swing.JTextField TxtNombre;
+    public static javax.swing.JComboBox<String> cbxCan;
+    public static javax.swing.JComboBox<String> cbxProv;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -1091,16 +1529,13 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JButton jbtGuardar;
     private javax.swing.JButton jbtNuevo;
     private javax.swing.JButton jbtSalir;
-    private javax.swing.JTextField txtCed;
-    private javax.swing.JTextField txtCodEmpresa;
-    private javax.swing.JTextField txtDir;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtExt1;
-    private javax.swing.JTextField txtRUC;
-    private javax.swing.JTextField txtRazonSo;
-    private javax.swing.JTextField txtReLe;
-    private javax.swing.JTextField txtRzon;
-    private javax.swing.JTextField txtTelfCelu;
-    private javax.swing.JTextField txtTelfComve;
+    public static javax.swing.JTextField txtCed;
+    public static javax.swing.JTextField txtEmail;
+    public static javax.swing.JTextField txtExt1;
+    public static javax.swing.JTextField txtRUC;
+    public static javax.swing.JTextField txtReLe;
+    public static javax.swing.JTextField txtRzon;
+    public static javax.swing.JTextField txtTelfCelu;
+    public static javax.swing.JTextField txtTelfComve;
     // End of variables declaration//GEN-END:variables
 }
