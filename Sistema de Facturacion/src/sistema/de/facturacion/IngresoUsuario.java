@@ -29,7 +29,7 @@ import javax.swing.JTextField;
  *
  * @author ADMIN
  */
-public class IngresoUsuario extends javax.swing.JFrame {
+public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form IngresoUsuario
@@ -232,12 +232,9 @@ public void bloquearTodoBotones() {
             JOptionPane.showMessageDialog(null, "ingrese numero de cedula");
             txtCedula.requestFocus();
             y++;
-        }else if(txtCedula.getText().toString().length()>0){
-           if(!verficacion_cedula_ec.verificaCedula(txtCedula.getText().toString())){
+        }else if(!verficacion_cedula_ec.verificaCedula(txtCedula.getText().toString())){
               JOptionPane.showMessageDialog(null, "Cedula incorrecta");
             y++; 
-           }
-            
         }else if (txtNombre.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar nombre mayor a 2 caracteres");
             txtNombre.requestFocus();
@@ -253,6 +250,11 @@ public void bloquearTodoBotones() {
         }else if (txtApellido1.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar apellido mayor a 2 caracteres");
             txtApellido1.requestFocus();
+            y++;
+        }else if (txtTelefono.getText().length() < 9  ) {
+            
+            JOptionPane.showMessageDialog(null, "Debe ingresar telefono de 9 digitos");
+            txtTelefono.requestFocus();
             y++;
         }else if (txtCelular.getText().length() < 10  ) {
             

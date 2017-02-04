@@ -22,8 +22,6 @@ public class conexion_mysql {
 //            conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "root", "");
 //            Class.forName("com.mysql.jdbc.Driver");
             conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
-            JOptionPane.showMessageDialog(null, "Conexion correcta");
-            System.out.println("conexion");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en la conexion en la base "+ ex);
             //Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);

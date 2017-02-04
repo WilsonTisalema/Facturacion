@@ -9,7 +9,6 @@ import dialogs.busquedaFactura;
 import dialogs.consultaCliente;
 import dialogs.consultaProductos;
 import dialogs.generarCobros;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -262,7 +261,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         conexion_mysql cn = new conexion_mysql();
         Connection cc = cn.conectar();
         String sql = "";
-        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RUC_CLI,TIPO_CONT_CLI,ACT_CLI from clientes where ci_cli='" + cedula + "'";
+        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RUC_CLI,TIPO_CONT_CLI from clientes where ci_cli='" + cedula + "'";
         // String[] filas=new String[8];
         Statement ps;
         try {
@@ -277,12 +276,6 @@ public class FacturaVenta extends javax.swing.JFrame {
 
                 txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
                 txtRuc.setText(rs.getString("RUC_CLI"));
-                int activo = Integer.valueOf(rs.getString("ACT_CLI"));
-                if (activo == 0) {
-                    jchActivo.setSelected(true);
-                } else {
-                    jchActivo.setSelected(false);
-                }
                 jchActivo.setEnabled(false);
                 txtNomCli.setEnabled(false);
                 txtTelefono.setEnabled(false);
@@ -448,8 +441,8 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     public void agregarAtabla() {
         int y = 0;
-        if (txtCant.getText().trim().length() > 0) {
-            int dato_stock = Integer.valueOf(txtCant.getText().trim());
+        if (txtCant.getText().toString().trim().length() > 0) {
+            int dato_stock = Integer.valueOf(txtCant.getText().toString().trim());
             if (dato_stock > stockProBase && stockProBase <= 0) {
                 JOptionPane.showMessageDialog(null, "El stock es = " + stockProBase);
                 y++;
@@ -459,7 +452,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             y++;
         }
         if (txtDescPro.getText().trim().length() > 0) {
-            float dato_descuento = Float.valueOf(txtDescPro.getText());
+            float dato_descuento = Float.valueOf(txtDescPro.getText().toString());
 
             if (dato_descuento > max_descuento) {
                 JOptionPane.showMessageDialog(null, "Descuento Maximo descuento es = " + max_descuento);
@@ -770,7 +763,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         conexion_mysql cc = new conexion_mysql();
         Connection cn = cc.conectar();
         String sql = "";
-        sql = "select df.COD_PRO_P,df.CANT_PRO,df.DES_PRO,df.PRE_UNI_PRO,ef.SUB_TO_FAC,ef.DES_TO_FAC,ef.EST_FAC"
+        sql = "select df.COD_PRO_P,df.CANT_PRO,df.DES_PRO,df.PRE_UNI_PRO,ef.SUB_TO_FAC,ef.DES_TO_FAC"
                 + " from detalle_fac_ven df, encabezadofactura ef where df.num_fac_per='" + txtSecuencial.getText() + "' "
                 + "and  ef.NUM_FAC=df.NUM_FAC_PER";
         String[] datos = new String[7];
@@ -784,12 +777,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtPreU.setText(String.valueOf(rs.getString("PRE_UNI_PRO")));
                 txtDescPro.setText(String.valueOf(rs.getString("DES_PRO")));
                 txtPresentacion.setText("1");
-                int an = Integer.valueOf(String.valueOf(rs.getString("EST_FAC")));
-                if (an == 0) {
-                    lblFacturaAnulada.setText("");
-                } else {
-                    lblFacturaAnulada.setText("Anulada");
-                }
+              
                 agregarAtabla();
 
             }
