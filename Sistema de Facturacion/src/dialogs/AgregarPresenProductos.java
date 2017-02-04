@@ -75,7 +75,7 @@ public class AgregarPresenProductos extends javax.swing.JDialog {
         Connection cn=cc.conectar();
         String sql="";
         String[] datos=new String[2];
-        sql="select * from presentaciones_productos where cod_pro_p='"+txtCodPro.getText().trim()+"'";
+        sql="select * from presentaciones_productos where COD_PRO_P='"+txtCodPro.getText().trim()+"'";
         try {
             Statement ps=cn.createStatement();
             ResultSet rs=ps.executeQuery(sql);
