@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -273,39 +274,46 @@ public class FacturaVenta extends javax.swing.JFrame {
     }
 
     public void buscarCliente(String cedula) {
-        conexion_mysql cn = new conexion_mysql();
-        Connection cc = cn.conectar();
-        String sql = "";
-        sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RUC_CLI,TIPO_CONT_CLI from clientes where ci_cli='" + cedula + "'";
-        // String[] filas=new String[8];
-        Statement ps;
-        try {
-            ps = cc.createStatement();
-            ResultSet rs = ps.executeQuery(sql);
-            while (rs.next()) {
-                txtNomCli.setText(rs.getString("nom_cli") + " " + rs.getString("nom_cli1") + " " + rs.getString("ape_cli") + " " + rs.getString("ape_cli1"));
-                txtTelefono.setText(rs.getString("TLF1_CLI"));
-                txtCelular.setText(rs.getString("CEL1_CLI"));
-                txtEmail.setText(rs.getString("E_MAIL_CLI"));
-                txtDireccion.setText(rs.getString("DIR_CLI"));
+        String comprobacion = existeCliente(cedula);
+        if (comprobacion.length() > 0) {
+            conexion_mysql cn = new conexion_mysql();
+            Connection cc = cn.conectar();
+            String sql = "";
+            sql = "select nom_cli,nom_cli1,ape_cli,ape_cli1,TLF1_CLI,CEL1_CLI,E_MAIL_CLI,DIR_CLI,RUC_CLI,TIPO_CONT_CLI from clientes where ci_cli='" + cedula + "'";
+            // String[] filas=new String[8];
+            Statement ps;
+            try {
+                ps = cc.createStatement();
+                ResultSet rs = ps.executeQuery(sql);
+                while (rs.next()) {
+                    txtNomCli.setText(rs.getString("nom_cli") + " " + rs.getString("nom_cli1") + " " + rs.getString("ape_cli") + " " + rs.getString("ape_cli1"));
+                    txtTelefono.setText(rs.getString("TLF1_CLI"));
+                    txtCelular.setText(rs.getString("CEL1_CLI"));
+                    txtEmail.setText(rs.getString("E_MAIL_CLI"));
+                    txtDireccion.setText(rs.getString("DIR_CLI"));
 
-                txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
-                txtRuc.setText(rs.getString("RUC_CLI"));
-                jchActivo.setEnabled(false);
-                txtNomCli.setEnabled(false);
-                txtTelefono.setEnabled(false);
-                txtCelular.setEnabled(false);
-                txtEmail.setEnabled(false);
-                txtDireccion.setEnabled(false);
-                txtRazonS.setEnabled(false);
-                txtTipo.setEnabled(false);
-                txtRuc.setEnabled(false);
+                    txtTipo.setText(rs.getString("TIPO_CONT_CLI"));
+                    txtRuc.setText(rs.getString("RUC_CLI"));
+                    jchActivo.setEnabled(false);
+                    txtNomCli.setEnabled(false);
+                    txtTelefono.setEnabled(false);
+                    txtCelular.setEnabled(false);
+                    txtEmail.setEnabled(false);
+                    txtDireccion.setEnabled(false);
+                    txtRazonS.setEnabled(false);
+                    txtTipo.setEnabled(false);
+                    txtRuc.setEnabled(false);
 
+                }
+            } catch (SQLException ex) {
+                //Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+            txtCodProd.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente no encontrado");
+            limpiarTxt();
+            txtCliente.requestFocus();
         }
-        txtCodProd.requestFocus();
 
     }
 
@@ -414,14 +422,24 @@ public class FacturaVenta extends javax.swing.JFrame {
         float conIva = 0;
         float sinIva = 0;
         float descuentos = 0;
+        String des="";
+        String iv="";
+        float ivf=0;
         for (int i = 0; i < jtbProductos.getRowCount(); i++) {
             suma = suma + Float.valueOf(jtbProductos.getValueAt(i, 6).toString());
             if ("0".equals(jtbProductos.getValueAt(i, 4).toString())) {
                 sinIva = sinIva + Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
             } else {
-                conIva = conIva + Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
+                iv=jtbProductos.getValueAt(i, 4).toString();
+            String[] ivs=des.split(",");
+            String ivas=ivs[0]+"."+ivs[1];
+            ivf = descuentos + Float.valueOf(ivas);
+                conIva = conIva + ivf;
             }
-            descuentos = descuentos + Float.valueOf(jtbProductos.getValueAt(i, 5).toString());
+            des=jtbProductos.getValueAt(i, 5).toString();
+            String[] descu=des.split(",");
+            String descuen=descu[0]+"."+descu[1];
+            descuentos = descuentos + Float.valueOf(descuen);
         }
         txtSubT.setText(String.valueOf(suma));
         txtIva.setText(String.valueOf(conIva));
@@ -453,53 +471,10 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
         return comprobacion;
     }
-
-    public void agregarAtabla() {
-    int y = 0;
-        float stockBDD=Float.valueOf(lblStock.getText());
-        if (txtCant.getText().trim().length() > 0) {
-            int totalVenta = -1;
-            int presentaciones = -1;
-            int dato_stock = -1;
-            try {
-                dato_stock = Integer.valueOf(txtCant.getText().trim());
-                presentaciones = Integer.valueOf(txtPresentacion.getText().trim());
-                totalVenta = dato_stock * presentaciones;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Ingreso de cantidad incorrecta solo enteros");
-                y++;
-            }
-            if(totalVenta!=stockBDD){
-            if (totalVenta >= stockBDD) {
-                JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
-                y++;
-            }
-                
-                if(totalVenta<0){
-                    JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
-                    y++;
-                }
-                    if(totalVenta==0){
-                    JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
-                    y++;    
-                    }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ingresar cantidad");
-            y++;
-        }
-        if (txtDescPro.getText().trim().length() >= 0.5) {
-            float dato_descuento = Float.valueOf(txtDescPro.getText());
-
-            if (dato_descuento >= max_descuento) {
-                JOptionPane.showMessageDialog(null, "Descuento Maximo descuento es = " + max_descuento);
-                y++;
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ingresar descuento");
-            y++;
-        }
-
+    public void agregarAtabla2(float iva){
+        int y = 0;
+        jbtAgregar.setEnabled(false);
+        jbtCancela.setEnabled(false);
         if (y == 0) {
             String[] datos = new String[7];
             datos[0] = txtCodProd.getText().trim().toUpperCase();
@@ -518,7 +493,96 @@ public class FacturaVenta extends javax.swing.JFrame {
             float total = ((cantidad * precioU) - totalS);
             float ivaProducto = 0;
             if (jchkIvaP.isSelected()) {
-                datos[4] = String.valueOf(total * (iva_ecuador / 100));
+                datos[4] = String.valueOf(total * (iva / 100));
+                ivaProducto = total * (iva / 100);
+            } else {
+                datos[4] = "0";
+                ivaProducto = 0;
+            }
+            datos[6] = String.valueOf(total + ivaProducto);
+            modelo.addRow(datos);
+            calculoTotalesPie();
+            limiparCajasProductos();
+        }
+        jtbProductos.setModel(modelo);
+        txtCodProd.requestFocus();
+    }
+    public void agregarAtabla() {
+        int y = 0;
+        if (txtCodProd.getText().trim().length() != 6) {
+            JOptionPane.showMessageDialog(null, "Agregar Codigo Valido");
+            y++;
+        } else {
+            float stockBDD = Float.valueOf(lblStock.getText());
+            if (txtCant.getText().trim().length() > 0) {
+                int totalVenta = -1;
+                int presentaciones = -1;
+                int dato_stock = -1;
+                try {
+                    dato_stock = Integer.valueOf(txtCant.getText().trim());
+                    presentaciones = Integer.valueOf(txtPresentacion.getText().trim());
+                    totalVenta = dato_stock * presentaciones;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ingreso de cantidad incorrecta solo enteros");
+                    y++;
+                }
+                if (totalVenta != stockBDD) {
+                    if (totalVenta >= stockBDD) {
+                        JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
+                        y++;
+                    }
+
+                    if (totalVenta < 0) {
+                        JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
+                        y++;
+                    }
+                    if (totalVenta == 0) {
+                        JOptionPane.showMessageDialog(null, "El stock es = " + stockBDD);
+                        y++;
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar cantidad");
+                y++;
+            }
+            if (txtDescPro.getText().trim().length() >= 0.5) {
+                float dato_descuento = Float.valueOf(txtDescPro.getText());
+
+                if (dato_descuento >= max_descuento) {
+                    JOptionPane.showMessageDialog(null, "Descuento Maximo descuento es = " + max_descuento);
+                    y++;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar descuento");
+                y++;
+            }
+        }
+        if (y == 0) {
+            String[] datos = new String[7];
+            datos[0] = txtCodProd.getText().trim().toUpperCase();
+            datos[1] = txtDesPro.getText().trim();
+
+            datos[3] = txtPreU.getText().trim();
+            //datos[5] = String.valueOf(Integer.valueOf(txtDescPro.getText().trim()));
+            float cantidad = Float.valueOf(Float.valueOf(txtCant.getText().trim()) * Float.valueOf(txtPresentacion.getText().trim()));
+            datos[2] = String.valueOf(cantidad);
+            //System.out.println(cantidad + " cantidad a comprar");
+            float precioU = Float.valueOf(txtPreU.getText().trim());
+            float descuento = Float.valueOf(txtDescPro.getText().trim());
+
+            float totalS = (cantidad * precioU) * (descuento / 100);
+            DecimalFormat df = new DecimalFormat("##.##");
+                //df.setRoundingMode(RoundingMode.DOWN);
+                String resulta = df.format(totalS);
+            datos[5] = String.valueOf(resulta);
+            float total = ((cantidad * precioU) - totalS);
+            float ivaProducto = 0;
+            if (jchkIvaP.isSelected()) {
+                float calculo=total * (iva_ecuador / 100);
+                DecimalFormat dfe = new DecimalFormat("##.##");
+                //df.setRoundingMode(RoundingMode.DOWN);
+                String resultados = dfe.format(calculo);
+                datos[4] = String.valueOf(resultados);
                 ivaProducto = total * (iva_ecuador / 100);
             } else {
                 datos[4] = "0";
@@ -530,6 +594,7 @@ public class FacturaVenta extends javax.swing.JFrame {
             limiparCajasProductos();
         }
         jtbProductos.setModel(modelo);
+        txtCodProd.requestFocus();
     }
 
     public void limiparCajasProductos() {
@@ -562,6 +627,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                 txtPresentacion.setEnabled(false);
                 stockProBase = rs.getInt("stock_pro");
                 max_descuento = rs.getInt("POR_MAX_DES_PROD");
+                lblStock.setText(rs.getString("stock_pro"));
                 txtPreU.setText(rs.getString("PRE1_PROD"));
                 txtPresentacion.setText(rs.getString("DES_PRES_PRO"));
                 txtPreU.setEnabled(false);
@@ -580,6 +646,26 @@ public class FacturaVenta extends javax.swing.JFrame {
             //Logger.getLogger(consultaProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public String existeCliente(String cedula) {
+        String cliente = "";
+        String sql = "";
+        sql = "select NOM_CLI from clientes where ci_cli='" + cedula + "'";
+        conexion_mysql cn = new conexion_mysql();
+        Connection cc = cn.conectar();
+        Statement ps;
+        try {
+            ps = cc.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                cliente = rs.getString("NOM_CLI");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return cliente;
     }
 
     public void imprimir() {
@@ -778,20 +864,21 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
 
     }
-    public void eliminarTodasFilas(){
+
+    public void eliminarTodasFilas() {
         String[] titulos = {"Código", "Descripcion", "Cantidad", "Pre. Uni", "IVA", "Descuento %", "Total"};
         modelo = new DefaultTableModel(null, titulos);
         jtbProductos.setModel(modelo);
 
-        
     }
-    public void eliminarFila(){
-        int fila=jtbProductos.getSelectedRow();
-        if(fila>-1){
-        modelo=(DefaultTableModel) jtbProductos.getModel();
-        jtbProductos.setModel(modelo);
-        modelo.removeRow(fila);
-        jtbProductos.setModel(modelo);
+
+    public void eliminarFila() {
+        int fila = jtbProductos.getSelectedRow();
+        if (fila > -1) {
+            modelo = (DefaultTableModel) jtbProductos.getModel();
+            jtbProductos.setModel(modelo);
+            modelo.removeRow(fila);
+            jtbProductos.setModel(modelo);
         }
     }
 
@@ -800,14 +887,16 @@ public class FacturaVenta extends javax.swing.JFrame {
         conexion_mysql cc = new conexion_mysql();
         Connection cn = cc.conectar();
         String sql = "";
-        sql = "select df.COD_PRO_P,df.CANT_PRO,df.DES_PRO,df.PRE_UNI_PRO,ef.SUB_TO_FAC,ef.DES_TO_FAC,ef.EST_FAC"
+        sql = "select df.COD_PRO_P,df.CANT_PRO,df.DES_PRO,df.PRE_UNI_PRO,ef.SUB_TO_FAC,ef.DES_TO_FAC,ef.EST_FAC,ef.TOT_FAC"
                 + " from detalle_fac_ven df, encabezadofactura ef where df.num_fac_per='" + txtSecuencial.getText() + "' "
                 + "and  ef.NUM_FAC=df.NUM_FAC_PER";
         String[] datos = new String[7];
         try {
             Statement ps = cn.createStatement();
             ResultSet rs = ps.executeQuery(sql);
+            
             while (rs.next()) {
+                float iva=0;
                 txtCodProd.setText(String.valueOf(rs.getString("COD_PRO_P")));
                 buscarProd(String.valueOf(rs.getString("COD_PRO_P")));
                 txtCant.setText(String.valueOf(rs.getString("CANT_PRO")));
@@ -820,14 +909,15 @@ public class FacturaVenta extends javax.swing.JFrame {
                 } else {
                     lblFacturaAnulada.setText("Anulada");
                 }
-                agregarAtabla();
-
+                 iva=((Float.valueOf(rs.getString("TOT_FAC").toString()))/(Float.valueOf(rs.getString("SUB_TO_FAC").toString())))*100;
+                agregarAtabla2(iva);
             }
         } catch (SQLException ex) {
             Logger.getLogger(FacturaVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
     public void soloNumeros(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
@@ -835,7 +925,8 @@ public class FacturaVenta extends javax.swing.JFrame {
             evt.consume();
         }
     }
-    public void limpiarTxt(){
+
+    public void limpiarTxt() {
         txtCant.setText("");
         txtCelular.setText("");
         txtCliente.setText("");
@@ -859,7 +950,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtTotal.setText("");
         lblFacturaAnulada.setText("");
         //txtVendedor.setText("");
-        
+
     }
 
     /**
@@ -1033,6 +1124,11 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtClienteActionPerformed(evt);
+            }
+        });
+        txtCliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtClienteFocusLost(evt);
             }
         });
         txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1576,18 +1672,19 @@ public class FacturaVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         //limpiarTodo();
         y = 0;
-       
+
         inNuevo();
         eliminarTodasFilas();
         txtSecuencial.setText("");
-         cargarSecuencial();
-             cargarNumeroFactura();
-             limpiarTxt();
-             jbtnAnul.setEnabled(false);
-             txtCliente.setText("9999999999");
-             buscarCliente(txtCliente.getText());
-             
-             txtCodProd.requestFocus();
+        cargarSecuencial();
+        cargarNumeroFactura();
+        limpiarTxt();
+        jbtnAnul.setEnabled(false);
+        txtCliente.setText("9999999999");
+        buscarCliente(txtCliente.getText());
+        jbtnAnul.setEnabled(false);
+            txtCodProd.requestFocus();
+            txtCodProd.setEnabled(true);
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnImprimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimitActionPerformed
@@ -1598,10 +1695,10 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
         // TODO add your handling code here:
         y = 0;
-            modelo = (DefaultTableModel) jtbProductos.getModel();
-            jtbProductos.setModel(modelo);
-            guardarFactura();
-       
+        modelo = (DefaultTableModel) jtbProductos.getModel();
+        jtbProductos.setModel(modelo);
+        guardarFactura();
+
         y = 0;
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
@@ -1611,7 +1708,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         txtCodProd.setEnabled(true);
         txtCodProd.requestFocus();
         eliminarFila();
-        
+        //limiparCajasProductos();
+
     }//GEN-LAST:event_jbtCancelaActionPerformed
 
     private void jbtAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAgregarActionPerformed
@@ -1641,6 +1739,7 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void txtCodProdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProdKeyPressed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_txtCodProdKeyPressed
 
     private void txtCodProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProdActionPerformed
@@ -1687,20 +1786,18 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         //limpiarTodo();
+        jbtAgregar.setEnabled(true);
+        jbtCancela.setEnabled(true);
         inCancelar();
         limpiar();
         bloquear();
         y = 0;
+        eliminarTodasFilas();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jbtnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnularActionPerformed
-            // TODO add your handling code here:
-        inNuevo();
-        eliminarTodasFilas();
-        txtSecuencial.setText("");
-         cargarSecuencial();
-             cargarNumeroFactura();
-             limpiarTxt();
+        // TODO add your handling code here:
+        jbtnAnul.setEnabled(true);
         busquedaFactura bf = new busquedaFactura(null, true);
         bf.show();
         txtSecuencial.setText(bf.numero);
@@ -1709,23 +1806,27 @@ public class FacturaVenta extends javax.swing.JFrame {
         buequedaDeFactura();
         y = 1;
         txtCodProd.setEnabled(false);
-        jbtnAnul.setEnabled(false);
+        jbtnAnul.setEnabled(true);
     }//GEN-LAST:event_jbtnAnularActionPerformed
 
     private void jbtnAnulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnulActionPerformed
         // TODO add your handling code here:
         
         if (y == 1) {
+            if(JOptionPane.showConfirmDialog(null, "Desea anular la factura?")==0){
             System.out.println("Anulada".equals(lblFacturaAnulada.getText()));
             if ("Anulada".equals(lblFacturaAnulada.getText())) {
-                
+
                 JOptionPane.showMessageDialog(null, "La factura ya se encuentra anulada");
+                
             } else {
                 anulacion();
                 jbtnAnul.setEnabled(false);
-                
+                eliminarTodasFilas();
+                buequedaDeFactura();
                 bloquear();
                 //inNuevo();
+            }
             }
         }
     }//GEN-LAST:event_jbtnAnulActionPerformed
@@ -1733,6 +1834,12 @@ public class FacturaVenta extends javax.swing.JFrame {
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
         // TODO add your handling code here:
         soloNumeros(evt);
+        int limite = 10;
+        if (txtCliente.getText().length() == limite) {
+            evt.consume();
+        } else {
+           
+        }
     }//GEN-LAST:event_txtClienteKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
@@ -1759,6 +1866,11 @@ public class FacturaVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         soloNumeros(evt);
     }//GEN-LAST:event_txtDescProKeyTyped
+
+    private void txtClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClienteFocusLost
+        // TODO add your handling code here:
+    buscarProd(txtCodProd.getText().trim());
+    }//GEN-LAST:event_txtClienteFocusLost
 
     /**
      * @param args the command line arguments
