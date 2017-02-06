@@ -6,6 +6,7 @@
 
 package sistema.de.facturacion;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,7 +49,17 @@ public class principal extends javax.swing.JFrame {
         }
         return res;
     }
-    
+    public void FABRICANTES() {
+        FabricanteProductos v = new FabricanteProductos();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(v);
+        try {
+            v.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+
+        }
+        v.show();
+    }
     
 
     /**
@@ -148,6 +159,19 @@ public class principal extends javax.swing.JFrame {
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047439_industry.png"))); // NOI18N
         jMenu5.setText("Fabricantes");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu5MousePressed(evt);
+            }
+        });
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047466_billing.png"))); // NOI18N
@@ -206,7 +230,7 @@ public class principal extends javax.swing.JFrame {
             IngresoUsuario usu=new IngresoUsuario();
             jDesktopPane1.add(usu);
             usu.show();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenu1MousePressed
@@ -214,6 +238,28 @@ public class principal extends javax.swing.JFrame {
     private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2MousePressed
+
+    private void jMenu5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MousePressed
+        // TODO add your handling code here:
+//         try {
+//            // TODO add your handling code here:
+//            FabricanteProductos usu=new FabricanteProductos();
+//            jDesktopPane1.add(usu);
+//            usu.show();
+//        } catch (Exception ex) {
+//            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_jMenu5MousePressed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+        FABRICANTES();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
