@@ -1361,7 +1361,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //if (txtCedulaC.getText().trim().length() < 20) {
+
         consultaCliente cn = new consultaCliente(this, rootPaneCheckingEnabled, txtCedulaC.getText().trim());
         cn.show();
         txtCedulaC.setText(cn.cedula);
