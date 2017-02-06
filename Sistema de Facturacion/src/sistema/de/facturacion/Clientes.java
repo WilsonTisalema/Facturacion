@@ -564,12 +564,16 @@ public class Clientes extends javax.swing.JFrame {
 
     public boolean controlCampos() {
         Calendar fecha1 = new GregorianCalendar();
+        String fecha = new SimpleDateFormat("yyyy").format(txtFecha.getDate());
         //fecha nacimiento
-        float anio1 = txtFecha.getDate().getYear();
+        float anio1 = Float.valueOf(fecha);
+        System.out.println("anio escogido  " + anio1);
         //fecha actual
         float año = fecha1.get(Calendar.YEAR);
+        System.out.println("anio actual  " + año);
         // calculo
         float suma = año - anio1;
+        System.out.println(suma);
 
         if (txtCedulaC.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Cédula no ingresados");
@@ -594,6 +598,7 @@ public class Clientes extends javax.swing.JFrame {
             return false;
         } else if (suma < 18) {
             JOptionPane.showMessageDialog(this, "Menor Edad");
+            return false;
         } else if (cbxGeneroC.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione genero");
             return false;
