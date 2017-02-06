@@ -735,10 +735,10 @@ public class Clientes extends javax.swing.JFrame {
             Connection cc = cn.conectar();
             String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
             String a = null;
-            if (cbxGeneroC.getSelectedItem().toString().equals("M")) {
-                a = ("MASCULINO");
+            if (cbxGeneroC.getSelectedItem().toString().equals("MASCULINO")) {
+                a = ("M");
             } else {
-                a = ("FEMENINO");
+                a = ("F");
             }
             System.out.println(a);
             String sql = "";
