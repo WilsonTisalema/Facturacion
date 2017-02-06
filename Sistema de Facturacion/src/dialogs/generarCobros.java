@@ -45,9 +45,10 @@ public class generarCobros extends javax.swing.JDialog {
     }
 
     public void generar() {
-        int ope = 0;
+int ope = 0;
         float totat = Float.valueOf(txtTotal.getText().toString());
         float recibo = Float.valueOf(txtRecibo.getText().toString());
+        if(recibo>=0){
         if (totat > recibo) {
             double resultado = totat - recibo;
             //resultado = (Math.floor(resultado * 100) / 100.0) + 0.001;
@@ -76,7 +77,9 @@ public class generarCobros extends javax.swing.JDialog {
         if (ope == 0) {
             guardar();
         }
-    }
+        }else{
+            JOptionPane.showMessageDialog(null, "El cobro ingresado es negativo");
+        }    }
 
     public void guardar() {
         conexion_mysql cn = new conexion_mysql();

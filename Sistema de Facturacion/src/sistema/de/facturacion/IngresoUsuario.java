@@ -29,6 +29,7 @@ import javax.swing.JTextField;
  *
  * @author ADMIN
  */
+
 public class IngresoUsuario extends javax.swing.JInternalFrame {
 
     /**

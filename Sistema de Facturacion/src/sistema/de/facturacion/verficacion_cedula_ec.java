@@ -11,6 +11,9 @@ package sistema.de.facturacion;
  */
 public class verficacion_cedula_ec {
     public static boolean verificaCedula(String ced) {
+        if(ced.equals("2222222222") || ced.equals("4444444444") || ced.equals("5555555555") || ced.equals("7777777777")){
+            return false;
+        }
         int c = ced.length(), i, sumaTotal;
         //String temp="   "; tercer metodo char a entero
         //temp [1]= '\0';
