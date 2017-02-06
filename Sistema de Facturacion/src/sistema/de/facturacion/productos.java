@@ -63,7 +63,7 @@ public class productos extends javax.swing.JFrame {
         jcbPresentaciones.setEnabled(false);
         jcbiva.setEnabled(false);
         txtUnid.setEnabled(false);
-        txtUnidAl.setEnabled(false);
+
         txtPreBas.setEnabled(false);
         txtPre1.setEnabled(false);
         txtUltPreCo.setEnabled(false);
@@ -71,14 +71,14 @@ public class productos extends javax.swing.JFrame {
        // cbxSubFam.setEnabled(false);
         cbxcateg.setEnabled(false);
 //        txtPre2.setEnabled(false);
-        txtPreProCom.setEnabled(false);
+        
         txtCntUltCom.setEnabled(false);
         txtMaxDes.setEnabled(false);
         txtUltCom.setEnabled(false);
         txtStockMax.setEnabled(false);
         txtStockMin.setEnabled(false);
         txtUltVen.setEnabled(false);
-        txtProUltCo.setEnabled(false);
+
         txtcodbarras.setEnabled(false);
      //   labecodigincorecto.setVisible(false);
         labelcodigobarras.setVisible(false);
@@ -98,21 +98,21 @@ public class productos extends javax.swing.JFrame {
         jcbPresentaciones.setEnabled(true);
         jcbiva.setEnabled(true);
         txtUnid.setEnabled(true);
-        txtUnidAl.setEnabled(true);
+
         txtPreBas.setEnabled(true);
         txtPre1.setEnabled(true);
         txtUltPreCo.setEnabled(true);
         cbxFam.setEnabled(true);
         cbxcateg.setEnabled(true);
      //   txtPre2.setEnabled(true);
-        txtPreProCom.setEnabled(true);
+    
         txtCntUltCom.setEnabled(true);
         txtMaxDes.setEnabled(true);
         txtUltCom.setEnabled(true);
         txtStockMax.setEnabled(true);
         txtStockMin.setEnabled(true);
         txtUltVen.setEnabled(true);
-        txtProUltCo.setEnabled(true);
+ 
         txtcodbarras.setEnabled(true);
         txtCod.requestFocus();
     }
@@ -123,21 +123,21 @@ public class productos extends javax.swing.JFrame {
         jcbPresentaciones.setSelectedItem(" ");
         jcbiva.setText("");
         txtUnid.setText("");
-        txtUnidAl.setText("");
+   
         txtPreBas.setText("");
         txtPre1.setText("");
         txtUltPreCo.setText("");
         cbxFam.setSelectedItem(" ");       
         cbxcateg.setSelectedItem(" ");  
       //  txtPre2.setText("");
-        txtPreProCom.setText("");
+      
         txtCntUltCom.setText("");
         txtMaxDes.setText("");
         txtUltCom.setText("");
         txtStockMax.setText("");
         txtStockMin.setText("");
         txtUltVen.setText("");
-        txtProUltCo.setText("");
+     
         txtCod.requestFocus();
     }
 
@@ -147,13 +147,13 @@ public class productos extends javax.swing.JFrame {
 
         txtUnid.setText("");
         cbxFam.setSelectedIndex(0);       
-        txtUnidAl.setText("");
+     
         txtPreBas.setText("");
         cbxcateg.setSelectedIndex(0); 
         txtPre1.setText("");
       //  txtPre2.setText("");
         txtUltPreCo.setText("");
-        txtPreProCom.setText("");
+       
         txtCntUltCom.setText("");
 
         //txtCostoProye.setText("");
@@ -164,7 +164,7 @@ public class productos extends javax.swing.JFrame {
         //txtDesCom.setText("");
         txtUltCom.setText("");
         txtUltVen.setText("");
-        txtProUltCo.setText("");
+     
 
         txtCod.requestFocus();
     }
@@ -261,119 +261,130 @@ public class productos extends javax.swing.JFrame {
     }
   
     public void guardar() {
-
-        if (txtCod.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la codigo");
-            txtCod.requestFocus();
-        } else if (jcbPresentaciones.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una Presentacion");
-            jcbPresentaciones.requestFocus();
-        } else if (txtUnid.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad");
-            txtUnid.requestFocus();
-        } else if (txtUnidAl.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad Alterna");
-            txtUnidAl.requestFocus();
-        } else if (cbxcateg.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-            cbxcateg.requestFocus();
-        } else if (cbxFam.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una Familia");
-            cbxFam.requestFocus();
-//        } else if (cbxSubFam.getSelectedIndex() == 0) {
-//            JOptionPane.showMessageDialog(null, "Debe seleccionar una SubFamilia");
-//            cbxSubFam.requestFocus();
-        } else if (txtPreBas.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el Precio Base");
-            txtPreBas.requestFocus();
-        } else if (txtPre1.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-            txtPre1.requestFocus();
-//        } else if (txtPre2.getText().isEmpty()) {
+//
+//        if (txtCod.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar la codigo");
+//            txtCod.requestFocus();
+//        } else if (jcbPresentaciones.getSelectedIndex() == 0) {
+//            JOptionPane.showMessageDialog(null, "Debe seleccionar una Presentacion");
+//            jcbPresentaciones.requestFocus();
+//        } else if (txtUnid.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad");
+//            txtUnid.requestFocus();
+//        } else if (txtUnidAl.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar la Unidad Alterna");
+//            txtUnidAl.requestFocus();
+//        } else if (cbxcateg.getSelectedIndex() == 0) {
 //            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
-//            txtPre2.requestFocus();
-        } else if (txtUltPreCo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el ultimo precio de compra");
-            txtUltPreCo.requestFocus();
-        } else if (txtPreProCom.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el precio promedio de compra");
-            txtPreProCom.requestFocus();
-        } else if (txtCntUltCom.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar la Ultima Cantidad Comprada");
-            txtCntUltCom.requestFocus();
-        } else if (txtStockMin.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Minimo");
-            txtStockMin.requestFocus();
-        } else if (txtStockMax.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Maximo");
-            txtStockMax.requestFocus();
-        } else if (txtMaxDes.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe insertar el Porcentaje Maximo de Descuento");
-            txtMaxDes.requestFocus();
+//            cbxcateg.requestFocus();
+//        } else if (cbxFam.getSelectedIndex() == 0) {
+//            JOptionPane.showMessageDialog(null, "Debe seleccionar una Familia");
+//            cbxFam.requestFocus();
+////        } else if (cbxSubFam.getSelectedIndex() == 0) {
+////            JOptionPane.showMessageDialog(null, "Debe seleccionar una SubFamilia");
+////            cbxSubFam.requestFocus();
+//        } else if (txtPreBas.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el Precio Base");
+//            txtPreBas.requestFocus();
+//        } else if (txtPre1.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+//            txtPre1.requestFocus();
+////        } else if (txtPre2.getText().isEmpty()) {
+////            JOptionPane.showMessageDialog(null, "Debe insertar la Categoria");
+////            txtPre2.requestFocus();
+//        } else if (txtUltPreCo.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el ultimo precio de compra");
+//            txtUltPreCo.requestFocus();
+//        } else if (txtPreProCom.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el precio promedio de compra");
+//            txtPreProCom.requestFocus();
+//        } else if (txtCntUltCom.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar la Ultima Cantidad Comprada");
+//            txtCntUltCom.requestFocus();
+//        } else if (txtStockMin.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Minimo");
+//            txtStockMin.requestFocus();
+//        } else if (txtStockMax.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el Stock Maximo");
+//            txtStockMax.requestFocus();
+//        } else if (txtMaxDes.getText().isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Debe insertar el Porcentaje Maximo de Descuento");
+//            txtMaxDes.requestFocus();
             try {
                 conexion_mysql cc = new conexion_mysql();
-                Connection cn = (Connection) cc.conectar();
-                String COD_PROD, DES_PROD, UNI_PROD, UNI_ALT_PRO, CATE_PRO_PROD, PRES_PROD, FAM_PROD, SUB_FAM_PROD,
-                        PREC_BASE, PRE1_PROD, PRE2_PROD, ULT_PRE_COM_PROD, ULT_PRO_COM_PROD, CNT_ULT_COM_PROD,
-                        STOCK_MIN, STOCK_MAX, POR_MAX_DES_PROD;
+                Connection cn = cc.conectar();
+                String COD_PROD,DES_PROD,UNI_PROD,CATE_PRO_PROD,FAM_PROD,PREC_BASE,
+                        PRE1_PROD,ULT_PRE_COM_PROD,CNT_ULT_COM_PROD,STOCK_MIN,STOCK_MAX,
+                        POR_MAX_DES_PROD,stock_pro,GRAB_IVA_P,COD_BARRAS;
                 String sql = "";
-                sql = "insert into autos(COD_PROD,DES_PROD,UNI_PROD,UNI_ALT_PRO,CATE_PRO_PROD,PRES_PROD,FAM_PROD, SUB_FAM_PROD"
-                        + ",PREC_BASE, PRE1_PROD, PRE2_PROD,ULT_PRE_COM_PROD,ULT_PRO_COM_PROD,CNT_ULT_COM_PROD,STOCK_MIN"
-                        + ")"
-                        + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                
+                sql = "insert into productos(COD_PROD,DES_PROD,UNI_PROD,CATE_PRO_PROD,FAM_PROD,PREC_BASE,PRE1_PROD,ULT_PRE_COM_PROD,CNT_ULT_COM_PROD,STOCK_MIN,STOCK_MAX,POR_MAX_DES_PROD,stock_pro,GRAB_IVA_P,COD_BARRAS ) "
+                        + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 COD_PROD = txtCod.getText().toUpperCase().trim();
                 if (txtDesc.getText().isEmpty()) {
                     DES_PROD = "NO HAY DESCRIPCION";
                 } else {
                     DES_PROD = txtDesc.getText().trim();
                 }
+                if (txtcodbarras.getText().isEmpty()) {
+                    COD_BARRAS = "";
+                } else {
+                    COD_BARRAS = txtcodbarras.getText().trim();
+                }
                 UNI_PROD = txtUnid.getText().toUpperCase().trim();
-                UNI_ALT_PRO = txtUnidAl.getText().toUpperCase().trim();
+                
                 CATE_PRO_PROD = String.valueOf(cbxcateg.getSelectedItem()).trim();
-                PRES_PROD = String.valueOf(jcbPresentaciones.getSelectedItem()).trim();
+                //PRES_PROD = String.valueOf(jcbPresentaciones.getSelectedItem()).trim();
                 FAM_PROD = String.valueOf(cbxFam.getSelectedItem()).trim();
                // SUB_FAM_PROD = String.valueOf(cbxSubFam.getSelectedItem()).trim();
                 PREC_BASE = txtPreBas.getText().toUpperCase().trim();
                 PRE1_PROD = txtPre1.getText().toUpperCase().trim();
                // PRE2_PROD = txtPre2.getText().toUpperCase().trim();
                 ULT_PRE_COM_PROD = txtUltPreCo.getText().toUpperCase().trim();
-                ULT_PRO_COM_PROD = txtPreProCom.getText().toUpperCase().trim();
+                
                 CNT_ULT_COM_PROD = txtCntUltCom.getText().toUpperCase().trim();
                 STOCK_MIN = txtStockMin.getText().toUpperCase().trim();
                 STOCK_MAX = txtStockMax.getText().toUpperCase().trim();
                 POR_MAX_DES_PROD = txtMaxDes.getText().toUpperCase().trim();
-
+                stock_pro=txtStock.getText().trim();
+                if(jcbiva.isSelected()){
+                    GRAB_IVA_P="0";
+                }else{
+                    GRAB_IVA_P="1";
+                }
+                
                 PreparedStatement psd = cn.prepareStatement(sql);
 
+               
+               
                 psd.setString(1, COD_PROD);
                 psd.setString(2, DES_PROD);
                 psd.setString(3, UNI_PROD);
-                psd.setString(4, UNI_ALT_PRO);
-                psd.setString(5, CATE_PRO_PROD);
-                psd.setString(6, PRES_PROD);
-                psd.setString(7, FAM_PROD);
-                //psd.setString(8, SUB_FAM_PROD);
-                psd.setString(8, PREC_BASE);
-                psd.setString(9, PRE1_PROD);
-               // psd.setString(10, PRE2_PROD);
-                psd.setString(10, ULT_PRE_COM_PROD);
-                psd.setString(11, ULT_PRO_COM_PROD);
-                psd.setString(12, CNT_ULT_COM_PROD);
-                psd.setString(13, CNT_ULT_COM_PROD);
-                psd.setString(14, STOCK_MIN);
-                psd.setString(15, STOCK_MAX);
-                psd.setString(16, POR_MAX_DES_PROD);
 
-                int n = psd.executeUpdate();
+                psd.setString(4, CATE_PRO_PROD);
+                psd.setString(5,FAM_PROD);
+                psd.setString(6, PREC_BASE);
+                psd.setString(7, PRE1_PROD);
+                psd.setString(8, ULT_PRE_COM_PROD);
+                psd.setString(9, CNT_ULT_COM_PROD);
+                psd.setString(10, STOCK_MIN);
+                psd.setString(11, STOCK_MAX);
+                psd.setString(12, POR_MAX_DES_PROD);
+                psd.setString(13, stock_pro);
+                psd.setString(14, GRAB_IVA_P);
+                psd.setString(15, COD_BARRAS);
+                
+                 int n = psd.executeUpdate();
+                
                 if (n > 0) {
                     JOptionPane.showMessageDialog(null, "Se inserto correctamente");
                 }
 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(rootPane, "No se inserto");
+                JOptionPane.showMessageDialog(rootPane, "No se inserto "+ex);
             }
 
-        }
+//        }
 
     }
     public void mayusculas(JTextField d) {
@@ -405,9 +416,7 @@ public class productos extends javax.swing.JFrame {
         jcbiva = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txtUnid = new javax.swing.JTextField();
-        txtUnidAl = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         cbxFam = new javax.swing.JComboBox<String>();
         jLabel18 = new javax.swing.JLabel();
@@ -417,9 +426,7 @@ public class productos extends javax.swing.JFrame {
         txtPre1 = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         txtUltPreCo = new javax.swing.JTextField();
-        txtPreProCom = new javax.swing.JTextField();
         txtCntUltCom = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         cbxcateg = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
@@ -436,8 +443,8 @@ public class productos extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         txtUltVen = new javax.swing.JTextField();
-        jLabel40 = new javax.swing.JLabel();
-        txtProUltCo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -553,15 +560,6 @@ public class productos extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Unidad:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel6.setText("Unidad Altera:");
-
-        txtUnidAl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUnidAlActionPerformed(evt);
-            }
-        });
-
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel14.setText("Familia:");
 
@@ -614,25 +612,11 @@ public class productos extends javax.swing.JFrame {
             }
         });
 
-        txtPreProCom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPreProComActionPerformed(evt);
-            }
-        });
-        txtPreProCom.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPreProComKeyTyped(evt);
-            }
-        });
-
         txtCntUltCom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCntUltComKeyTyped(evt);
             }
         });
-
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel27.setText("Pre prom Com");
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel28.setText("Cnt ulti com:");
@@ -670,13 +654,10 @@ public class productos extends javax.swing.JFrame {
                         .addComponent(txtPreBas, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel20))
-                                .addGap(12, 12, 12))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -687,10 +668,7 @@ public class productos extends javax.swing.JFrame {
                                     .addComponent(txtUnid, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtUltPreCo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtUnidAl, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtUltPreCo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -714,12 +692,8 @@ public class productos extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel28)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtCntUltCom, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPreProCom, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtCntUltCom, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -746,20 +720,11 @@ public class productos extends javax.swing.JFrame {
                                 .addComponent(jLabel4)))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txtUnidAl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel14)
-                                        .addComponent(cbxFam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(6, 6, 6)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(12, 12, 12))))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(cbxFam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(txtcodbarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -783,9 +748,7 @@ public class productos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel26)
-                            .addComponent(txtUltPreCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel27)
-                            .addComponent(txtPreProCom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtUltPreCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -829,8 +792,13 @@ public class productos extends javax.swing.JFrame {
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel39.setText("Última venta:");
 
-        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel40.setText("Proveedor última compra");
+        jLabel6.setText("Stock:");
+
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -856,19 +824,20 @@ public class productos extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(txtStockMin, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(txtUltVen, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel34)
                         .addGap(66, 66, 66)
                         .addComponent(txtStockMax, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtProUltCo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -883,15 +852,15 @@ public class productos extends javax.swing.JFrame {
                         .addComponent(jLabel34)
                         .addComponent(txtStockMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtMaxDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
                     .addComponent(txtUltCom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel39)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUltVen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProUltCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1035,14 +1004,6 @@ public class productos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnActualizarActionPerformed
 
-    private void txtPreProComActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreProComActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPreProComActionPerformed
-
-    private void txtPreBasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreBasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPreBasActionPerformed
-
     private void txtCodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyTyped
         // TODO add your handling code here:
        // soloNumeros(evt);
@@ -1056,31 +1017,6 @@ public class productos extends javax.swing.JFrame {
         // TODO add your handling code here:
         soloLetras(evt);
     }//GEN-LAST:event_txtDescKeyTyped
-
-    private void txtPreBasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPreBasKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtPreBasKeyTyped
-
-    private void txtPre1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPre1KeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtPre1KeyTyped
-
-    private void txtUltPreCoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUltPreCoKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtUltPreCoKeyTyped
-
-    private void txtPreProComKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPreProComKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtPreProComKeyTyped
-
-    private void txtCntUltComKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCntUltComKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-    }//GEN-LAST:event_txtCntUltComKeyTyped
 
     private void txtStockMinKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockMinKeyTyped
         // TODO add your handling code here:
@@ -1103,21 +1039,12 @@ public class productos extends javax.swing.JFrame {
         desbloquear();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void cbxFamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFamItemStateChanged
-        // TODO add your handling code here:
-       //familia();
-    }//GEN-LAST:event_cbxFamItemStateChanged
-
     private void btnPresentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPresentActionPerformed
         // TODO add your handling code here:
         AgregarPresenProductos agr = new AgregarPresenProductos(this, true, txtCod.getText().trim());
         agr.show();
 
     }//GEN-LAST:event_btnPresentActionPerformed
-
-    private void txtUnidAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidAlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUnidAlActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
@@ -1140,18 +1067,67 @@ public class productos extends javax.swing.JFrame {
         cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodActionPerformed
+
+// public void verificar2(){
+//     calculoCodBarras cal = new calculoCodBarras();
+//    if(txtcodbarras.getText().length() == 13){
+//        cal.verificador13D(txtcodbarras.getText());          
+//            labelcodigobarras.setVisible(true);
+//        }else{
+//         labecodigincorecto.setVisible(true);
+//    }
+// }
+    private void txtcodbarrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodbarrasKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+        verificar1();
+
+    }//GEN-LAST:event_txtcodbarrasKeyTyped
+
+    private void cbxcategItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxcategItemStateChanged
+        // TODO add your handling code here:
+        familia();
+    }//GEN-LAST:event_cbxcategItemStateChanged
+
+    private void txtCntUltComKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCntUltComKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtCntUltComKeyTyped
+
+    private void txtUltPreCoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUltPreCoKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtUltPreCoKeyTyped
+
+    private void txtPre1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPre1KeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtPre1KeyTyped
+
+    private void txtPreBasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPreBasKeyTyped
+        // TODO add your handling code here:
+        soloNumeros(evt);
+    }//GEN-LAST:event_txtPreBasKeyTyped
+
+    private void txtPreBasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPreBasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPreBasActionPerformed
+
     private void cbxFamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxFamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxFamActionPerformed
 
-    private void cbxcategItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxcategItemStateChanged
+    private void cbxFamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxFamItemStateChanged
         // TODO add your handling code here:
-      familia();
-    }//GEN-LAST:event_cbxcategItemStateChanged
+        //familia();
+    }//GEN-LAST:event_cbxFamItemStateChanged
 
-    private void txtCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodActionPerformed
+    private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodActionPerformed
+    }//GEN-LAST:event_txtStockKeyTyped
  public void verificar1(){
      calculoCodBarras cal = new calculoCodBarras();
      if(txtcodbarras.getText().length() == 12 ){           
@@ -1171,22 +1147,6 @@ public class productos extends javax.swing.JFrame {
 
      }
  }
-// public void verificar2(){
-//     calculoCodBarras cal = new calculoCodBarras();
-//    if(txtcodbarras.getText().length() == 13){
-//        cal.verificador13D(txtcodbarras.getText());          
-//            labelcodigobarras.setVisible(true);
-//        }else{
-//         labecodigincorecto.setVisible(true);
-//    }
-// }
-    private void txtcodbarrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodbarrasKeyTyped
-        // TODO add your handling code here:
-        soloNumeros(evt);
-          verificar1();
-          
-    }//GEN-LAST:event_txtcodbarrasKeyTyped
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         guardar();
@@ -1247,7 +1207,6 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
@@ -1256,7 +1215,6 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -1274,15 +1232,13 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JTextField txtMaxDes;
     private javax.swing.JTextField txtPre1;
     private javax.swing.JTextField txtPreBas;
-    private javax.swing.JTextField txtPreProCom;
-    private javax.swing.JTextField txtProUltCo;
+    private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtStockMax;
     private javax.swing.JTextField txtStockMin;
     private javax.swing.JTextField txtUltCom;
     private javax.swing.JTextField txtUltPreCo;
     private javax.swing.JTextField txtUltVen;
     private javax.swing.JTextField txtUnid;
-    private javax.swing.JTextField txtUnidAl;
     private javax.swing.JTextField txtcodbarras;
     // End of variables declaration//GEN-END:variables
 }
