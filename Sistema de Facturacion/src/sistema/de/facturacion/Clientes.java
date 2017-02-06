@@ -647,6 +647,12 @@ public class Clientes extends javax.swing.JFrame {
         Connection cn = cx.conectar();
         String sql = "insert into clientes(CI_CLI, NOM_CLI, NOM_CLI1, APE_CLI, APE_CLI1, TIPO_CONT_CLI, FEC_NAC_CLI, EST_CIV_CLI, GEN_CLI, PRO_CLI, CANT_CLI, DIR_CLI, CEL1_CLI, TLF1_CLI, E_MAIL_CLI, RUC_CLI,EXT_CLI)values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
+        float anio1 = txtFecha.getDate().getYear();
+        float mes1 = txtFecha.getDate().getYear();
+        java.util.Date anio = new Date();
+        java.util.Date mes = new Date();
+        anio.getYear();
+        mes.getMonth();
         if (controlCampos()) {
             try {
                 PreparedStatement ps = cn.prepareStatement(sql);
@@ -656,10 +662,11 @@ public class Clientes extends javax.swing.JFrame {
                 ps.setString(4, txtApellido.getText());
                 ps.setString(5, txtApellido1.getText());
                 ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
+
                 ps.setString(7, fecha);
                 ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
                 String a = null;
-                if (cbxGeneroC.getSelectedItem().toString().equals("MASCULINO") ) {
+                if (cbxGeneroC.getSelectedItem().toString().equals("MASCULINO")) {
                     a = "M";
                 } else {
                     a = "F";
