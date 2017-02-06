@@ -418,36 +418,40 @@ public class FacturaVenta extends javax.swing.JFrame {
         if (txtDescuento.getText().trim().length() == 0) {
             txtDescuento.setText("0");
         }
-        float suma = 0;
-        float conIva = 0;
-        float sinIva = 0;
-        float descuentos = 0;
-        String des="";
-        String iv="";
-        float ivf=0;
+        double suma = 0;
+        double conIva = 0;
+        double sinIva = 0;
+        double descuentos = 0;
+        String des = "";
+        String iv = "";
+        double ivf = 0;
         for (int i = 0; i < jtbProductos.getRowCount(); i++) {
             suma = suma + Float.valueOf(jtbProductos.getValueAt(i, 6).toString());
             if ("0".equals(jtbProductos.getValueAt(i, 4).toString())) {
                 sinIva = sinIva + Float.valueOf(jtbProductos.getValueAt(i, 4).toString());
             } else {
-                iv=jtbProductos.getValueAt(i, 4).toString();
-            String[] ivs=des.split(",");
-            String ivas=ivs[0]+"."+ivs[1];
-            ivf = descuentos + Float.valueOf(ivas);
+                iv = jtbProductos.getValueAt(i, 4).toString();
+//            String[] ivs=des.split(",");
+//            String ivas=ivs[0]+"."+ivs[1];
+                ivf = descuentos + Float.valueOf(iv);
+                ivf = Math.floor(ivf * 100) / 100.0;
                 conIva = conIva + ivf;
             }
-            des=jtbProductos.getValueAt(i, 5).toString();
-            String[] descu=des.split(",");
-            String descuen=descu[0]+"."+descu[1];
-            descuentos = descuentos + Float.valueOf(descuen);
+            des = jtbProductos.getValueAt(i, 5).toString();
+//            String[] descu = des.split(",");
+//            String descuen = descu[0] + "." + descu[1];
+            descuentos = descuentos + Float.valueOf(des);
+            descuentos = Math.floor(descuentos * 100) / 100.0;
+            
         }
+        suma = Math.floor(suma * 100) / 100.0;
         txtSubT.setText(String.valueOf(suma));
         txtIva.setText(String.valueOf(conIva));
         txtIva0.setText(String.valueOf(sinIva));
         txtDescuento.setText(String.valueOf(descuentos));
-        float subTotal = suma;
-        float descuento = Float.valueOf(txtDescuento.getText().trim());
-        float descuentoDinero = subTotal * (descuento / 100);
+        double subTotal = suma;
+        double descuento = Float.valueOf(txtDescuento.getText().trim());
+        double descuentoDinero = subTotal * (descuento / 100);
         //float ivaf = (subTotal - descuentoDinero) * ((iva_ecuador / 100));
         double totales = (subTotal - descuentoDinero);
         totales = Math.floor(totales * 100) / 100.0;
@@ -471,7 +475,8 @@ public class FacturaVenta extends javax.swing.JFrame {
         }
         return comprobacion;
     }
-    public void agregarAtabla2(float iva){
+
+    public void agregarAtabla2(float iva) {
         int y = 0;
         jbtAgregar.setEnabled(false);
         jbtCancela.setEnabled(false);
@@ -507,6 +512,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         jtbProductos.setModel(modelo);
         txtCodProd.requestFocus();
     }
+
     public void agregarAtabla() {
         int y = 0;
         if (txtCodProd.getText().trim().length() != 6) {
@@ -570,25 +576,29 @@ public class FacturaVenta extends javax.swing.JFrame {
             float precioU = Float.valueOf(txtPreU.getText().trim());
             float descuento = Float.valueOf(txtDescPro.getText().trim());
 
-            float totalS = (cantidad * precioU) * (descuento / 100);
-            DecimalFormat df = new DecimalFormat("##.##");
-                //df.setRoundingMode(RoundingMode.DOWN);
-                String resulta = df.format(totalS);
-            datos[5] = String.valueOf(resulta);
-            float total = ((cantidad * precioU) - totalS);
-            float ivaProducto = 0;
+            double totalS = (cantidad * precioU) * (descuento / 100);
+//            DecimalFormat df = new DecimalFormat("##.##");
+//                //df.setRoundingMode(RoundingMode.DOWN);
+//                String resulta = df.format(totalS);
+            totalS = Math.floor(totalS * 100) / 100.0;
+            datos[5] = String.valueOf(totalS);
+            double total = ((cantidad * precioU) - totalS);
+            double ivaProducto = 0;
             if (jchkIvaP.isSelected()) {
-                float calculo=total * (iva_ecuador / 100);
-                DecimalFormat dfe = new DecimalFormat("##.##");
-                //df.setRoundingMode(RoundingMode.DOWN);
-                String resultados = dfe.format(calculo);
-                datos[4] = String.valueOf(resultados);
+                double calculo = total * (iva_ecuador / 100);
+//                DecimalFormat dfe = new DecimalFormat("##.##");
+//                //df.setRoundingMode(RoundingMode.DOWN);
+//                String resultados = dfe.format(calculo);.
+                calculo = Math.floor(calculo * 100) / 100.0;
+                datos[4] = String.valueOf(calculo);
                 ivaProducto = total * (iva_ecuador / 100);
             } else {
                 datos[4] = "0";
                 ivaProducto = 0;
             }
-            datos[6] = String.valueOf(total + ivaProducto);
+            double totalOk=total + ivaProducto;
+            totalOk = Math.floor(totalOk * 100) / 100.0;
+            datos[6] = String.valueOf(totalOk);
             modelo.addRow(datos);
             calculoTotalesPie();
             limiparCajasProductos();
@@ -615,7 +625,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         Connection cc = cn.conectar();
         String sql = "";
         sql = "select p.cod_prod,p.des_prod,p.stock_pro,p.PRE1_PROD,p.POR_MAX_DES_PROD,pr.DES_PRES_PRO,p.GRAB_IVA_P from productos p,presentaciones_productos pr where p.cod_prod = '" + producto + "' and p.cod_prod=pr.COD_PRO_P";
-        System.out.println(sql);
+        //System.out.println(sql);
         int stock = 0;
         try {
             Statement ps = cc.createStatement();
@@ -894,9 +904,9 @@ public class FacturaVenta extends javax.swing.JFrame {
         try {
             Statement ps = cn.createStatement();
             ResultSet rs = ps.executeQuery(sql);
-            
+
             while (rs.next()) {
-                float iva=0;
+                float iva = 0;
                 txtCodProd.setText(String.valueOf(rs.getString("COD_PRO_P")));
                 buscarProd(String.valueOf(rs.getString("COD_PRO_P")));
                 txtCant.setText(String.valueOf(rs.getString("CANT_PRO")));
@@ -909,7 +919,7 @@ public class FacturaVenta extends javax.swing.JFrame {
                 } else {
                     lblFacturaAnulada.setText("Anulada");
                 }
-                 iva=((Float.valueOf(rs.getString("TOT_FAC").toString()))/(Float.valueOf(rs.getString("SUB_TO_FAC").toString())))*100;
+                iva = ((Float.valueOf(rs.getString("TOT_FAC").toString())) / (Float.valueOf(rs.getString("SUB_TO_FAC").toString()))) * 100;
                 agregarAtabla2(iva);
             }
         } catch (SQLException ex) {
@@ -1680,11 +1690,12 @@ public class FacturaVenta extends javax.swing.JFrame {
         cargarNumeroFactura();
         limpiarTxt();
         jbtnAnul.setEnabled(false);
-        txtCliente.setText("9999999999");
+        txtCliente.setText("0000000000");
         buscarCliente(txtCliente.getText());
         jbtnAnul.setEnabled(false);
-            txtCodProd.requestFocus();
-            txtCodProd.setEnabled(true);
+        txtCodProd.requestFocus();
+        txtCodProd.setEnabled(true);
+        jbtnImprimit.setEnabled(false);
     }//GEN-LAST:event_jbtnNuevoActionPerformed
 
     private void jbtnImprimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnImprimitActionPerformed
@@ -1811,22 +1822,22 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void jbtnAnulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnulActionPerformed
         // TODO add your handling code here:
-        
-        if (y == 1) {
-            if(JOptionPane.showConfirmDialog(null, "Desea anular la factura?")==0){
-            System.out.println("Anulada".equals(lblFacturaAnulada.getText()));
-            if ("Anulada".equals(lblFacturaAnulada.getText())) {
 
-                JOptionPane.showMessageDialog(null, "La factura ya se encuentra anulada");
-                
-            } else {
-                anulacion();
-                jbtnAnul.setEnabled(false);
-                eliminarTodasFilas();
-                buequedaDeFactura();
-                bloquear();
-                //inNuevo();
-            }
+        if (y == 1) {
+            if (JOptionPane.showConfirmDialog(null, "Desea anular la factura?") == 0) {
+                System.out.println("Anulada".equals(lblFacturaAnulada.getText()));
+                if ("Anulada".equals(lblFacturaAnulada.getText())) {
+
+                    JOptionPane.showMessageDialog(null, "La factura ya se encuentra anulada");
+
+                } else {
+                    anulacion();
+                    jbtnAnul.setEnabled(false);
+                    eliminarTodasFilas();
+                    buequedaDeFactura();
+                    bloquear();
+                    //inNuevo();
+                }
             }
         }
     }//GEN-LAST:event_jbtnAnulActionPerformed
@@ -1838,7 +1849,7 @@ public class FacturaVenta extends javax.swing.JFrame {
         if (txtCliente.getText().length() == limite) {
             evt.consume();
         } else {
-           
+
         }
     }//GEN-LAST:event_txtClienteKeyTyped
 
@@ -1869,7 +1880,8 @@ public class FacturaVenta extends javax.swing.JFrame {
 
     private void txtClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClienteFocusLost
         // TODO add your handling code here:
-    buscarProd(txtCodProd.getText().trim());
+       // buscarProd(txtCodProd.getText().trim());
+        
     }//GEN-LAST:event_txtClienteFocusLost
 
     /**
