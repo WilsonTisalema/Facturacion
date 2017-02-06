@@ -1481,7 +1481,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 botonesInicio();
-
+        inicio();
+        btnBuscar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
