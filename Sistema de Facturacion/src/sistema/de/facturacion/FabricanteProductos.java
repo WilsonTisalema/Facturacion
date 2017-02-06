@@ -69,7 +69,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
             ResultSet rs = ps.executeQuery(sql);
             while (rs.next()) {
                 txtEmpresa.setText(rs.getString("emp_fab"));
-                
+
                 txtEmail.setText(rs.getString("email_fab"));
                 txtDirecion.setText(rs.getString("dir_fab"));
                 txtTelefono.setText(rs.getString("telf_fab"));
@@ -90,7 +90,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
         txtEmpresa.setEditable(true);
         txtTelefono.setEditable(true);
         txtWeb.setEditable(true);
-       
         btnNuevo.setEnabled(false);
         btnCancelar.setEnabled(true);
         btnCerrar.setEnabled(true);
@@ -99,15 +98,23 @@ public class FabricanteProductos extends javax.swing.JFrame {
     }
 
     public void ActivarTodasCajas() {
-        // txtCodigo.setEnabled(true);
+       // txtCodigo.setEditable(true);
+        //txtCodigo.requestFocus();
         txtEmpresa.setEditable(true);
-       
         txtDirecion.setEditable(true);
         txtEmail.setEditable(true);
-
         txtTelefono.setEditable(true);
         txtWeb.setEditable(true);
-
+    }
+    
+    public void Activar() {
+        /////////
+        txtCodigo.setEnabled(true);
+        txtEmpresa.setEnabled(true);
+        txtDirecion.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        txtWeb.setEnabled(true);
     }
 
     public void ActivarTodoBotones() {
@@ -117,26 +124,26 @@ public class FabricanteProductos extends javax.swing.JFrame {
     }
 
     public void bloquearTodasCajas() {
-        //txtCodigo.setEnabled(false);
+        txtCodigo.setEditable(false);
         txtDirecion.setEditable(false);
         txtEmail.setEditable(false);
         txtEmpresa.setEditable(false);
         txtTelefono.setEditable(false);
         txtWeb.setEditable(false);
-       
 
     }
- public void ParaVisualizar() {
+
+    public void ParaVisualizar() {
         //txtCodigo.setEnabled(false);
         txtDirecion.setEnabled(false);
         txtEmail.setEnabled(false);
         txtEmpresa.setEnabled(false);
         txtTelefono.setEnabled(false);
         txtWeb.setEnabled(false);
-       
-
     }
     private void nuevo() {
+        k=0;
+        txtCodigo.requestFocus();
         txtCodigo.setText("");
         txtEmpresa.setText("");
         txtDirecion.setText("");
@@ -144,7 +151,6 @@ public class FabricanteProductos extends javax.swing.JFrame {
         txtTelefono.setText("");
         txtWeb.setText("");
     }
-
     ///////////////////////////////////////////////////////////////////////////////////////////7
     public void buscar() {
         consultaFabricantes con = new consultaFabricantes(null, rootPaneCheckingEnabled, txtCodigo.getText());
@@ -164,7 +170,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar empresa mayor a 2 caracteres");
             txtEmpresa.requestFocus();
             y++;
-        }  else if (txtDirecion.getText().length() < 2) {
+        } else if (txtDirecion.getText().length() < 2) {
             JOptionPane.showMessageDialog(null, "Debe ingresar una dirección valida");
             txtDirecion.requestFocus();
             y++;
@@ -197,11 +203,10 @@ public class FabricanteProductos extends javax.swing.JFrame {
             Connection cc = cn.conectar();
             String sql = "";
             sql = "Insert into  fabricante_producto(cod_fab,emp_fab,email_fab,dir_fab,telf_fab,web_fab)"
-                    + " values(?,?,?,?,?,?,?,?)";
-            String cod_fab, emp_fab,email_fab, dir_fab, telf_fab, web_fab;
+                    + " values(?,?,?,?,?,?)";
+            String cod_fab, emp_fab, email_fab, dir_fab, telf_fab, web_fab;
             cod_fab = txtCodigo.getText().trim();
             emp_fab = txtEmpresa.getText().trim();
-          
             email_fab = txtEmail.getText().trim();
             dir_fab = txtDirecion.getText().trim();
             telf_fab = txtTelefono.getText().trim();
@@ -214,9 +219,9 @@ public class FabricanteProductos extends javax.swing.JFrame {
                 ps.setString(4, dir_fab);
                 ps.setString(5, telf_fab);
                 ps.setString(6, web_fab);
-
-                if (ps.executeUpdate() > 0) {
-                    JOptionPane.showMessageDialog(this, "Se ha guardado correctamente");
+                int n=ps.executeUpdate();
+                if (n> 0) {
+                    JOptionPane.showMessageDialog(null, "Se ha guardado correctamente");
                     bloquearTodasCajas();
                     nuevo();
                     bloquearTodoBotones();
@@ -225,7 +230,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
                     btnNuevo.setEnabled(true);
                 }
             } catch (Exception ex) {
-                Logger.getLogger(IngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(IngresoUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -261,7 +266,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
             }
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -407,6 +412,9 @@ public class FabricanteProductos extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEmailKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailKeyTyped(evt);
+            }
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -427,6 +435,9 @@ public class FabricanteProductos extends javax.swing.JFrame {
         txtWeb.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtWebKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtWebKeyTyped(evt);
             }
         });
 
@@ -591,7 +602,7 @@ public class FabricanteProductos extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addGap(147, 147, 147))
         );
 
@@ -604,34 +615,23 @@ public class FabricanteProductos extends javax.swing.JFrame {
         soloNumeros(evt);
         if (n > 9) {
             evt.consume();
-
         }
-
-
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
-        // TODO add your handling code here:
-
         int n = txtCodigo.getText().toString().length();
         soloNumeros(evt);
         if (n > 9) {
             evt.consume();
-
         }
-
-
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtEmpresaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyTyped
-        // TODO add your handling code here:
         int n = txtEmpresa.getText().toString().length();
         soloLetras(evt);
-        if (n > 20) {
+        if (n > 49) {
             evt.consume();
-
         }
-
     }//GEN-LAST:event_txtEmpresaKeyTyped
 
     private void txtEmpresaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmpresaKeyReleased
@@ -652,99 +652,96 @@ public class FabricanteProductos extends javax.swing.JFrame {
         txtCodigo.setEditable(true);
         txtCodigo.requestFocus();
         btnNuevo.setEnabled(false);
-
-
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-
         nuevo();
         bloquearTodasCajas();
         bloquearTodoBotones();
-        txtCodigo.setEditable(true);
+        txtCodigo.setEditable(false);
+       //estaba esta txtCodigo.setEditable(true);
         txtCodigo.requestFocus();
         bntBuscar.setEnabled(true);
         btnNuevo.setEnabled(true);
-
-
     }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void btnGuargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarActionPerformed
         guardar();
     }//GEN-LAST:event_btnGuargarActionPerformed
-
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
-
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-
         bntBuscar.requestFocus();
     }//GEN-LAST:event_txtCodigoActionPerformed
-
+    int k = 0;
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+       k++;
+              Activar();
+       txtEmpresa.requestFocus();
+        if (k == 2) {
+            actualizar();
+            btnNuevo.setEnabled(true);
+            
+            txtCodigo.setEditable(false);
+        }
        
-        
-        actualizar();
-        btnNuevo.setEnabled(true);
-        txtCodigo.setEditable(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
-
     private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
-        // TODO add your handling code here:
-        
         if (txtCodigo.getText().length() == 10) {
             txtCodigo.setEditable(false);
             buscarFabricante(txtCodigo.getText());
             btnNuevo.setEnabled(false);
             ParaVisualizar();
-           // ActivarTodasCajas();
             ActivarTodoBotones();
             btnGuargar.setEnabled(false);
-
         }
         if (txtCodigo.getText().length() < 10) {
             buscar();
             buscarFabricante(txtCodigo.getText());
             ParaVisualizar();
-            //ActivarTodasCajas();
             ActivarTodoBotones();
             btnGuargar.setEnabled(false);
-
+            txtCodigo.setEnabled(false);
         }
     }//GEN-LAST:event_bntBuscarActionPerformed
-
     private void txtDirecionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirecionKeyReleased
         // TODO add your handling code here:
         mayusculas(txtDirecion);
     }//GEN-LAST:event_txtDirecionKeyReleased
-
     private void txtDirecionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDirecionKeyTyped
         // TODO add your handling code here:
         int n = txtDirecion.getText().toString().length();
         soloLetras(evt);
-        if (n > 30) {
+        if (n > 49) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDirecionKeyTyped
-
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
-        // TODO add your handling code here:
         mayusculas(txtEmail);
     }//GEN-LAST:event_txtEmailKeyReleased
-
     private void txtWebKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtWebKeyReleased
-        // TODO add your handling code here:
         mayusculas(txtWeb);
     }//GEN-LAST:event_txtWebKeyReleased
-
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        // TODO add your handling code here:
         ActivarTodasCajas();
     }//GEN-LAST:event_btnActualizarMouseClicked
 
+    private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
+        // TODO add your handling code here:
+        int n = txtEmail.getText().toString().length();
+        if (n > 29) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEmailKeyTyped
+
+    private void txtWebKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtWebKeyTyped
+        // TODO add your handling code here:
+        int n = txtWeb.getText().toString().length();
+        soloLetras(evt);
+        if (n > 29) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtWebKeyTyped
     /**
      * @param args the command line arguments
      */

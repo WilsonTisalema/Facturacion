@@ -20,9 +20,9 @@ public class conexion_mysql {
             //Class.forName("com.mysql.jdbc.Drive");//empresa a la que hace referencia papi
             //Class.forName("com.mysql.jdbc.Driver"); 
             Class.forName("com.mysql.jdbc.Driver"); 
-          conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "pm", "password");
+         // conexion=DriverManager.getConnection("jdbc:mysql://localhost/leb", "pm", "password");
             
-            //conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
+            conexion=DriverManager.getConnection("jdbc:mysql://192.168.1.2/leb", "root", "password");
             //JOptionPane.showMessageDialog(null, "Conexion correcta");
 
         } catch (Exception ex) {
