@@ -136,8 +136,8 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public void genero() {
-        cbxGeneroC.addItem("F");
-        cbxGeneroC.addItem("M");
+        cbxGeneroC.addItem("FEMENINO");
+        cbxGeneroC.addItem("MMASCULINO");
     }
 
     public void estadoCivil() {
@@ -657,7 +657,13 @@ public class Clientes extends javax.swing.JFrame {
                 ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
                 ps.setString(7, fecha);
                 ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
-                ps.setString(9, cbxGeneroC.getSelectedItem().toString());
+                String a = null;
+                if (cbxGeneroC.getSelectedItem().toString() == "MASCULINO") {
+                    a = "M";
+                } else {
+                    a = "F";
+                }
+                ps.setString(9, a);
                 ps.setString(10, cbxProvincia.getSelectedItem().toString());
                 ps.setString(11, cbxCanton.getSelectedItem().toString());
                 ps.setString(12, txtDireccionC.getText());
@@ -700,7 +706,11 @@ public class Clientes extends javax.swing.JFrame {
                 fechaS = formatoDeFecha.parse(rs.getString("FEC_NAC_CLI"));
                 txtFecha.setDate(fechaS);
                 cbxEstadocivil.setSelectedItem(rs.getString("EST_CIV_CLI"));
-                cbxGeneroC.setSelectedItem(rs.getString("GEN_CLI"));
+                if (rs.getString("GEN_CLI").equals("M")) {
+                    cbxGeneroC.setSelectedItem("MASCULINO");
+                } else {
+                    cbxGeneroC.setSelectedItem("FEMENINO");
+                }
                 cbxProvincia.setSelectedItem(rs.getString("PRO_CLI"));
                 cbxCanton.setSelectedItem(rs.getString("CANT_CLI"));
                 txtDireccionC.setText(rs.getString("DIR_CLI"));
@@ -1483,7 +1493,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_ExtranjeroStateChanged
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-botonesInicio();
+        botonesInicio();
         inicio();
         btnBuscar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
