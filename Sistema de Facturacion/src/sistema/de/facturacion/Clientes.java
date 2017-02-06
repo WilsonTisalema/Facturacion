@@ -39,7 +39,6 @@ public class Clientes extends javax.swing.JFrame {
         if (!Extranjero.isSelected()) {
             lbExtranjero.setText("Ecuatoriano");
         }
-
     }
 
     public void soloNumeros(java.awt.event.KeyEvent evt) {
@@ -910,6 +909,8 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
+        txtFecha.setEnabled(false);
+
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel22.setText("Ruc: ");
 
@@ -1368,6 +1369,8 @@ public class Clientes extends javax.swing.JFrame {
             buscarCliente(txtCedulaC.getText());
             botonesInicio();
             btnEditar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnBuscar.setEnabled(false);
         } catch (ParseException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1481,7 +1484,8 @@ public class Clientes extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 botonesInicio();
-
+        inicio();
+        btnBuscar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
