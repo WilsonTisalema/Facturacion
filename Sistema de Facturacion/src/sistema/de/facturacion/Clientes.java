@@ -14,11 +14,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import sistema.de.facturacion.verficacion_cedula_ec;
 
 /**
  *
@@ -130,14 +133,14 @@ public class Clientes extends javax.swing.JFrame {
     public void tipoContri() {
         cbxTipContribuyente.removeAllItems();
         cbxTipContribuyente.addItem("SELECCIONE UNO");
-        cbxTipContribuyente.addItem("PERSOAN NATURAL");
+        cbxTipContribuyente.addItem("PERSONA NATURAL");
         cbxTipContribuyente.addItem("PERSONA JURÍDICA ");
         cbxTipContribuyente.addItem("SOCIEDAD");
     }
 
     public void genero() {
-        cbxGeneroC.addItem("F");
-        cbxGeneroC.addItem("M");
+        cbxGeneroC.addItem("FEMENINO");
+        cbxGeneroC.addItem("MASCULINO");
     }
 
     public void estadoCivil() {
@@ -560,6 +563,14 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     public boolean controlCampos() {
+        Calendar fecha1 = new GregorianCalendar();
+        //fecha nacimiento
+        float anio1 = txtFecha.getDate().getYear();
+        //fecha actual
+        float año = fecha1.get(Calendar.YEAR);
+        // calculo
+        float suma = año - anio1;
+
         if (txtCedulaC.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Cédula no ingresados");
             return false;
@@ -581,6 +592,8 @@ public class Clientes extends javax.swing.JFrame {
         } else if (txtFecha.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
             return false;
+        } else if (suma < 18) {
+            JOptionPane.showMessageDialog(this, "Menor Edad");
         } else if (cbxGeneroC.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccione genero");
             return false;
@@ -657,7 +670,13 @@ public class Clientes extends javax.swing.JFrame {
                 ps.setString(6, cbxTipContribuyente.getSelectedItem().toString());
                 ps.setString(7, fecha);
                 ps.setString(8, cbxEstadocivil.getSelectedItem().toString());
-                ps.setString(9, cbxGeneroC.getSelectedItem().toString());
+                String a = null;
+                if (cbxGeneroC.getSelectedItem().toString().equals("MASCULINO")) {
+                    a = "M";
+                } else {
+                    a = "F";
+                }
+                ps.setString(9, a);
                 ps.setString(10, cbxProvincia.getSelectedItem().toString());
                 ps.setString(11, cbxCanton.getSelectedItem().toString());
                 ps.setString(12, txtDireccionC.getText());
@@ -700,7 +719,11 @@ public class Clientes extends javax.swing.JFrame {
                 fechaS = formatoDeFecha.parse(rs.getString("FEC_NAC_CLI"));
                 txtFecha.setDate(fechaS);
                 cbxEstadocivil.setSelectedItem(rs.getString("EST_CIV_CLI"));
-                cbxGeneroC.setSelectedItem(rs.getString("GEN_CLI"));
+                if (rs.getString("GEN_CLI").equals("M")) {
+                    cbxGeneroC.setSelectedItem("MASCULINO");
+                } else {
+                    cbxGeneroC.setSelectedItem("FEMENINO");
+                }
                 cbxProvincia.setSelectedItem(rs.getString("PRO_CLI"));
                 cbxCanton.setSelectedItem(rs.getString("CANT_CLI"));
                 txtDireccionC.setText(rs.getString("DIR_CLI"));
@@ -723,6 +746,13 @@ public class Clientes extends javax.swing.JFrame {
             conexion_mysql cn = new conexion_mysql();
             Connection cc = cn.conectar();
             String fecha = new SimpleDateFormat("yyyy-MM-dd").format(txtFecha.getDate());
+            String a = null;
+            if (cbxGeneroC.getSelectedItem().toString().equals("MASCULINO")) {
+                a = ("M");
+            } else {
+                a = ("F");
+            }
+            System.out.println(a);
             String sql = "";
             sql = "update clientes set NOM_CLI ='" + txtNombre.getText() + "',"
                     + "NOM_CLI1 ='" + txtNombre1.getText() + "',"
@@ -731,7 +761,7 @@ public class Clientes extends javax.swing.JFrame {
                     + "TIPO_CONT_CLI ='" + cbxTipContribuyente.getSelectedItem() + "',"
                     + "FEC_NAC_CLI ='" + fecha + "',"
                     + "EST_CIV_CLI ='" + cbxEstadocivil.getSelectedItem().toString() + "',"
-                    + "GEN_CLI ='" + cbxGeneroC.getSelectedItem().toString() + "',"
+                    + "GEN_CLI ='" + a + "',"
                     + "PRO_CLI ='" + cbxProvincia.getSelectedItem().toString() + "',"
                     + "CANT_CLI ='" + cbxCanton.getSelectedItem().toString() + "',"
                     + "DIR_CLI ='" + txtDireccionC.getText() + "',"
@@ -831,7 +861,7 @@ public class Clientes extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         cbxTipContribuyente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxTipContribuyente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Contribuyente:" }));
+        cbxTipContribuyente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECCIONE CONTRIBUYENTE:" }));
         cbxTipContribuyente.setToolTipText("Seleccione uno ");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -841,7 +871,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel8.setText("Género:");
 
         cbxGeneroC.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxGeneroC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione  Genero:" }));
+        cbxGeneroC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECIONE GENERO:" }));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Fecha de Nacimiento");
@@ -850,7 +880,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel7.setText("Estado Civil :");
 
         cbxEstadocivil.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxEstadocivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Esado civil:" }));
+        cbxEstadocivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ESTADO CIVIL:" }));
 
         jbpasaporte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jbpasaporte.setText("Cédula:");
@@ -1017,7 +1047,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel10.setText("Provincia:");
 
         cbxProvincia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxProvincia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Provincia:" }));
+        cbxProvincia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECCIONE PROVINCIA:" }));
         cbxProvincia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxProvinciaItemStateChanged(evt);
@@ -1033,7 +1063,7 @@ public class Clientes extends javax.swing.JFrame {
         jLabel11.setText("Cantón :");
 
         cbxCanton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cbxCanton.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Canton:" }));
+        cbxCanton.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECCIONE CANTON:" }));
 
         txtDireccionC.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -1361,7 +1391,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //if (txtCedulaC.getText().trim().length() < 20) {
+
         consultaCliente cn = new consultaCliente(this, rootPaneCheckingEnabled, txtCedulaC.getText().trim());
         cn.show();
         txtCedulaC.setText(cn.cedula);
@@ -1408,7 +1438,7 @@ public class Clientes extends javax.swing.JFrame {
     private void btnGuargarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuargarCActionPerformed
         if (controlCampos()) {
             if (!Extranjero.isSelected()) {
-                if (!verificaCedula(txtCedulaC.getText())) {
+                if (!verficacion_cedula_ec.verificaCedula(txtCedulaC.getText())) {
                     JOptionPane.showMessageDialog(this, "Cèdula no Valida");
                 } else {
                     guardar();
@@ -1483,7 +1513,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_ExtranjeroStateChanged
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-botonesInicio();
+        botonesInicio();
         inicio();
         btnBuscar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed

@@ -226,7 +226,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Seleccione Contribuyente:"/>
+                <StringItem index="0" value="SELECCIONE CONTRIBUYENTE:"/>
               </StringArray>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Seleccione uno "/>
@@ -258,7 +258,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Seleccione  Genero:"/>
+                <StringItem index="0" value="SELECIONE GENERO:"/>
               </StringArray>
             </Property>
           </Properties>
@@ -289,7 +289,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Esado civil:"/>
+                <StringItem index="0" value="ESTADO CIVIL:"/>
               </StringArray>
             </Property>
           </Properties>
@@ -457,7 +457,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Seleccione Provincia:"/>
+                <StringItem index="0" value="SELECCIONE PROVINCIA:"/>
               </StringArray>
             </Property>
           </Properties>
@@ -484,7 +484,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Seleccione Canton:"/>
+                <StringItem index="0" value="SELECCIONE CANTON:"/>
               </StringArray>
             </Property>
           </Properties>
