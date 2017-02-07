@@ -6,6 +6,7 @@
 
 package sistema.de.facturacion;
 
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,13 +50,67 @@ public class principal extends javax.swing.JFrame {
         }
         return res;
     }
-    public void FABRICANTES() {
+    public void fabricantes() {
         FabricanteProductos v = new FabricanteProductos();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(v);
-        v.setMaximum(true);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension FrameSize = v.getSize();
+        v.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         v.show();
     }
+    public void usuarios(){
+        try {
+            IngresoUsuario usu=new IngresoUsuario();
+            
+            jDesktopPane1.add(usu);
+            Dimension desktopSize = jDesktopPane1.getSize();
+            Dimension FrameSize = usu.getSize();
+            usu.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+            usu.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void clientes(){
+         Clientes cli = new Clientes();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(cli);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension FrameSize = cli.getSize();
+        cli.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        cli.show();
+    }
+    public void factura(){
+        FacturaVenta fac = new FacturaVenta();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(fac);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension FrameSize = fac.getSize();
+        fac.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        fac.show();
+    }
+        public void proveedor(){
+        Proveedor pro = new Proveedor();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(pro);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension FrameSize = pro.getSize();
+        pro.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        pro.show();
+    }
+      public void productos(){
+        productos pro = new productos();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(pro);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension FrameSize = pro.getSize();
+        pro.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        pro.show();
+    }
+      
     
 
     /**
@@ -76,7 +131,6 @@ public class principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
@@ -92,7 +146,7 @@ public class principal extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
+            .addGap(0, 464, Short.MAX_VALUE)
         );
 
         lblUsuario.setText("Usuario:");
@@ -143,14 +197,20 @@ public class principal extends javax.swing.JFrame {
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047393_suppliers.png"))); // NOI18N
         jMenu3.setText("Proveedores");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu3MousePressed(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047410_file-roller.png"))); // NOI18N
         jMenu4.setText("Productos");
-
-        jMenuItem1.setText("Agregar Stock");
-        jMenu4.add(jMenuItem1);
-
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu4MousePressed(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047439_industry.png"))); // NOI18N
@@ -172,10 +232,14 @@ public class principal extends javax.swing.JFrame {
 
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047466_billing.png"))); // NOI18N
         jMenu6.setText("Facturacion");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu6MousePressed(evt);
+            }
+        });
         jMenuBar1.add(jMenu6);
 
-        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1485047488_Help.png"))); // NOI18N
-        jMenu7.setText("Acerca de");
+        jMenu7.setText("Reportes");
         jMenuBar1.add(jMenu7);
 
         jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
@@ -220,31 +284,16 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu8MouseClicked
 
     private void jMenu1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MousePressed
-        // TODO add your handling code here:
-         try {
-            // TODO add your handling code here:
-            IngresoUsuario usu=new IngresoUsuario();
-            jDesktopPane1.add(usu);
-            usu.show();
-        } catch (Exception ex) {
-            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           usuarios();
     }//GEN-LAST:event_jMenu1MousePressed
 
     private void jMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MousePressed
         // TODO add your handling code here:
+        clientes();
     }//GEN-LAST:event_jMenu2MousePressed
 
     private void jMenu5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MousePressed
-        // TODO add your handling code here:
-//         try {
-//            // TODO add your handling code here:
-//            FabricanteProductos usu=new FabricanteProductos();
-//            jDesktopPane1.add(usu);
-//            usu.show();
-//        } catch (Exception ex) {
-//            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+      fabricantes();
     }//GEN-LAST:event_jMenu5MousePressed
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
@@ -254,8 +303,23 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
-        FABRICANTES();
+        fabricantes();
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
+        // TODO add your handling code here:
+        proveedor();
+    }//GEN-LAST:event_jMenu3MousePressed
+
+    private void jMenu4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MousePressed
+        // TODO add your handling code here:
+        productos();
+    }//GEN-LAST:event_jMenu4MousePressed
+
+    private void jMenu6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MousePressed
+        // TODO add your handling code here:
+        factura();
+    }//GEN-LAST:event_jMenu6MousePressed
 
     /**
      * @param args the command line arguments
@@ -304,7 +368,6 @@ public class principal extends javax.swing.JFrame {
     public static javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    public static javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables

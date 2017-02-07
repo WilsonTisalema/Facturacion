@@ -37,18 +37,20 @@ public class login extends javax.swing.JFrame {
             if (password.equals(verClave())) {
                 if (jerarquia(txtUser.getText()).equals("ADMINISTRADOR")) {
                     principal pl = new principal(txtUser.getText());
-                    principal.jMenuItem1.setVisible(false);
                     principal.jMenu6.setVisible(false);
                     pl.setVisible(true);
                     this.dispose();
                 } else if (jerarquia(txtUser.getText()).equals("CAJERO")) {
                     principal pl = new principal(txtUser.getText());
                     principal.jMenu1.setVisible(false);
+                    principal.jMenu7.setVisible(false);
                     pl.setVisible(true);
                     this.dispose();
                 } else if (jerarquia(txtUser.getText()).equals("BODEGUERO")) {
                     principal pl = new principal(txtUser.getText());
+                    principal.jMenu1.setVisible(false);
                     principal.jMenu6.setVisible(false);
+                    principal.jMenu7.setVisible(false);
                     pl.setVisible(true);
                     this.dispose();
                 }
