@@ -467,6 +467,22 @@ public class productos extends javax.swing.JFrame {
         
         
     }
+    public void buscarPresentaciones(String codigo){
+        conexion_mysql cc=new conexion_mysql();
+        Connection cn=cc.conectar();
+        String sql="";
+        sql="select des_pres_pro from presentaciones_productos where  cod_pro_p='"+codigo+"'";
+        try {
+            Statement ps=cn.createStatement();
+            ResultSet rs=ps.executeQuery(sql);
+            while(rs.next()){
+                jcbPresentaciones.addItem(rs.getString("des_pres_pro"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     public void mayusculas(JTextField d) {
         String cad = d.getText().toUpperCase();
         d.setText(cad);
@@ -1203,6 +1219,8 @@ public class productos extends javax.swing.JFrame {
         cn.show();
         txtCod.setText(cn.data);
         buscar(txtCod.getText());
+        buscarPresentaciones(txtCod.getText());
+        
         
     }//GEN-LAST:event_btnBusquedaActionPerformed
 
