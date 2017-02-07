@@ -13,7 +13,7 @@ public class calculoCodBarras {
 
     public boolean verificador13D(String codigo) {
         boolean ok = false;
-        System.out.println(codigo);
+        //System.out.println(codigo);
         float pares = 0;
         float impares = 0;
         float mulx3 = 0;
