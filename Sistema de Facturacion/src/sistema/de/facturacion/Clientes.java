@@ -565,12 +565,15 @@ public class Clientes extends javax.swing.JFrame {
     public boolean controlCampos() {
         Calendar fecha1 = new GregorianCalendar();
         String fecha = new SimpleDateFormat("yyyy").format(txtFecha.getDate());
+        String fechames = new SimpleDateFormat("MM").format(txtFecha.getDate());
         //fecha nacimiento
         float anio1 = Float.valueOf(fecha);
-        System.out.println("anio escogido  " + anio1);
+        float mes1 = Float.valueOf(fechames);
+        System.out.println("mes escogido  " + fechames);
         //fecha actual
         float año = fecha1.get(Calendar.YEAR);
-        System.out.println("anio actual  " + año);
+        float mes = fecha1.get(Calendar.MONTH);
+        System.out.println("mes actual  " + mes);
         // calculo
         float suma = año - anio1;
         System.out.println(suma);
@@ -596,7 +599,7 @@ public class Clientes extends javax.swing.JFrame {
         } else if (txtFecha.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Fecha de nacimiento no ingresada");
             return false;
-        } else if (suma < 18) {
+        } else if ((suma < 18 && mes < mes1)) {
             JOptionPane.showMessageDialog(this, "Menor Edad");
             return false;
         } else if (cbxGeneroC.getSelectedIndex() == 0) {
