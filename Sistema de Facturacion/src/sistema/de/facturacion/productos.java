@@ -1196,15 +1196,32 @@ public class productos extends javax.swing.JFrame {
         buscar(txtCod.getText());
         
     }//GEN-LAST:event_btnBusquedaActionPerformed
- 
+//  public String cargarCod_Fra(String cod){
+//        String sql="" ,nombre = "";
+//        sql="select * from fabricante_producto where cod_fab ='"+cod+"'";
+//          conexion_mysql cc = new conexion_mysql();
+//                Connection cn = cc.conectar();
+//        try {
+//            Statement psd=cn.createStatement();
+//            ResultSet rs=psd.executeQuery(sql);
+//            while(rs.next()){
+//               nombre=rs.getString("");              
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(null, ex);
+//    }
+//                    return nombre;
+//    }
     public void verificar1(){
      calculoCodBarras cal = new calculoCodBarras();
-     if(txtcodbarras.getText().length() == 12 ){           
+     if(txtcodbarras.getText().length() == 12 ){   
+          txtcodbarras.getText().substring(1, 6);
             cal.verificador(txtcodbarras.getText());
             labelcodigobarras.setVisible(true);
             labelcodigobarras.setText("Codigo Correcto");
             txtcodbarras.setEnabled(false);
         }else if(txtcodbarras.getText().length() == 13){
+         txtcodbarras.getText().substring(3, 8);
         cal.verificador13D(txtcodbarras.getText()); 
          labelcodigobarras.setVisible(true);
             labelcodigobarras.setText("Codigo Correcto");

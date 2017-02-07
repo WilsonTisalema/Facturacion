@@ -53,11 +53,7 @@ public class principal extends javax.swing.JFrame {
         FabricanteProductos v = new FabricanteProductos();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(v);
-        try {
-            v.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-
-        }
+        v.setMaximum(true);
         v.show();
     }
     
