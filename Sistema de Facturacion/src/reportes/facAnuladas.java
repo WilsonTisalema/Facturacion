@@ -97,7 +97,7 @@ public class facAnuladas extends javax.swing.JInternalFrame {
         Map parametro = new HashMap();
         try {
             //parametro.put("numero", txtSecuencial.getText().trim());
-            JasperReport reporte = JasperCompileManager.compileReport("C:/leb/reporteFacturasAnuladas.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("D:/leb/reporteFacturasAnuladas.jrxml");
             JasperPrint print = JasperFillManager.fillReport(reporte, null, cc);
             JasperViewer.viewReport(print, false);
         } catch (Exception ex) {

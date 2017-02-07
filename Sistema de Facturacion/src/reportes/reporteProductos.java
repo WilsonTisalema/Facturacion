@@ -154,7 +154,7 @@ public class reporteProductos extends javax.swing.JInternalFrame {
         Map parametro = new HashMap();
         try {
             parametro.put("cod_pro", cbxCodigos.getSelectedItem().toString());
-            JasperReport reporte = JasperCompileManager.compileReport("c:/leb/stockA.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("C:/leb/stockA.jrxml");
             JasperPrint print = JasperFillManager.fillReport(reporte, parametro, cc);
             JasperViewer.viewReport(print, false);
         } catch (Exception ex) {
@@ -168,7 +168,7 @@ public class reporteProductos extends javax.swing.JInternalFrame {
         Map parametro = new HashMap();
         try {
             parametro.put("numero", cbxCodigos.getSelectedItem().toString());
-            JasperReport reporte = JasperCompileManager.compileReport("c:/leb/stockTodo.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("C:/leb/stockTodo.jrxml");
             JasperPrint print = JasperFillManager.fillReport(reporte, null, cc);
             JasperViewer.viewReport(print, false);
         } catch (Exception ex) {

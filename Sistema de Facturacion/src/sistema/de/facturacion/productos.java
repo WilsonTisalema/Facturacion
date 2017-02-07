@@ -1212,15 +1212,14 @@ public class productos extends javax.swing.JFrame {
     int a;
      public void cortar(){
         if(txtcodbarras.getText().trim().length()==13){
-           // txtcodbarras.setText(txtcodbarras.getText().substring(3, 8));
              dat = txtcodbarras.getText().substring(3, 8);
-            System.out.println("dat ="+dat);
+            txtcodbarras.setText(dat);
             a=1;
         }else{
             if(txtcodbarras.getText().trim().length()==12){
-               // txtcodbarras.setText(txtcodbarras.getText().substring(1, 6));
+               //
                 dat1 = txtcodbarras.getText().substring(1, 6);
-                System.out.println("dat1 ="+dat1);
+                 txtcodbarras.setText(dat1);
                
             }
         }

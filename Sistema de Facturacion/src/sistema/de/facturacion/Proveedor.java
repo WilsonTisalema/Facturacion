@@ -5,6 +5,7 @@
  */
 
 package sistema.de.facturacion;
+import dialogs.BuscarProveedor;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Gabriel
  */
-public class Proveedor extends javax.swing.JFrame {
+public class Proveedor extends javax.swing.JInternalFrame {
 public static final int NUMERO_DE_PROVINCIAS = 24;//22;
 
     /**
@@ -31,9 +32,10 @@ DefaultTableModel modelo;
 //        cargarcampos();
         conbot=0;
         botonesblo();
-
+        
         
     }
+    
         public void botonesblo()
     {
         jbtActualizar.setEnabled(true);
@@ -50,7 +52,43 @@ DefaultTableModel modelo;
         jbtSalir.setEnabled(true);
         jbtCancelar.setEnabled(true);
     }
-     
+     public void buscar() {
+        BuscarProveedor con = new BuscarProveedor(null, rootPaneCheckingEnabled, txtCed.getText());
+        con.show();
+        txtCed.setText(con.codigos);
+    }
+
+    public void buscarProveedor(String codigo)
+    {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+               
+        sql = "select * from proveedores where CED_PROV= '"+codigo+"'";
+        try {
+            Statement psd = cn.createStatement();
+            ResultSet rs = psd.executeQuery(sql);
+            while (rs.next()) {
+                txtCed.setText(rs.getString("CED_PROV"));
+                TxtNombre.setText(rs.getString("NOM_PRO"));
+                TxtApellido.setText(rs.getString("APE_PRO"));
+                txtRUC.setText(rs.getString("RUC_PROV"));
+                CbxCodigoEmpresa.setSelectedItem(rs.getString("COD_EMP_PRO"));
+                txtTelfCelu.setText(rs.getString("CEL_PROV"));
+                txtTelfComve.setText(rs.getString("TLF1_PROV"));
+                txtRzon.setText(rs.getString("FOR_PAG_PROV"));
+                txtEmail.setText(rs.getString("E_MAIL_PROV"));
+                CbxCodigoEmpresa.setSelectedItem(rs.getString("CEL_PROV"));
+                cbxProv.setSelectedItem(rs.getString("PRO_PROV"));
+                cbxCan.setSelectedItem(rs.getString("CANT_PROV"));
+                txtReLe.setText(rs.getString("REP_LEG_PROV"));
+                txtExt1.setText(rs.getString("EXT1_PROV"));
+                //prov.show(true);
+                }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
     
     public void actualizar()
     {
@@ -1081,8 +1119,8 @@ public void mayusrepre(java.awt.event.KeyEvent evt) {
                         .addComponent(cbxCan, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel14))
@@ -1338,9 +1376,9 @@ public void mayusrepre(java.awt.event.KeyEvent evt) {
     }//GEN-LAST:event_TxtApellidoKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        BuscarProveedores bpro = new BuscarProveedores();
-        bpro.show();
-        this.dispose();
+       buscar();
+       buscarProveedor(txtCed.getText());
+        //this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbxProvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxProvItemStateChanged
