@@ -6,10 +6,15 @@
 package sistema.de.facturacion;
 
 import dialogs.AgregarPresenProductos;
+import dialogs.consultaProductos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -169,47 +174,6 @@ public class productos extends javax.swing.JFrame {
 
         txtCod.requestFocus();
     }
-    int paraActualizar = 0;
-   public void actualizar() {
-        conexion_mysql cc = new conexion_mysql();
-        Connection cn = cc.conectar();
-        String sql = "";
-        String iva = "0";
-        if (jcbiva.isSelected()) {
-            iva = "0";
-        } else {
-            iva = "1";
-        }
-        sql = "UPDATE productos "
-                + "SET "
-                + "  DES_PROD = '" + txtDesc.getText().trim().toUpperCase() + "', "
-                + "  UNI_PROD = '" + txtUnid.getText().toUpperCase().trim() + "', "
-                + "  CATE_PRO_PROD = '" + cbxcateg.getSelectedItem().toString() + "', "
-                + "  FAM_PROD = '" + cbxFam.getSelectedItem().toString() + "', "                
-                + "  PREC_BASE = '" + txtPreBas.getText().toUpperCase().trim() + "', "
-                + "  PRE1_PROD = '" + txtPre1.getText().trim() + "', "
-                + "  ULT_PRE_COM_PROD  = '" + txtUltPreCo.getText().trim() + "', " 
-                + "  CNT_ULT_COM_PROD = '" + txtCntUltCom.getText().trim() + "', "
-                + "  STOCK_MIN = '" + txtStockMin.getText().trim() + "', "
-                + "  STOCK_MAX = '" + txtStockMax.getText().trim() + "', "
-                + "  POR_MAX_DES_PROD = '" + txtMaxDes.getText().trim() + "', "
-                + "  stock_pro = '" + txtStock.getText() + "', "
-                + "  GRAB_IVA_P = '" + iva + "' "
-                + "WHERE COD_PROD = '" + txtCod.getText().trim() + "'";
-        System.out.println(sql);
-        try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Actualizado Correctamente");
-                cancelar();            
-        paraActualizar=0;
-            }
-        } catch (SQLException ex) {
-            //Logger.getLogger(productos.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "No se puede Actualizar "+ex);
-        }
-    }
-
 
 //    public void Tipo() {
 //        cbxTipo.removeAllItems();
@@ -429,6 +393,42 @@ public class productos extends javax.swing.JFrame {
 //        }
 
     }
+    public void buscar(String codigo){
+        conexion_mysql cn=new conexion_mysql();
+        Connection cc=cn.conectar();
+        String sql="";
+        sql="select COD_PROD,DES_PROD,UNI_PROD,CATE_PRO_PROD,FAM_PROD,PREC_BASE,"
+                + "PRE1_PROD,ULT_PRE_COM_PROD,CNT_ULT_COM_PROD,STOCK_MIN,STOCK_MAX,"
+                + "POR_MAX_DES_PROD,stock_pro,GRAB_IVA_P,COD_BARRAS from productos where cod_prod='"+codigo+"'";
+        try {
+            Statement ps=cc.createStatement();
+            ResultSet rs=ps.executeQuery(sql);
+            while(rs.next()){
+                txtDesc.setText(rs.getString("DES_PROD"));
+                txtUnid.setText(rs.getString("UNI_PROD"));
+               cbxcateg.setSelectedItem(rs.getString("CATE_PRO_PROD"));
+                cbxFam.setSelectedItem(rs.getString("FAM_PROD"));
+                txtPre1.setText(rs.getString("PRE1_PROD"));
+                txtUltPreCo.setText(rs.getString("ULT_PRE_COM_PROD"));
+                txtCntUltCom.setText(rs.getString("CNT_ULT_COM_PROD"));
+                txtStockMax.setText(rs.getString("STOCK_MAX"));
+                txtStockMin.setText(rs.getString("STOCK_MIN"));
+                txtMaxDes.setText(rs.getString("POR_MAX_DES_PROD"));
+                txtStock.setText(rs.getString("stock_pro"));
+                int iva=Integer.valueOf(rs.getString("GRAB_IVA_P").toString());
+                if(iva==0){
+                    jcbiva.setSelected(true);
+                }else{
+                    jcbiva.setSelected(false);
+                }
+                txtcodbarras.setText(rs.getString("COD_BARRAS"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
     public void mayusculas(JTextField d) {
         String cad = d.getText().toUpperCase();
         d.setText(cad);
@@ -530,6 +530,11 @@ public class productos extends javax.swing.JFrame {
         btnBusqueda.setBackground(new java.awt.Color(102, 204, 255));
         btnBusqueda.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnBusqueda.setText("Busqueda");
+        btnBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusquedaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Presentacion:");
@@ -1170,6 +1175,15 @@ public class productos extends javax.swing.JFrame {
     private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStockKeyTyped
+
+    private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
+        // TODO add your handling code here:
+        consultaProductos pr=new consultaProductos(this, rootPaneCheckingEnabled, " ");
+        
+        pr.show();
+        txtCod.setText(pr.data);
+        buscar(txtCod.getText().trim());
+    }//GEN-LAST:event_btnBusquedaActionPerformed
  public void verificar1(){
      calculoCodBarras cal = new calculoCodBarras();
      if(txtcodbarras.getText().length() == 12 ){           
