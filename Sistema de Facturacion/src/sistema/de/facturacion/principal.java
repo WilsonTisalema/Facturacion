@@ -92,7 +92,7 @@ public class principal extends javax.swing.JFrame {
         fac.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         fac.show();
     }
-        public void proveedor(){
+        public void Proveedor(){
         Proveedor pro = new Proveedor();
         jDesktopPane1.removeAll();
         jDesktopPane1.add(pro);
@@ -308,7 +308,7 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MousePressed
         // TODO add your handling code here:
-        proveedor();
+        Proveedor();
     }//GEN-LAST:event_jMenu3MousePressed
 
     private void jMenu4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MousePressed
