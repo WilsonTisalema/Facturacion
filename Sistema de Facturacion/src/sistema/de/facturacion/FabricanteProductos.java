@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  *
  * @author SystemRD
  */
-public class FabricanteProductos extends javax.swing.JInternalFrame {
+public class FabricanteProductos extends javax.swing.JFrame {
 
     /**
      * Creates new form FabricanteProductos
@@ -266,7 +266,15 @@ public class FabricanteProductos extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+    public void cortar(){
+        if(txtCodigo.getText().trim().length()==13){
+            txtCodigo.setText(txtCodigo.getText().substring(3, 8));
+        }else{
+            if(txtCodigo.getText().trim().length()==12){
+                txtCodigo.setText(txtCodigo.getText().substring(1, 6));
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -619,7 +627,7 @@ public class FabricanteProductos extends javax.swing.JInternalFrame {
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         int n = txtCodigo.getText().toString().length();
         soloNumeros(evt);
-        if (n > 9) {
+        if (n > 12) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCodigoKeyTyped
@@ -670,6 +678,7 @@ public class FabricanteProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         bntBuscar.requestFocus();
+        cortar();
     }//GEN-LAST:event_txtCodigoActionPerformed
     int k = 0;
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
