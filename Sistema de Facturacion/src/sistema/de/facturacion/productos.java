@@ -530,6 +530,7 @@ public class productos extends javax.swing.JFrame {
         labelcodigobarras = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         txtMaxDes = new javax.swing.JTextField();
+        jlabelempresa = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
@@ -747,6 +748,9 @@ public class productos extends javax.swing.JFrame {
             }
         });
 
+        jlabelempresa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jlabelempresa.setText("jLabel7");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -805,7 +809,10 @@ public class productos extends javax.swing.JFrame {
                                 .addGap(117, 117, 117))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelcodigobarras, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(76, 76, 76))))))
+                                .addGap(76, 76, 76))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jlabelempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -860,7 +867,9 @@ public class productos extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addComponent(labelcodigobarras, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(19, 19, 19)
-                        .addComponent(txtMaxDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMaxDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlabelempresa))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -1214,22 +1223,48 @@ public class productos extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnBusquedaActionPerformed
-//  public String cargarCod_Fra(String cod){
-//        String sql="" ,nombre = "";
-//        sql="select * from fabricante_producto where cod_fab ='"+cod+"'";
-//          conexion_mysql cc = new conexion_mysql();
-//                Connection cn = cc.conectar();
-//        try {
-//            Statement psd=cn.createStatement();
-//            ResultSet rs=psd.executeQuery(sql);
-//            while(rs.next()){
-//               nombre=rs.getString("");              
-//            }
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null, ex);
-//    }
-//                    return nombre;
-//    }
+
+    
+    String dat;
+    String dat1;
+    int a;
+     public void cortar(){
+        if(txtcodbarras.getText().trim().length()==13){
+           // txtcodbarras.setText(txtcodbarras.getText().substring(3, 8));
+             dat = txtcodbarras.getText().substring(3, 8);
+            System.out.println("dat ="+dat);
+            a=1;
+        }else{
+            if(txtcodbarras.getText().trim().length()==12){
+               // txtcodbarras.setText(txtcodbarras.getText().substring(1, 6));
+                dat1 = txtcodbarras.getText().substring(1, 6);
+                System.out.println("dat1 ="+dat1);
+               
+            }
+        }
+    }
+     
+       public void cargarCod_Fra(){
+        String sql="" ,nombre = ""; 
+        if(a==1){
+        sql="select * from fabricante_producto where cod_fab ='"+dat+"'";
+        }else{
+           sql="select * from fabricante_producto where cod_fab ='"+dat1+"'"; 
+        }
+          conexion_mysql cc = new conexion_mysql();
+                Connection cn = cc.conectar();
+        try {
+            Statement psd=cn.createStatement();
+            ResultSet rs=psd.executeQuery(sql);
+            while(rs.next()){
+               nombre=rs.getString("EMP_FAB");              
+            }
+            jlabelempresa.setText(nombre);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+    }
+        //        
+    }
     public void verificar1(){
      calculoCodBarras cal = new calculoCodBarras();
      if(txtcodbarras.getText().length() == 12 ){   
@@ -1238,12 +1273,16 @@ public class productos extends javax.swing.JFrame {
             labelcodigobarras.setVisible(true);
             labelcodigobarras.setText("Codigo Correcto");
             txtcodbarras.setEnabled(false);
+            cortar();
+            cargarCod_Fra();
         }else if(txtcodbarras.getText().length() == 13){
          txtcodbarras.getText().substring(3, 8);
         cal.verificador13D(txtcodbarras.getText()); 
          labelcodigobarras.setVisible(true);
             labelcodigobarras.setText("Codigo Correcto");
            txtcodbarras.setEnabled(false);
+           cortar();
+           cargarCod_Fra();
         }else{
      //   labecodigincorecto.setVisible(true);
              labelcodigobarras.setVisible(true);
@@ -1327,6 +1366,7 @@ public class productos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JComboBox jcbPresentaciones;
     private javax.swing.JCheckBox jcbiva;
+    private javax.swing.JLabel jlabelempresa;
     private javax.swing.JLabel labelcodigobarras;
     private javax.swing.JTextField txtCntUltCom;
     private javax.swing.JTextField txtCod;
