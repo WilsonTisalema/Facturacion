@@ -265,6 +265,52 @@ public class productos extends javax.swing.JFrame {
             cbxFam.addItem("DEJA");
         }
     }
+    
+    int paraActualizar = 0;
+   public void actualizar() {
+        conexion_mysql cc = new conexion_mysql();
+        Connection cn = cc.conectar();
+        String sql = "";
+        String iva = "0";
+        if (jcbiva.isSelected()) {
+            iva = "0";
+        } else {
+            iva = "1";
+        }
+        sql = "UPDATE productos "
+                + "SET "
+                + "  DES_PROD = '" + txtDesc.getText().trim().toUpperCase() + "', "
+                + "  UNI_PROD = '" + txtUnid.getText().toUpperCase().trim() + "', "
+                + "  CATE_PRO_PROD = '" + cbxcateg.getSelectedItem().toString() + "', "
+                + "  FAM_PROD = '" + cbxFam.getSelectedItem().toString() + "', "                
+                + "  PREC_BASE = '" + txtPreBas.getText().toUpperCase().trim() + "', "
+                + "  PRE1_PROD = '" + txtPre1.getText().trim() + "', "
+                + "  ULT_PRE_COM_PROD  = '" + txtUltPreCo.getText().trim() + "', " 
+                + "  CNT_ULT_COM_PROD = '" + txtCntUltCom.getText().trim() + "', "
+                + "  STOCK_MIN = '" + txtStockMin.getText().trim() + "', "
+                + "  STOCK_MAX = '" + txtStockMax.getText().trim() + "', "
+                + "  POR_MAX_DES_PROD = '" + txtMaxDes.getText().trim() + "', "
+                + "  stock_pro = '" + txtStock.getText() + "', "
+                + "  GRAB_IVA_P = '" + iva + "' "
+                + "WHERE COD_PROD = '" + txtCod.getText().trim() + "'";
+        System.out.println(sql);
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Actualizado Correctamente");
+                cancelar();            
+//              txtCantProxComp.setEnabled(false);
+//        txtPrecioProx.setEnabled(false);
+//        txtCantProxComp.setText("");
+//        txtPrecioProx.setText("");
+        paraActualizar=0;
+            }
+        } catch (SQLException ex) {
+            //Logger.getLogger(productos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se puede Actualizar "+ex);
+        }
+    }
+
   
     public void guardar() {
 //
